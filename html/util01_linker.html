@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<style>
+    /*CSS RESET*******************************************/
+    html, body, div, span, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    abbr, address, cite, code,
+    del, dfn, em, img, ins, kbd, q, samp,
+    small, strong, sub, sup, var,
+    b, i,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
+    body {
+        line-height: 1;
+    }
+
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+
+    nav ul {
+        list-style: none;
+    }
+
+    blockquote, q {
+        quotes: none;
+    }
+
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+    a {
+        margin: 0;
+        padding: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
+    /* change colours to suit your needs */
+    ins {
+        background-color: #ff9;
+        color: #000;
+        text-decoration: none;
+    }
+
+    /* change colours to suit your needs */
+    mark {
+        background-color: #ff9;
+        color: #000;
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    del {
+        text-decoration: line-through;
+    }
+
+    abbr[title], dfn[title] {
+        border-bottom: 1px dotted;
+        cursor: help;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    /* change border colour to suit your needs */
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #000000;
+        margin: 1em 0;
+        padding: 0;
+    }
+
+    input, select {
+        vertical-align: middle;
+    }
+
+    form {
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        width: 202px;
+        height: 100%;
+        border: 1px solid darkblue;
+    }
+
+    input {
+        border: 1px solid grey;
+        font-size: 18px;
+        width: 100%;
+        height: 100%;
+    }
+
+    td {
+        text-align: center;
+        vertical-align: middle;
+        width: 200px;
+        height: 40px;
+    }
+    button{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<body>
+
+<form>
+    <table>
+        <tr>
+            <td>
+                <input id="q" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="c" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" onclick="getInfo(event)">GO TO HELM</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+
+    function getInfo(evt) {
+        evt.preventDefault();
+        var brachName = "shawn-test";
+        var q = document.getElementById("q").value;
+        var c = document.getElementById("c").value;
+        var helmURL = "http://helm.devel.kakao.com/helm/" + brachName + "/smeagol?q=" + q + "&ca=" + c + "&mdebug=1&reload=1";
+        var serviceURL = "https://s.kakao.com/search?q=" + q;
+        window.open(helmURL, '_blank');
+        window.open(serviceURL, '_blank');
+        console.log(q);
+        console.log(c);
+        console.log(helmURL);
+        console.log(serviceURL);
+    }
+
+
+</script>
+</body>
+</html>
+

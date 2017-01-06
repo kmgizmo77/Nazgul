@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    #wrap {
+        border: dotted red;
+        margin: auto;
+        width: 505px;
+        height: 505px;
+        position: relative;
+    }
+
+    #circle {
+        margin: auto;
+        width: 500px;
+        height: 500px;
+        border: solid;
+        border-radius: 100%;
+    }
+
+</style>
+<body>
+<div>
+    <button id="btn" style="width: 50px;height: 25px;"> . . .</button>
+</div>
+
+
+<div id="wrap">
+    <div id="circle">
+    </div>
+</div>
+
+<script>
+    //로드
+    window.addEventListener('load', function () {
+        //선언부
+        var lineList = [];
+        var a = 180;
+        var wrap = document.getElementById("wrap");
+        var circle = document.getElementById("circle");
+        var btn = document.getElementById("btn");
+
+        //생성자
+        function Line(x, y, w, h, a, hms) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.a = a;
+            this.hms = hms;
+            this.elem = document.createElement("div");
+        }
+
+        // 프로토타입 : 생성자의 초기값이 없을 때 프로토타입을 참조 하여 엘리맨트의 속성의 초기 스타일을 지정한다.---------------------------
+        Line.prototype.setLineStyle = function () {
+            var lineElem = this.elem;
+            lineElem.setAttribute("class", "line");
+            lineElem.style.position = 'absolute';
+            lineElem.style.animationTimingFunction = 'linear';
+            lineElem.style.borderRadius = '30%';
+            lineElem.style.transformOrigin = 'top left';
+            lineElem.style.backgroundColor = 'orange';
+            lineElem.style.left = this.x + 'px';
+            lineElem.style.top = this.y + 'px';
+            lineElem.style.width = this.w + 'px';
+            lineElem.style.height = this.h + 'px';
+            var MoveStyle = lineElem.style.transform = "rotate(" + this.a + 180 + "deg)";
+            lineElem.style.animation = MoveStyle + this.hms + 's linear';
+
+            wrap.appendChild(lineElem);
+        };
+
+        //박스생성 ------------------------------------------------------------------------------------------------
+        function createLine(x, y, w, h, a, hms) {
+            var line = new Line(x, y, w, h, a, hms);
+            lineList.push(line);
+
+            for (var i = 0; i < lineList.length; i++) {
+                lineList[i].setLineStyle();
+            }
+        }
+
+        function setWatch() {
+            createLine(252, 248, 4, 250, 0, 0); //hour
+            createLine(254, 246, 8, 220, 0, 0); //min
+            createLine(254, 246, 8, 170, 0, 0); //sec
+            setInterval(function () {
+                var date = new Date();
+                var hour = date.getHours();
+                var min = date.getMinutes();
+                var sec = date.getSeconds();
+                console.log(hour + ":" + min + ":" + sec);
+
+                lineList[0].elem.style.transform = "rotate(" + ((sec * (360 / 60)) + 180 ) + "deg)";//sec
+                lineList[0].elem.style.backgroundColor = "red";
+                lineList[1].elem.style.transform = "rotate(" + ((min * (360 / 60)) + 180 ) + "deg)";//min
+                lineList[2].elem.style.transform = "rotate(" + ((hour * (360 / 12)) + 180 ) + "deg)";//hour
+
+            }, 1000);
+
+        }
+
+        btn.addEventListener("click", function () {
+            setWatch();
+        })
+    });
+</script>
+</body>
+</html>
