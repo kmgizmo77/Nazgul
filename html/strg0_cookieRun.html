@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>https://www.acmicpc.net/problem/1181</title>
+</head>
+<style>
+    /*CSS RESET*******************************************/
+    html, body, div, span, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    abbr, address, cite, code,
+    del, dfn, em, img, ins, kbd, q, samp,
+    small, strong, sub, sup, var,
+    b, i,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
+    body {
+        line-height: 1;
+    }
+
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+
+    nav ul {
+        list-style: none;
+    }
+
+    blockquote, q {
+        quotes: none;
+    }
+
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+    a {
+        margin: 0;
+        padding: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
+    /* change colours to suit your needs */
+    ins {
+        background-color: #ff9;
+        color: #000;
+        text-decoration: none;
+    }
+
+    /* change colours to suit your needs */
+    mark {
+        background-color: #ff9;
+        color: #000;
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    del {
+        text-decoration: line-through;
+    }
+
+    abbr[title], dfn[title] {
+        border-bottom: 1px dotted;
+        cursor: help;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    /* change border colour to suit your needs */
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #cccccc;
+        margin: 1em 0;
+        padding: 0;
+    }
+
+    input, select {
+        vertical-align: middle;
+    }
+
+    /*CSS**************************************************/
+
+    #map {
+        background-color: khaki;
+        border: 1px solid;
+        width: 1000px;
+        height: 300px;
+        margin: auto;
+        position: relative;
+    }
+
+    #jumpBtn {
+
+        background-color: antiquewhite;
+        width: 1000px;
+        height: 30px;
+        position: relative;
+
+    }
+
+    .btnDiv {
+        background-color: darkgoldenrod;
+        padding-top: 5px;
+        border: 1px solid;
+        width: 1000px;
+        height: 50px;
+        text-align: center;
+        margin: auto;
+    }
+</style>
+<body>
+<div id="map">
+
+</div>
+<div class="btnDiv">
+    <h1>click jump button to start the Game!!</h1>
+    <button id="jumpBtn">JUMP</button>
+</div>
+
+<script>
+    (function () {
+        //선언부
+        var objContainer = [];
+        var objContainer2 = [];
+        var jumpNum = 0;
+        var map = document.getElementById("map");
+        var jumpBtn = document.getElementById("jumpBtn");
+
+
+        //생성자 -> 생성자로 오브잭트를 생성한다.
+        function Obj(x, y, w, h, vf) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.vf = vf;
+            this.elem = document.createElement("div");
+        }
+
+        //프로토타입 -> 만들어진 오브젝트(앨리맨탈)에 스타일을 지정한다
+        Obj.prototype.setObjStyle = function () {
+            var objElem = this.elem;
+            objElem.style.position = 'absolute';
+            objElem.style.border = "3px dotted";
+            objElem.style.backgroundColor = 'green';
+            objElem.style.left = this.x + 'px';
+            objElem.style.top = this.y + 'px';
+            objElem.style.width = this.w + 'px';
+            objElem.style.height = this.h + 'px';
+            map.appendChild(objElem);
+        }
+
+
+        //함수부
+        function createObj(x, y, w, h, vf) {
+            var obj = new Obj(x, y, w, h, vf);
+            objContainer.push(obj);
+            for (var i = 0; i < objContainer.length; i++) {
+                objContainer[i].setObjStyle();
+            }
+        }
+
+        function createObj2(x, y, w, h, vf) {
+            var obj = new Obj(x, y, w, h, vf);
+            objContainer2.push(obj);
+            for (var i = 0; i < objContainer2.length; i++) {
+                objContainer2[i].setObjStyle();
+            }
+        }
+
+        //실행부
+
+
+        function requestMove() {
+            var movement = setInterval(function () {
+                moveXObj(objContainer);
+            }, 10);
+
+        }
+
+        function moveXObj(objContainer, movement) {
+            for (var i = 0; i < objContainer.length; i++) {
+                var obj = objContainer[i];
+                var x = obj.x;
+
+                if (x <= 0) {
+                    x = 0;
+                    clearInterval(movement);
+                    x = 980;
+                    //delete objContainer.splice(i);
+                    console.log(objContainer[0]);
+                } else {
+                    x--;
+                }
+                obj.elem.style.left = x + 'px';
+                obj.x = x;
+
+            }
+        }
+//y축의 행동 패턴 정의
+//        function moveYObj(objContainer2, movement2) {
+//            for (var i = 0; i < objContainer2.length; i++) {
+//                var obj = objContainer[i];
+//                var x = obj.y;
+//
+//                if (x <= 0) {
+//                    x = 0;
+//                    clearInterval(movement);
+//                    x = 980;
+//                    //delete objContainer.splice(i);
+//                    console.log(objContainer[0]);
+//                } else {
+//                    x--;
+//                }
+//                obj.elem.style.left = x + 'px';
+//                obj.x = x;
+//
+//            }
+//        }
+
+        jumpBtn.addEventListener("click", function () {
+            if (jumpNum % 7 == 0) {
+                createObj(980, 250, 20, 50, true);
+
+            }
+
+            if (jumpNum == 0) {
+                requestMove();
+                createObj2(50, 250, 30, 60, true)
+            }
+            jumpNum++;
+            console.log(jumpNum);
+        })
+
+    }());
+</script>
+</body>
+</html>

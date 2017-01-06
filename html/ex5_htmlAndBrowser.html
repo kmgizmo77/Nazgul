@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div>
+    <h1>HTML&Browser</h1>
+
+    <h3>Browser 가 HTML 을 인식하는 방식</h3>
+
+    <p>
+        일반적인 환경에서는 XHTML 규격에 맞게 적성된 모든 문서가 실질적으로 HTML과 동일하게 처리된다.
+        HTTP 헤더는 전송할 문서에 대한 메타 정보를 제공하게 되는데, 그 중에서 가장 중요한 헤더가 Content-Type 헤더이다.
+        이것은 브라우저와 같은 사용자 에이전트(user agent)에게 전송할 문서가 어떤 내용을 담고 있는 문서인지 알려주는 역할을 한다.
+        또한 이 헤더는 문서가 어떤 문자 인코딩을 사용하는지에 관한 정보도 포함할 수 있다.(MIME 에 대한 추가 공부..)
+    </p>
+
+    <h3>DOCTYPE&MIME</h3>
+
+    <p>
+        문서형 정의(DTD:Document Type Definition)은 HTML5, XHTML, HTML의 세가지 문서 유형이 존재하며, 기술한 유형에 따라 마크업 문서의 요소와 속성등을 처리하는 기준이
+        되며 유효성 검사에 이용된다.
+        이전 버전의 HTML(HTML2~HTML4)은 SGML(Standard Generalized Markup Language)에 기반을 두어 만들어졌기 때문에 DTD 참조가 필요하며, 이 때문에
+        DOCTYPE 선언을 하려면 공개 식별자와 시스템 식별자가 포함된 긴 문자열을 작성해야 한다.
+        HTML과 XHTML은 각 버전에서 사용 가능한 태그나 속성 등을 DTD로 상세히 정의한다. DTD는 XML 문서들의 클래스에 논리적인 구조를 강요하는 법칙이다.
+        따라서 DTD는 모든 적법한 마크업을 쓰고 마크업이 문서에 포함될 수 있는 장소와 그 방법을 지정한다.
+        이런 요소 구문 또는 문법은 요소와 그들의 속성의 의미를 정의한다.<br/>
+
+        웹 서버는 송신하는 각 문서를 MIME(Multipart Internet Mail Extensions)으로 확인한다.
+        MIME은 콘텐츠 타입이라고 부르기도 한다.
+        이 콘텐츠 타입은 문서의 HTTPhead 요소에 들어있으며, 브라우저는 콘텐츠 타입에 따라 문서 처리 방식을 결정하게 된다.
+        콘텐츠 타입이 text/html인 문서가 수신되면 브라우저는 그 문서를 HTML로 렌더링한다.
+    </p>
+
+    <h3>Head&meta</h3>
+
+    <p>
+        "[title][style][meta][link][script][base]"<br/>
+        요소는 페이지 설명, 키워드, 저자 및 기타 메타 데이터를 사용하는 문자 집합을 지정하는 데 사용됩니다.
+        메타 데이터는 브라우저 (검색 방법 (내용) 표시 방법), 검색 엔진 (키워드) 및 기타 웹 서비스에서 사용됩니다.
+        웹 페이지에 대한 설명을 정의하십시오.<br/>
+        [meta charset="UTF-8"]<br/>
+        검색 엔진에 대한 키워드 정의 :<br/>
+        [meta name="description" content="Free Web tutorials"]<br/>
+        페이지 작성자를 정의하십시오.<br/>
+        [meta name="keywords" content="HTML,CSS,XML,JavaScript"]<br/>
+        30 초마다 문서 새로 ​​고침 :<br/>
+        [meta name="author" content="Hege Refsnes"]<br/>
+        뷰포트 설정하기<br/>
+        [meta name="viewport" content="width=device-width, initial-scale=1.0"]<br/>
+        요소는 페이지의 모든 상대 URL에 대한 기본 URL과 기본 대상을 지정합니다.<br/>
+        [base href="http://www.w3schools.com/images/" target="_blank"]<br/>
+    </p>
+
+    <h3>경로</h3>
+
+    <p>
+        절대경로<br/>
+        절대경로는 http://~~~~ , c: home/img/~~~고유한 경로를 지정해 주는 경우임<br/>
+        상대경로<br/>
+        상대경로는 상위 폴더로 들어가서 다시 하위폴더를 찾는식의 경로 설정법<br/>
+        index.html 파일이 c:home\doc 폴더에 위치하고있고 logo.gif 파일은 c:home\images 폴더에 위치하고 있으면 [img scr="../images/logo.gif"] 이와
+        같이 지정합니다.
+    </p>
+
+    <h3>배치와 랜더링</h3>
+
+    <p>
+        CSS 파일이 JavaScript 파일보다 먼저로드되면 페이지가 렌더링을 시작할 수 있고 파일 다운로드가 병렬로 수행되어 렌더링 시간이 단축됩니다.<br/>
+        JavaScript 파일이 CSS 파일보다 먼저로드 될 때 발생할 수있는 또 다른 문제는 두 파일 모두로드가 완료 될 때까지 해당 CSS 파일에 설정된 속성을 사용하는 JavaScript 코드를 실행할
+        수 없다는 것입니다.
+    </p>
+</div>
+
+<script>
+    // 기초!!!! 공부 - 브라우져가 hrml을 인식하게 되는지. 그리는지
+    // DOCTYPE 알아보기
+    // meta ??! - 새로고침 기능 등등이 있다
+    // 왜  CSS가 스크립트위에 있는지..
+    // head 가 머하는 애인지
+    // lang = en /????
+    // rel , crossrigin integrity
+    // 왜 상대경로 ? 절대경로? ...
+</script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+
+</head>
+<style>
+
+</style>
+<body>
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3 class="panel-title">MY IDEAL WORLD CUP</h3>
+    </div>
+    <div class="panel-body">
+        <!--Panel content-->
+        <!--프로그래스바-->
+        <div style="width: 100%;height: 100%;">
+            <div class="progress">
+                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+                     aria-valuemin="0"
+                     aria-valuemax="100" id="progressBar" style="width: 0%;">
+                </div>
+            </div>
+        </div>
+
+        <!--게임-->
+        <div class="row">
+            <div class="col-xs-6 col-md-3 " id="p1Btn">
+                <a href="javascript:;" class="thumbnail ">
+                    <img class="gameInfo" id="p1Img">
+
+                    <div class="caption gameInfo" id="p1Info"></div>
+                </a>
+            </div>
+            <div class="col-xs-6 col-md-3 " id="p2Btn">
+                <a href="javascript:;" class="thumbnail ">
+                    <img class="gameInfo" id="p2Img">
+
+                    <div class="caption gameInfo" id="p2Info"></div>
+                </a>
+            </div>
+        </div>
+        <!--res-->
+        <div>
+            <div class="resBtn" id="target">나의 이상형을 찾아라!</div>
+            <div class="resBtn" id="startBtn"
+                 style="background-color: #fff7d1; border: 1px solid burlywood; border-radius: 20px;">START
+            </div>
+        </div>
+
+    </div>
+    <div class=" panel-footer" >
+        <!--<div id="kakaoLinkBtn" >-->
+        <!--<a id="kakao-link-btn" href="javascript:;">-->
+            <!--<img src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>-->
+            <!--<h3>공유하기</h3>-->
+        <!--</a>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<script type='text/javascript'>
+    // 요구사항
+    // 부트스트랩 써도 댐, 이상형월드컵 (완료)
+    // 게이지 바 이동(완료)
+    // 카톡 공유 ( 이건 진짜 뭐임)
+    (function () {
+//선언부 ------------------------------------------------------------------------------------------------------------
+        // 제이 쿼리 처럼 사용
+//        var $ = function (query) {
+//            var elem = document.querySelectorAll(query);
+//            return query[0] === "#" ? elem[0];
+//        };
+
+        var $ = function (query) {
+            return document.querySelectorAll(query);
+        };
+
+        var players = 8;  // 게임 참여 인원 (최대 20명 참여 = 16강전)
+        var memberList = []; //데이터 배열
+        var p1Btn = document.getElementById("p1Btn");
+        var p2Btn = document.getElementById("p2Btn");
+        var p1Info = document.getElementById("p1Info");
+        var p2Info = document.getElementById("p2Info");
+        var p1Img = document.getElementById("p1Img");
+        var p2Img = document.getElementById("p2Img");
+        var gameInfo = $(".gameInfo"); // class 가 배열을 반환함으로 for 문으로 돌려 줘야 한다
+        var startBtn = document.getElementById("startBtn");
+        var progressBar = document.getElementById("progressBar");
+        var kakaoLinkBtn = document.getElementById("kakaoLinkBtn");
+
+//생성자 ------------------------------------------------------------------------------------------------------------
+        // 생성자로 참여자의정보를 생성
+        function MemberInfo(memberName, memberImgURL, memberRank) {
+            this.memberName = memberName;
+            this.memberImgURL = memberImgURL;
+            this.memberRank = memberRank;
+        };
+
+// 함수부 ------------------------------------------------------------------------------------------------
+        // 참여자 데이터 생성
+        function createMemberList() {
+            if (memberList.length <= 1) {
+                memberList = [];
+                //데이터 ------------------------------------------------------------------------------------------------------------
+                insertMember("아이유", "http://cfile1.uf.tistory.com/image/2278E041566DF58F2D1777", 0);
+                insertMember("수 지", "data:image/jpeg;base64,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", 0);
+                insertMember("송중기", "http://img.insight.co.kr/static/2016/04/18/700/8r327l159q2jv23s3396.jpg", 0);
+                insertMember("이정재", "http://cfs15.tistory.com/image/23/tistory/2009/02/20/22/22/499eae944e2bd", 0);
+                insertMember("김사랑", "http://pds.joins.com/news/component/starnews/201508/24/2015082409050771587_2.jpg", 0);
+                insertMember("이지아", "http://cfile26.uf.tistory.com/image/127E454E4DB5514E2ED8E1", 0);
+                insertMember("박시후", "http://cfile22.uf.tistory.com/image/2425554051DFC6AA28428D", 0);
+                insertMember("문근영", "http://cfile204.uf.daum.net/image/17463D0F4BBC5360281217", 0);
+                insertMember("임정은", "http://cfile1.uf.tistory.com/image/211DF234574C38D51BD129", 0);
+                insertMember("윤종신", "https://i.ytimg.com/vi/jDAzU5HpInI/maxresdefault.jpg", 0);
+                insertMember("김지선", "http://cfile23.uf.tistory.com/image/2701EA4352D0FB5D2894EB", 0);
+                insertMember("이혁재", "http://i2.media.daumcdn.net/photo-media/200510/25/mydaily/20051025170030.756.0.jpg", 0);
+                insertMember("송윤아", "http://bntnews.hankyung.com/bntdata/images/photo/201602/feafa41a681c5f1574b8c9dbd3c409e2.jpg", 0);
+                insertMember("김하늘", "data:image/jpeg;base64,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", 0);
+                insertMember("한고은", "http://cfile8.uf.tistory.com/image/2614014656FF7D69067F59", 0);
+                insertMember("유재석", "http://image.elle.co.kr/upload/NEWS/2013/11/ncd_131122013/thumb/ncd_131122013_172523v_b.jpg", 0);
+                insertMember("배슬기", "http://cfile9.uf.tistory.com/image/26780D3957006C1420BEB9", 0);
+                insertMember("하 하", "http://image.ytn.co.kr/general/jpg/2015/0227/201502271350259595_d.jpg", 0);
+                insertMember("나연", "https://ncache.ilbe.com/files/attach/new/20160827/4255758/8524813614/8668085060/70593ebf3a1d00dc5507e42c86fc5b2c.jpg", 0);
+                insertMember("박보영", "http://res.heraldm.com/content/image/2015/08/22/20150822000118_0.jpg", 0);
+            }
+        }
+
+        // 데이터 입력 함수
+        function insertMember(memberName, memberImgURL, memberRank) {
+            var memberBox = new MemberInfo(memberName, memberImgURL, memberRank);
+            memberList.push(memberBox);
+        }
+
+        // 게임에 참여할 인물들의 리스트 얻는 함수
+        function getGameList(memberList, players) {
+            var gameList = [];
+            //총 인원에서 라운드 수만큼의 인원을 랜덤으루 추출하고 게임 리스트에 추가한다
+            for (var i = 0; i < players; i++) {
+                var memberListLength = memberList.length;
+                var pickedGameMember = Math.floor(Math.random() * memberListLength);
+                //splice 는 배열을 반환하니 그것의 0 번째 배열을 푸쉬해야 배열의 정보만 push 됨
+                gameList.push(memberList.splice(pickedGameMember, 1)[0]);
+                console.log("gameList", gameList[i]);
+            }
+            console.log("-------------------Game List-------------------");
+            return gameList;
+        }
+
+        //프로그래스바 설정
+        function getProgressData(memberList, players) {
+            var roundList = [16, 8, 4, 2, 1];
+            var progressBarPercentage = (100 + ((1 / players) * 100)) - ((memberList.length / players) * 100);
+            var progressBarRound = Math.floor(memberList.length);
+            if (progressBarPercentage <= 100) {
+                progressBar.style.width = progressBarPercentage + "%";
+            }
+            for (var i = 0; i < roundList.length; i++) {
+                if (progressBarRound === roundList[i]) {
+                    if (progressBarRound < 2) {
+                        progressBar.innerText = "우 승";
+                    } else if (progressBarRound === 2) {
+                        progressBar.innerText = "결 승 전";
+                    } else {
+                        progressBar.innerText = progressBarRound + " 강 전";
+                    }
+                } else if (progressBarRound > roundList[0]) {
+                    progressBar.innerText = "예 선 전";
+                }
+            }
+        }
+
+        //이미지 셋하기
+        function setMember(memberList) {
+            if (memberList.length > 1) {
+                for (var i = 0; i < gameInfo.length; i++) {
+                    gameInfo[i].style.display = "inline-block";
+                }
+                p1Btn.style.display = "inline-block";
+                p2Btn.style.display = "inline-block";
+                p1Img.setAttribute("src", memberList[0].memberImgURL);
+                p1Info.innerHTML = "<h4>" + memberList[0].memberName + "</h4>";
+                p2Img.setAttribute("src", memberList[1].memberImgURL);
+                p2Info.innerHTML = "<h4>" + memberList[1].memberName + "</h4>";
+            }
+            else if (memberList.length === 1) {
+                p1Img.setAttribute("src", memberList[0].memberImgURL);
+                p1Info.innerHTML = "당신의 이상형은 " + "<h4>" + memberList[0].memberName + "</h4>" + "입니다. "
+                    + "<br/>" + "[랭크 : " + memberList[0].memberRank + "]";
+                p2Btn.style.display = "none";
+                startBtn.style.display = "inline-block";
+                kakaoLinkBtn.style.display = "block";
+            }else{
+                kakaoLinkBtn.style.display = "none";
+            }
+        }
+
+        //승자 배열 만들기
+        function getWinnerList(memberList, winNum) {
+            console.log("winNum : " + winNum);
+            memberList.push(memberList.splice(winNum, 1)[0]);
+            memberList.splice(0, 1);
+            for (var i = 0; i < memberList.length; i++) {
+                console.log(memberList[i]);
+            }
+            console.log("-------------------Player : " + memberList.length + "-------------------");
+            console.log("-------------------Add Winner-------------------");
+        }
+
+        //승자 뽑기
+        function pickWinner(winNum) {
+            getWinnerList(memberList, winNum);
+            setMember(memberList);
+            getProgressData(memberList, players);
+        }
+
+//감지부 ------------------------------------------------------------------------------------------------
+        //this , clojure 에 대해서 공부할 필요가 있음
+        p1Btn.addEventListener("click", pickWinner.bind(undefined, 0));
+        p2Btn.addEventListener("click", pickWinner.bind(undefined, 1));
+        startBtn.addEventListener("click", function () {
+            createMemberList();
+            memberList = getGameList(memberList, players);
+            setMember(memberList);
+            getProgressData(memberList, players);
+            startBtn.style.display = "none";
+            kakaoLinkBtn.style.display = "none";
+        });
+
+//공유하기 ------------------------------------------------------------------------------------------------
+        //<![CDATA[
+        // // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('af64056b2a01259d35ecd019433abc15');
+        // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+        Kakao.Link.createTalkLinkButton({
+            container: '#kakao-link-btn',
+            label: '당신의 이상형을 찾아 보세요!!',
+            image: {
+                src: 'http://dn.api1.kage.kakao.co.kr/14/dn/btqaWmFftyx/tBbQPH764Maw2R6IBhXd6K/o.jpg',
+                width: '300',
+                height: '200'
+            },
+            webButton: {
+                text: '이상형 월드컵 시작',
+                url: 'http://172.28.32.180:8080/front/ex4_idealWorldCup.html' // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+                //https://dev.kakao.com/docs/js
+            }
+        });
+        //]]>
+    }());
+</script>
+</body>
+
+</html>

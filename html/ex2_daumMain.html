@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    /*CSS RESET*******************************************/
+    html, body, div, span, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    abbr, address, cite, code,
+    del, dfn, em, img, ins, kbd, q, samp,
+    small, strong, sub, sup, var,
+    b, i,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
+    body {
+        line-height: 1;
+    }
+
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+
+    nav ul {
+        list-style: none;
+    }
+
+    blockquote, q {
+        quotes: none;
+    }
+
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+    a {
+        margin: 0;
+        padding: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
+    /* change colours to suit your needs */
+    ins {
+        background-color: #ff9;
+        color: #000;
+        text-decoration: none;
+    }
+
+    /* change colours to suit your needs */
+    mark {
+        background-color: #ff9;
+        color: #000;
+        font-style: italic;
+        font-weight: bold;
+    }
+
+    del {
+        text-decoration: line-through;
+    }
+
+    abbr[title], dfn[title] {
+        border-bottom: 1px dotted;
+        cursor: help;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    /* change border colour to suit your needs */
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #cccccc;
+        margin: 1em 0;
+        padding: 0;
+    }
+
+    input, select {
+        vertical-align: middle;
+    }
+
+    /*markup*************************************************************/
+
+    .wrapper {
+        width: 500px;
+        height: 512px;
+        border: 1px solid darkblue;
+        position: relative;
+        margin: auto;
+    }
+
+    .nav {
+        width: 500px;
+        height: 33px;
+    }
+
+    .news {
+        width: 500px;
+        height: 280px;
+        background-color: #f6f6f6;
+    }
+
+    .images {
+        width: 500px;
+        height: 140px;
+    }
+
+    .pages {
+        width: 500px;
+        height: 30px;
+        background-color: #f6f6f6;
+        position: relative;
+        padding-top: 10px;
+    }
+
+    .nav span {
+        float: left;
+        text-align: center;
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+
+    img {
+        width: 145px;
+        height: 80px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .news_list {
+        height: 48%;
+    }
+
+    .news_img {
+        margin-left: 10px;
+        margin-top: 0px;
+        float: left;
+        text-align: center;
+        font-size: smaller;
+
+    }
+
+    .news_text {
+        margin-left: 180px;
+        margin-top: 15px;
+        font-size: small;
+    }
+
+    .images_img {
+        margin-left: 10px;
+        margin-top: 15px;
+        float: left;
+        text-align: center;
+        font-size: smaller;
+    }
+
+    .img_txt {
+        display: block;
+    }
+
+    .pages_page {
+        padding-top: 6px;
+        text-align: center;
+        font-size: small;
+    }
+
+    .pages_page span {
+        margin-right: 10px;
+
+    }
+
+    .pages_btn {
+        width: 30px;
+        height: 20px;
+    }
+
+    a:link {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    a:hover {
+        text-decoration: underline;
+        color: blue;
+    }
+
+    .nav a:link {
+        text-decoration: none;
+        color: #efefef;
+    }
+
+    .nav a:hover {
+        text-decoration: underline;
+        color: #000000;
+    }
+
+    .target_panel {
+        height: 440px;
+        position: relative;
+    }
+
+    .news_panel {
+        position: absolute;
+    }
+
+    /*script*************************************************************/
+
+</style>
+<body>
+<div class="wrapper">
+    <div class="nav">
+        <span>
+            <a href="javascript:;"><h3>뉴스</h3></a>
+        </span>
+        <span>
+            <a href="javascript:;"><h3>연예</h3></a>
+        </span>
+        <span>
+            <a href="javascript:;"><h3>스포츠</h3></a>
+        </span>
+        <span>
+            <a href="javascript:;"><h3>자동차</h3></a>
+        </span>
+        <span>
+            <a href="javascript:;"><h3>라이프</h3></a>
+        </span>
+        <span>
+            <a href="javascript:;"><h3>TV</h3></a>
+        </span>
+    </div>
+    <!--targetArea ---------------------------------------------------------------------------------------------------------------->
+
+    <div class="target_panel">
+
+        <div class="news_panel">
+
+            <div class="news">
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            " 여기는 뉴스 <br> 삼아달라"
+                        </span>
+                            </a>
+                        </li>
+
+                        <li class="news_text"><a href="javascript:;">김상만, 보안손님으로 靑 출입의혹.."자문의 임명전 진료"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">국조특위, 朴 대통령 증인 요청.."靑 현장조사도 양보할 수 없...</a></li>
+                        <li class="news_text"><a href="javascript:;">이정현 "21일 사임..'친박 10적'말고 나만 주적 삼아달라"</a></li>
+                    </ul>
+                </div>
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                        </span>
+                            </a>
+                        </li>
+                        <li class="news_text"><a href="javascript:;">IBM, 트럼프 IT 간담회 앞서 美서 2만5천명 고용계획 공개 </a></li>
+                        <li class="news_text"><a href="javascript:;">특검 "수사기간 연장승인은 대통령 권한대행이 해야"</a></li>
+                        <li class="news_text"><a href="javascript:;">黃 대행 대정부질의 불참? 민주 "대통령 행세하지 말라"</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="images">
+                <ul>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "저 이정현 주적으로 <br> 삼아달라"
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "7시간 박근혜.. <br> 뭐 했나?"
+                    </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="news_panel">
+            <div class="news">
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            "여기는 연예 <br> 삼아달라"
+                        </span>
+                            </a>
+                        </li>
+
+                        <li class="news_text"><a href="javascript:;">김상만, 보안손님으로 靑 출입의혹.."자문의 임명전 진료"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">국조특위, 朴 대통령 증인 요청.."靑 현장조사도 양보할 수 없...</a></li>
+                        <li class="news_text"><a href="javascript:;">이정현 "21일 사임..'친박 10적'말고 나만 주적 삼아달라"</a></li>
+                    </ul>
+                </div>
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                        </span>
+                            </a>
+                        </li>
+                        <li class="news_text"><a href="javascript:;">IBM, 트럼프 IT 간담회 앞서 美서 2만5천명 고용계획 공개 </a></li>
+                        <li class="news_text"><a href="javascript:;">특검 "수사기간 연장승인은 대통령 권한대행이 해야"</a></li>
+                        <li class="news_text"><a href="javascript:;">黃 대행 대정부질의 불참? 민주 "대통령 행세하지 말라"</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="images">
+                <ul>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "저 이정현 주적으로 <br> 삼아달라"
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "7시간 박근혜.. <br> 뭐 했나?"
+                    </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="news_panel">
+            <div class="news">
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            "여기는 스포츠 <br> 삼아달라"
+                        </span>
+                            </a>
+                        </li>
+
+                        <li class="news_text"><a href="javascript:;">김상만, 보안손님으로 靑 출입의혹.."자문의 임명전 진료"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">국조특위, 朴 대통령 증인 요청.."靑 현장조사도 양보할 수 없...</a></li>
+                        <li class="news_text"><a href="javascript:;">이정현 "21일 사임..'친박 10적'말고 나만 주적 삼아달라"</a></li>
+                    </ul>
+                </div>
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                        </span>
+                            </a>
+                        </li>
+                        <li class="news_text"><a href="javascript:;">IBM, 트럼프 IT 간담회 앞서 美서 2만5천명 고용계획 공개 </a></li>
+                        <li class="news_text"><a href="javascript:;">특검 "수사기간 연장승인은 대통령 권한대행이 해야"</a></li>
+                        <li class="news_text"><a href="javascript:;">黃 대행 대정부질의 불참? 민주 "대통령 행세하지 말라"</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="images">
+                <ul>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        여기는 자동차  <br> 선서하는 증인들
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "저 이정현 주적으로 <br> 삼아달라"
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "7시간 박근혜.. <br> 뭐 했나?"
+                    </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="news_panel">
+            <div class="news">
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            여기는 자동차 <br> 삼아달라"
+                        </span>
+                            </a>
+                        </li>
+
+                        <li class="news_text"><a href="javascript:;">김상만, 보안손님으로 靑 출입의혹.."자문의 임명전 진료"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">국조특위, 朴 대통령 증인 요청.."靑 현장조사도 양보할 수 없...</a></li>
+                        <li class="news_text"><a href="javascript:;">이정현 "21일 사임..'친박 10적'말고 나만 주적 삼아달라"</a></li>
+                    </ul>
+                </div>
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                        </span>
+                            </a>
+                        </li>
+                        <li class="news_text"><a href="javascript:;">IBM, 트럼프 IT 간담회 앞서 美서 2만5천명 고용계획 공개 </a></li>
+                        <li class="news_text"><a href="javascript:;">특검 "수사기간 연장승인은 대통령 권한대행이 해야"</a></li>
+                        <li class="news_text"><a href="javascript:;">黃 대행 대정부질의 불참? 민주 "대통령 행세하지 말라"</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="images">
+                <ul>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "저 이정현 주적으로 <br> 삼아달라"
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "7시간 박근혜.. <br> 뭐 했나?"
+                    </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="news_panel">
+            <div class="news">
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            여기는 라이프 <br> 삼아달라"
+                        </span>
+                            </a>
+                        </li>
+
+                        <li class="news_text"><a href="javascript:;">김상만, 보안손님으로 靑 출입의혹.."자문의 임명전 진료"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">국조특위, 朴 대통령 증인 요청.."靑 현장조사도 양보할 수 없...</a></li>
+                        <li class="news_text"><a href="javascript:;">이정현 "21일 사임..'친박 10적'말고 나만 주적 삼아달라"</a></li>
+                    </ul>
+                </div>
+                <div class="news_list">
+                    <ul>
+                        <li class="news_img">
+                            <a>
+                        <span>
+                            <img/>
+                        </span>
+                        <span class="img_txt">
+                            최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                        </span>
+                            </a>
+                        </li>
+                        <li class="news_text"><a href="javascript:;">IBM, 트럼프 IT 간담회 앞서 美서 2만5천명 고용계획 공개 </a></li>
+                        <li class="news_text"><a href="javascript:;">특검 "수사기간 연장승인은 대통령 권한대행이 해야"</a></li>
+                        <li class="news_text"><a href="javascript:;">黃 대행 대정부질의 불참? 민주 "대통령 행세하지 말라"</a></li>
+                        <li class="news_text"><a href="javascript:;">정병국 "친박 정치생명 연장 위해 수단 가리지 않아"</a></li>
+                        <li class="news_text"><a href="javascript:;">IS "이집트 콥트교회 테러 우리가 했다" 배후 자처</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="images">
+                <ul>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        최순실 국조특위 3차 청문회,  <br> 선서하는 증인들
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "저 이정현 주적으로 <br> 삼아달라"
+                    </span>
+                        </a>
+                    </li>
+                    <li class="images_img">
+                        <a>
+                    <span>
+                        <img/>
+                    </span>
+                    <span class="img_txt">
+                        "7시간 박근혜.. <br> 뭐 했나?"
+                    </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!--data list ---------------------------------------------------------------------------------------------------------------->
+
+    <div class="pages">
+        <div class="pages_page">
+            <span id="changedPage"></span>
+            <span>/</span>
+            <span>5</span>
+            <button class="pages_btn" id="preBtn"><</button>
+            <button class="pages_btn" id="nextBtn">></button>
+            <a id="changedHome"></a>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    (function () {
+        var $ = function (query) {
+            return document.querySelectorAll(query);
+        };
+
+        function toArray(arr) {
+            return Array.prototype.slice.call(arr);
+        }
+        // 요소에 접근하는 방법 1. '.'을 이요하여 접근, 2. elem['kkkk'] 로 접근;
+        // 오브잭트를 루프할 수 있는 현재까지는 유일한 방법
+        function setStyle(elem, obj) {
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    elem.style[key] = obj[key];
+                }
+            }
+        }
+//선언부
+        var currentPage = 1;
+        var news_panel = toArray($('.news_panel'));
+        var nav_span_a = toArray($('.nav span a'));
+        var navTitleList = ['뉴스', '연예', '스포츠', '자동차', '라이프'];
+        var homeList = ['#뉴스', '#연예', '#스포츠', '#자동차', '#라이프'];
+        var nextBtn = $('#nextBtn')[0];
+        var preBtn = $('#preBtn')[0];
+        var changedPage = $('#changedPage')[0];
+        var changedHome = $('#changedHome')[0];
+//함수부
+        function resetNewsStyle() {
+            news_panel.forEach(function (elem) {
+                setStyle(elem, {"display": "none"});
+            });
+        }
+
+        function resetNavPanelStyle() {
+            nav_span_a.forEach(function (elem) {
+                setStyle(elem, {"color": "gray", "textDecoration": "none"});
+            });
+        }
+
+        function setNavPanelStyle(currentPage) {
+            var cp = currentPage - 1;
+            var elem = nav_span_a[cp];
+            setStyle(elem, {"color": "black", "textDecoration": "underline"});
+        }
+
+        function setNewsPanelStyle(currentPage) {
+            var cp = currentPage - 1;
+            var elem = news_panel[cp];
+            setStyle(elem, {"display": "block"});
+        }
+
+        function setPageNumber(currentPage) {
+            changedPage.innerText = "" + currentPage + "";
+        }
+
+        function setHomeLink(currentPage) {
+            var cp = currentPage - 1;
+            changedHome.innerText = "" + navTitleList[cp] + " 홈 > ";
+            changedHome.href = homeList[cp];
+        }
+
+//실행부
+        resetNewsStyle();
+        resetNavPanelStyle();
+        setNavPanelStyle(currentPage);
+        setNewsPanelStyle(currentPage);
+        setPageNumber(currentPage);
+        setHomeLink(currentPage);
+//감지부
+        nextBtn.addEventListener("click", function () {
+            if (currentPage > 0 && currentPage < 5) {
+                currentPage = currentPage + 1;
+            } else if (currentPage == 5) {
+                currentPage = 1;
+            }
+            resetNewsStyle();
+            resetNavPanelStyle();
+            setNavPanelStyle(currentPage);
+            setNewsPanelStyle(currentPage);
+            setPageNumber(currentPage);
+            setHomeLink(currentPage);
+        });
+
+        preBtn.addEventListener("click", function () {
+            if (currentPage > 1 && currentPage <= 5) {
+                currentPage = currentPage - 1;
+            } else if (currentPage == 1) {
+                currentPage = 5;
+            }
+            resetNewsStyle();
+            resetNavPanelStyle();
+            setNavPanelStyle(currentPage);
+            setNewsPanelStyle(currentPage);
+            setPageNumber(currentPage);
+            setHomeLink(currentPage);
+        });
+    }());
+
+
+    // 1. 기능별로 쪼개기 0
+    // 2. naming (동사 : function() / 명사 : 변수) 0
+    // 3. markup template 시키기
+    // 4. Jquery 사용가능
+    // 5. 가상 DB 만들어서 해보기
+
+
+</script>
+</body>
+</html>

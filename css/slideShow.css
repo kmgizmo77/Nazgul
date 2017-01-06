@@ -1,0 +1,189 @@
+/*CSS RESET*******************************************/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    line-height: 1;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+nav ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #000000;
+    margin: 1em 0;
+    padding: 0;
+}
+
+input, select {
+    vertical-align: middle;
+}
+
+/*슬라이드 구조*/
+
+.slider {
+    border: 5px solid white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    height: 320px;
+    width: 680px;
+    margin: 40px auto 0;
+    overflow: visible;
+    position: relative;
+    background-color: black;
+}
+
+.mask {
+    overflow: hidden;
+    height: 320px; /*mask 는 슬라이드 구조를 숨겨줄수 있음 크기는 같아야 함*/
+    width: 680px;
+}
+
+.slide_ul {
+    position: relative;
+}
+
+li {
+    height: 320px;
+    width: 680px;
+    position: absolute;
+    left: -685px;
+    list-style: none;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.slide_li_timo {
+animation: cycle1 20s linear infinite;
+}
+.slide_li_mifo{
+animation: cycle2 20s linear infinite;
+}
+.slide_li_notil{
+animation: cycle3 20s linear infinite;
+}
+.slide_li_ari{
+animation: cycle4 20s linear infinite;
+}
+
+@keyframes cycle1 {
+    0%  { left: 0px; }
+    4%  { left: 0px; }
+    16% { left: 0px; }
+    20% { left: 685px; } /* From 16% to 20% = for 1 second exit image */
+    21% { left: -685px;  } /* Return to Original Position */
+    92% { left: -685px;  }
+    96% { left: -685px;  } /* From 96% to 100% = for 1 second enter image*/
+    100%{ left: 0px; }
+}
+
+@keyframes cycle2 {
+    0%  { left: -680px; opacity: 0; } /* Original Position */
+    16% { left: -680px; opacity: 0; }/* Starts moving after 16% to this position */
+    20% { left: 0px; opacity: 1; }
+    24% { left: 0px; opacity: 1; }  /* From 20% to 24% = for 1 second enter image*/
+    36% { left: 0px; opacity: 1; z-index: 0; }   /* From 24% to 36 % = for 3 seconds the image is visible */
+    40% { left: 680px; opacity: 0; z-index: 0; } /* From 36% to 40% = for 1 second exit image */
+    41% { left: -680px; opacity: 0; z-index: -1; }   /* Return to Original Position */
+    100%{ left: -680px; opacity: 0; z-index: -1; }
+}
+
+@keyframes cycle3 {
+    0%  { left: -680px; opacity: 0; }
+    36% { left: -680px; opacity: 0; }
+    40% { left: 0px; opacity: 1; }
+    44% { left: 0px; opacity: 1; }
+    56% { left: 0px; opacity: 1; }
+    60% { left: 680px; opacity: 0; z-index: 0; }
+    61% { left: -680px; opacity: 0; z-index: -1; }
+    100%{ left: -680px; opacity: 0; z-index: -1; }
+}
+
+@keyframes cycle4 {
+    0%  { left: -680px; opacity: 0; }
+    56% { left: -680px; opacity: 0; }
+    60% { left: 0px; opacity: 1; }
+    64% { left: 0px; opacity: 1; }
+    76% { left: 0px; opacity: 1; z-index: 0; }
+    80% { left: 680px; opacity: 0; z-index: 0; }
+    81% { left: -680px; opacity: 0; z-index: -1; }
+    100%{ left: -680px; opacity: 0; z-index: -1; }
+}
+

@@ -1,0 +1,21 @@
+
+.resBtn {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.gameInfo {
+    width: 100%;
+    text-align: center;
+    display: none;
+}
+#p1Img,#p2Img{
+    width: 100%;
+    height: 300px;
+}
+
+
+#p1Btn,#p2Btn,#kakaoLinkBtn{
+    display: none;
+}
