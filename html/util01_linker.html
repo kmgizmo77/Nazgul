@@ -122,7 +122,8 @@
         width: 200px;
         height: 40px;
     }
-    button{
+
+    button {
         width: 100%;
         height: 100%;
     }
@@ -157,7 +158,7 @@
         var q = document.getElementById("q").value;
         var c = document.getElementById("c").value;
         var helmURL = "http://helm.devel.kakao.com/helm/" + brachName + "/smeagol?q=" + q + "&ca=" + c + "&mdebug=1&reload=1";
-        var serviceURL = "https://s.kakao.com/search?q=" + q;
+        var serviceURL = "https://s.kakao.com/search?q=" + q + "&tdebug=1";
         window.open(helmURL, '_blank');
         window.open(serviceURL, '_blank');
         console.log(q);
