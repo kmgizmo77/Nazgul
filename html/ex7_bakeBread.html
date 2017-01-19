@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    (function () {
+
+        function bakery(time, piece) {
+            //기본 밀가루 원료
+            var flour = {flour: "밀가루"};
+            //밀가루 생산
+            var ingredients = clone(flour);
+            //밀가루 공장  - 오브젝트 복제를 위한 함수 ( 한줄로 가능하다고 ...?!ㅜㅜ)
+            function clone(obj) {
+                if (null == obj || "object" != typeof obj) {
+                    return obj;
+                }
+                var copy = obj.constructor();
+                //오브젝트를 룹 하는 방법
+                for (var attr in obj) {
+                    if (obj.hasOwnProperty(attr)) {
+                        copy[attr] = obj[attr];
+                    }
+                }
+                return copy;
+            }
+
+            //반죽
+            function knead(ingredients) {
+                var dough = {};
+                dough.recipe = ingredients;
+                dough.name = "반죽";
+                dough.type = "덩어리";
+                return dough;
+            }
+
+            //굽기
+            function bake(dough, time) {
+                var bread = {};
+                console.log(time + " 분 동안 빵을 굽습니다!");
+                bread.recipe = dough;
+                bread.name = "구운빵";
+                bread.type = "빵";
+                bread.time = 15;
+                return bread;
+            }
+
+            //자르기
+            function slice(bread, piece) {
+                var pieces = [];
+
+                console.log("빵을 " + piece + " 조각으로 자릅니다.");
+                for (var i = 0; i < piece; i++) {
+                    var slicedBread = {};
+                    slicedBread.recipe = bread;
+                    slicedBread.name = "잘린빵";
+                    slicedBread.type = (i + 1) + " 번 째 빵조각";
+                    pieces.push(slicedBread);
+                }
+                return pieces;
+            }
+
+            //제빵사 등장
+            var baker = {};
+            //제빵사의 일
+            baker.knead = knead(ingredients);
+            baker.bake = bake(baker.knead, time);
+            baker.slice = slice(baker.bake, piece);
+            //결과
+            console.log(baker.slice);
+            console.log(flour);
+        }
+
+        //빵구울 시간, 빵 조각
+        bakery(15, 4);
+
+    })();
+</script>
+<script>
+
+    function clone(obj) {
+        if (obj === null || typeof(obj) !== 'object')
+            return obj;
+        var copy = obj.constructor();
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) {
+                copy[attr] = clone(obj[attr]);
+            }
+        }
+        return copy;
+    }
+
+    var flour =
+        {
+            material: '밀가루',
+            inputFood: '',
+            result: ''
+        };
+
+    var makeBaker = clone(flour);
+
+    var Baker = function (flour) {
+        this.makeflour = flour;
+
+    };
+
+    Baker.prototype.init = function () {
+        return
+    };
+
+
+    Baker.prototype.dough = function (water) {
+        this.makeflour.result = '반죽';
+        console.log('현재상태 : ', this.makeflour.result);
+        return this;
+    };
+
+    Baker.prototype.bake = function (minute) {
+        this.makeflour.result = minute + '만큼구워짐';
+        console.log('현재상태 : ', this.makeflour.result);
+        return this;
+    };
+
+    Baker.prototype.sliceBread = function (sliceNumber) {
+        this.makeflour.result = sliceNumber + '분 만큼 잘림';
+        console.log('현재상태 : ', this.makeflour.result);
+        return this;
+    };
+    Baker.prototype.inputMaterial = function (food) {
+        this.makeflour.inputFood += food;
+        return this;
+    };
+    Baker.prototype.resultSandwich = function () {
+        this.makeflour.result = this.makeflour.inputFood + '가 들어간 샌드위치';
+        console.log('현재상태 :', this.makeflour.result);
+        return this;
+    };
+
+    var person = new Baker(makeBaker);
+
+
+    person.dough('물').bake(3).sliceBread(4).inputMaterial('햄').resultSandwich();
+
+    console.log(person.dough('물').bake(3).sliceBread(4).inputMaterial('햄').resultSandwich());
+    console.log(flour);
+    //console.log(persion.bake(3));
+
+
+</script>
+</body>
+</html>
