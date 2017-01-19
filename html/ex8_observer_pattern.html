@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #target {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+    }
+
+    #btn {
+        width: 200px;
+        height: 50px;
+    }
+</style>
+<body>
+<div id="target"></div>
+<button id="btn">changeData</button>
+<script>
+    //실패작 ... 개 빡침
+    var btn = document.getElementById("btn");
+    var target = document.getElementById("target");
+
+    //repository
+    var Store = function () {
+        this.colorList = [];
+    };
+
+    var Observer = function () {
+        this.update = function () {
+
+        };
+    };
+
+    //extend
+    var extend = function(obj, extension){
+        console.log("extend");
+        for(var key in extension){
+            obj[key] = extension[key];
+        }
+    };
+
+    btn.addEventListener("click", function () {
+
+    });
+    //execute
+    var blueObj = {color:"blue"};
+    extend(btn, new Store());
+    extend(target, new Observer());
+
+</script>
+<!--<script>
+    //extend
+    var extend = function(obj, extension){
+        console.log("extend");
+        for(var key in extension){
+            obj[key] = extension[key];
+        }
+    };
+
+    //Observer (편지를 받을 사람들)
+    function Observer() {
+        console.log("Observer");
+        this.update = function(){
+
+        };
+    }
+
+    //ObserverList(주택단지)
+    function ObserverList(){
+        console.log("ObserverList");
+        this.observerList = []; //target 이 저장되는 곳
+    }
+    ObserverList.prototype.add = function (observer) {
+        console.log("ObserverList.add");
+        this.observerList.push(observer);
+    };
+    ObserverList.prototype.count = function () {
+        console.log("ObserverList.count");
+        return this.observerList.length;
+    };
+    ObserverList.prototype.getObserver = function (index) {
+        console.log("ObserverList.getObserver");
+        return this.observerList[index];
+    };
+
+//    ObserverList.prototype.remove = function (observer) {
+//        console.log("ObserverList.remove");
+//        this.observerList.splice(this.indexOf(observer),1);
+//
+//    };
+
+//    ObserverList.prototype.indexOf = function (observer) {
+//        console.log("ObserverList.indexOf");
+//        for(var i = 0; i<this.observerList.length; i++){
+//            if(this.observerList[i] === observer){
+//                return i;
+//            }
+//        }
+//    };
+
+
+    //Subject(우채국)
+    function Subject(){
+        console.log("Subject");
+        this.observers = new ObserverList();
+    }
+    Subject.prototype.addObserver = function (obj) {
+        console.log("Subject.addObserver");
+        this.observers.add(obj); // target 을 옵져버리스트에 추가
+    };
+    Subject.prototype.notify = function (color) {
+        console.log("Subject.color");
+        for(var i = 0; i<this.observers.count(); i++){
+            this.observers.getObserver(i).update(color);
+        }
+    };
+
+    //    Subject.prototype.removeObserver = function (obj) {
+    //        console.log("Subject.removeObserver");
+    //        this.observers.remove(obj);
+    //    };
+
+    window.onload = function () {
+      var btn = document.getElementById("btn");
+      var target = document.getElementById("target");
+
+      extend(btn, new Subject());
+        console.log(Subject);
+      extend(target, new Observer());
+        console.log(Observer);
+      btn.addObserver(target);
+
+      btn.addEventListener("click",function () {
+          this.notify("blue");
+      },false);
+
+      target.update = function (color) {
+          this.style.backgroundColor = color;
+      }
+
+
+
+    };
+
+
+</script>-->
+</body>
+</html>
