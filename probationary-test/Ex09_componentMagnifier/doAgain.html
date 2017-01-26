@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+    .target{
+        transform-origin: 0 0;
+        background-color: white;
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+    }
+    #img{
+        transform-origin: 0 0;
+        width: 1000px;
+        height: 800px;
+    }
+    #view{
+        transform-origin: 0 0;
+        position: absolute;
+        background-color:  coral;
+        overflow: hidden;
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+    }
+    #viewImg{
+        position: absolute;
+        transform-origin: 0 0;
+    }
+</style>
+<body>
+<div id="wrap">
+    <div id="target">
+        <img id="img" src="http://postfiles8.naver.net/20150612_151/qq1221qq_1434116698687LYwGq_JPEG/23%3Bdljfghkdfgo4one-piece-avengers.jpg?type=w2" >
+    </div>
+    <div id="view">
+        <img src="" id="viewImg">
+    </div>
+</div>
+<script>
+    // 엘리멘트들 부르고
+    var wrap = document.getElementById('wrap');
+    var target = document.getElementById('target');
+    var view = document.getElementById('view');
+    var viewImg = document.getElementById('viewImg');
+//생성자로 생성 속성을 기입
+    var Obj = function(x, y ,Img){
+        this.x = x;
+        this.y = y;
+        this.Img = Img;
+        this.setX = function(x){
+            this.x = x;
+        };
+        this.setY = function(y){
+            this.y = y;
+        };
+        this.init = function(){
+            this.Img.src ="http://postfiles8.naver.net/20150612_151/qq1221qq_1434116698687LYwGq_JPEG/23%3Bdljfghkdfgo4one-piece-avengers.jpg?type=w2";
+            this.Img.style.width = 2000+'px';
+            this.Img.style.height = 1600+'px';
+            this.Img.style.left = this.x+'px';
+            this.Img.style.top =  this.y+'px';
+        };
+        this.change = function(){
+            view.style.left = this.x -100+'px';
+            view.style.top = this.y-100+'px';
+            this.Img.style.left = -(this.x*2 - 100)+'px'; // 배율과 기준점을 설정
+            this.Img.style.top =  -(this.y*2 - 100)+'px';
+        };
+        this.hide  = function(){
+            view.style.visibility ='hidden';
+        };
+        this.show = function(){
+            view.style.visibility ='visible';
+        }
+    };
+
+
+    var o = new Obj(0,0,viewImg);
+    o.init();
+    o.hide();
+
+    wrap.addEventListener('mousemove' , function(e){
+        console.log('x' , e.pageX , 'y' , e.pageY);
+        if(e.pageX+100  >= 1000 || e.pageY+100 >= 800){
+            console.log('크다');
+            o.hide();
+        }else{
+            console.log('작다');
+            o.show();
+            o.setX(e.pageX);
+            o.setY(e.pageY);
+            o.change();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+
+    // 랜덤으로 실행
+    var makeConnectionTime = function(){
+        return Math.round(Math.random() * 1500);
+    };
+
+    var connectDB = function(dburl ,callback){
+        var data = JSON.stringify({result: ["사람", "동물", "사물"]});
+        setTimeout(function(){
+            console.log('connectDB : ' , data);
+            callback(data);
+        }, makeConnectionTime());
+    };
+
+    var parseData = function(data , callback){
+        var err = !!Math.round(Math.random()) ?  new Error('Failed to parse json to object') : data;
+        console.log('err: ' ,err);
+        setTimeout(function(){
+            console.log('parseDate :' , data);
+            callback(err, JSON.parse(data));
+        }, makeConnectionTime());
+    };
+
+    //에러캐치에 따른 분기
+    var display = function(err , data){
+        console.log('display :' , data);
+    };
+
+
+    //실행구문은 직접 만드세요 그게 답입니다.
+    connectDB("URL",function (data) {
+        parseData(data,function (err) {
+            display(err,data);
+        });
+    });
+
+
+
+</script>
+</html>

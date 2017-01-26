@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #wrap {
+        margin: auto;
+        background-color: white;
+        width: 700px;
+        height: 400px;
+        border: solid;
+        position: relative;
+    }
+
+    #buttons {
+        margin: auto;
+        width: 700px;
+        font-size: large;
+        text-align: center;
+    }
+
+    .btn {
+        background-color: antiquewhite;
+        width: 20%;
+        height: 20%;
+    }
+</style>
+
+<body>
+<div>
+    <div id="wrap"></div>
+    <div id="buttons">
+        <button class="btn" id="btnMove">MOVE</button>
+        <button class="btn" id="btnPause">PAUSE/CONTINUE</button>
+        <button class="btn" id="btnDivide">DIVIDE</button>
+        <button class="btn" id="btnClear">CLEAR</button>
+    </div>
+</div>
+<script>
+    //로드
+    window.addEventListener('load', function () {
+        var boxList = [];
+        var actionFlag = false;
+        var movement;
+        var wrap = document.getElementById("wrap");
+        var btnMove = document.getElementById("btnMove");
+        var btnPause = document.getElementById("btnPause");
+        var btnDivide = document.getElementById("btnDivide");
+        var btnClear = document.getElementById("btnClear");
+        // 생성자 박스 엘리멘트를 생성---------------------------------------------------------------------------------
+
+        function Box(x, y, size, verticalFlag, horizontalFlag) {
+            this.x = x;
+            this.y = y;
+            this.verticalFlag = verticalFlag;
+            this.horizontalFlag = horizontalFlag;
+            this.size = size;
+            this.elem = document.createElement("div");
+        }
+
+        // 프로토타입 : 생성자의 초기값이 없을 때 프로토타입을 참조 하여 엘리맨트의 속성의 초기 스타일을 지정한다.---------------------------
+        Box.prototype.setBoxStyle = function () {
+            var boxElem = this.elem;
+            boxElem.setAttribute("class", "box");
+            boxElem.style.position = 'absolute';
+            boxElem.style.backgroundColor = 'red';
+            boxElem.style.left = this.x + 'px';
+            boxElem.style.top = this.y + 'px';
+            boxElem.style.width = this.size + 'px';
+            boxElem.style.height = this.size + 'px';
+            wrap.appendChild(boxElem);
+        };
+
+        //박스생성 ------------------------------------------------------------------------------------------------
+        function createBox(x, y, size, verticalFlag, horizontalFlag) {
+            var box = new Box(x, y, size, verticalFlag, horizontalFlag);
+            boxList.push(box);
+
+            for (var i = 0; i < boxList.length; i++) {
+                boxList[i].setBoxStyle();
+            }
+        }
+
+        // 움직임 요청
+        function requestMove() {
+            movement = setInterval(function () {
+                frame(boxList);
+            }, 10);
+            actionFlag = true;
+        }
+
+        // 움직이는 프레임
+        function frame(boxList) {
+            for (var i = 0; i < boxList.length; i++) {
+                var box = boxList[i];
+                var verticalFlag = box.verticalFlag;
+                var horizontalFlag = box.horizontalFlag;
+                var x = box.x;
+                var y = box.y;
+                // --- vertical config ----------------------------------------------------
+                if (verticalFlag == true) {
+                    x--;
+                    if (x <= 0) {
+                        box.verticalFlag = false;
+                        //console.log("verticalFlag : [" + verticalFlag + "] || x : [" + x + "]");
+                    }
+                } else {
+                    x++;
+                    if (x + box.size >= 700) {
+                        box.verticalFlag = true;
+                        //console.log("verticalFlag : [" + verticalFlag + "] || x : [" + x + "]");
+                    }
+                }
+
+                // --- horizontal config ----------------------------------------------------
+                if (horizontalFlag == true) {
+                    y--;
+                    if (y <= 0) {
+                        box.horizontalFlag = false;
+                        //console.log("horizontalFlag : [" + horizontalFlag + "] || y : [" + y + "]");
+                    }
+                } else {
+                    y++;
+                    if (y + box.size >= 400) {
+                        box.horizontalFlag = true;
+                        //console.log("horizontalFlag : [" + horizontalFlag + "] || y : [" + y + "]");
+                    }
+                }
+                //  ------- view result ----------------------------------------------------
+                box.elem.style.left = x + 'px';
+                box.elem.style.top = y + 'px';
+                box.x = x;
+                box.y = y;
+            }
+        }
+
+        // 나누기 요청
+        function requestDivide() {
+            var listVal = boxList.length;
+            var sizeVal = boxList[0].size / 2;
+            var xVal;
+            var yVal;
+            for (var i = 0; i < listVal; i++) {
+                xVal = boxList[i].x;
+                yVal = boxList[i].y;
+                boxList[i].size = sizeVal;
+                boxList[i].setBoxStyle();
+                createBox(sizeVal + xVal, yVal, sizeVal, true, false);
+                createBox(xVal, sizeVal + yVal, sizeVal, false, true);
+                createBox(sizeVal + xVal, sizeVal + yVal, sizeVal, true, true);
+            }
+        }
+
+        // 클리어 요청
+        function requestClear() {
+            boxList = [];
+            wrap.innerHTML = "";
+            actionFlag = false;
+            createBox(0, 0, 50, false, false);
+        }
+
+        // 실행부 ------------------------------------------------------------------------------------
+        createBox(0, 0, 50, false, false);
+        btnMove.addEventListener("click", function () {
+            console.log("btnTest : btnMove");
+            if (actionFlag == false) {
+                requestMove();
+            }
+        });
+
+        btnPause.addEventListener("click", function () {
+            console.log("btnTest : btnPause");
+            if (actionFlag == true) {
+                clearInterval(movement);
+                actionFlag = false;
+            } else {
+                requestMove();
+            }
+        });
+
+        btnDivide.addEventListener("click", function () {
+            console.log("btnTest : btnDivide");
+            if (actionFlag == true) {
+                requestDivide();
+            }
+        });
+
+        btnClear.addEventListener("click", function () {
+            console.log("btnTest : btnClear");
+            clearInterval(movement);
+            requestClear();
+        });
+    });
+</script>
+</body>
+</html>
