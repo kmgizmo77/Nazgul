@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        .main{
+            transform-origin: 0 0;
+            background-color: white;
+            width: 400px;
+            height: 400px;
+            overflow: hidden;
+        }
+        #ryan{
+            transform-origin: 0 0;
+            width: 400px;
+            height: 400px;
+        }
+        #view{
+            transform-origin: 0 0;
+            position: absolute;
+            background-color:  coral;
+            overflow: hidden;
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+        }
+        #viewRyan{
+            position: absolute;
+            transform-origin: 0 0;
+        }
+    </style>
+</head>
+<body>
+<div class="main" id="main">
+    <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSgmE64Sty5EachoUO4ZuhCLp5yTVxC99DhW9hu2XyCc-3yoMuq3w" id="ryan">
+    <div id="view">
+        <img src="" id="viewRyan">
+    </div>
+</div>
+
+</body>
+<script>
+    var main = document.getElementById('main');
+    var viewRyan = document.getElementById('viewRyan');
+    var view = document.getElementById('view');
+
+    var box = function(x, y ,Img){
+        this.x = x;
+        this.y = y;
+        this.Img = Img;
+        this.setX = function(x){
+            this.x = x;
+        };
+        this.setY = function(y){
+            this.y = y;
+        };
+        this.init = function(){
+            this.Img.src ="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSgmE64Sty5EachoUO4ZuhCLp5yTVxC99DhW9hu2XyCc-3yoMuq3w";
+            this.Img.style.width = 800+'px';
+            this.Img.style.height = 'auto';
+            this.Img.style.left = this.x+'px';
+            this.Img.style.top =  this.y+'px';
+        };
+        this.change = function(){
+            view.style.left = this.x -100+'px';
+            view.style.top = this.y-100+'px';
+            this.Img.style.left = -(this.x*2 - 100)+'px';
+            this.Img.style.top =  -(this.y*2 - 100)+'px';
+        };
+        this.hide  = function(){
+            view.style.visibility ='hidden';
+        };
+        this.show = function(){
+            view.style.visibility ='visible';
+        }
+    };
+
+
+    var b = new box(0,0,viewRyan);
+    b.init();
+    b.hide();
+
+    main.addEventListener('mousemove' , function(e){
+        console.log('x' , e.pageX , 'y' , e.pageY);
+        if(e.pageX+100  >= 400 || e.pageY+100 >= 400){
+            console.log('크다');
+            b.hide();
+        }else{
+            console.log('작다');
+            b.show();
+            b.setX(e.pageX);
+            b.setY(e.pageY);
+            b.change();
+        }
+    });
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>/*CSS RESET*******************************************/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    line-height: 1;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+nav ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #000000;
+    margin: 1em 0;
+    padding: 0;
+}
+
+input, select {
+    vertical-align: middle;
+}
+/*RESET END*/
+#cursor {
+        position: absolute;
+        width: 1200px;
+        height: 800px;
+    }
+
+    #wrap {
+        position: relative;
+        overflow: hidden;
+        width: 1200px;
+        height: 800px;
+    }
+
+    #cursorImg {
+        position: absolute;
+        width: 1200px;
+        height: 800px;
+        border: 2px solid darkgreen;
+    }
+
+    #magnifierImg {
+        position: absolute;
+        width: 2400px;
+        height: 1600px;
+    }
+
+    #magnifier {
+        position: absolute;
+        overflow: hidden;
+        height: 200px;
+        width: 200px;
+        border-radius: 100%;
+        border: 5px solid white;
+    }
+
+</style>
+<body>
+<div id="wrap">
+    <div id="cursor">
+        <img id="cursorImg"
+             src="http://postfiles8.naver.net/20150612_151/qq1221qq_1434116698687LYwGq_JPEG/23%3Bdljfghkdfgo4one-piece-avengers.jpg?type=w2"/>
+    </div>
+
+    <div id="magnifier">
+        <img id="magnifierImg"
+             src="http://postfiles8.naver.net/20150612_151/qq1221qq_1434116698687LYwGq_JPEG/23%3Bdljfghkdfgo4one-piece-avengers.jpg?type=w2"/>
+    </div>
+
+</div>
+<script>
+    (function () {
+
+        var cursor = document.getElementById("cursor");
+        var magnifier = document.getElementById("magnifier");
+        var magnifierImg = document.getElementById("magnifierImg");
+        var magnification = 2;//돋보기 배율
+        var size = 100;//돋보기 크기
+
+        function show(clientX, clientY) {
+            var x = clientX * magnification; //x -> minX / maxX
+            var y = clientY * magnification; //y -> minY / maxY
+            console.log("돋보기 좌표",x,y);
+            magnifier.style.left = (clientX-size) + "px";
+            magnifier.style.top = (clientY-size) + "px";
+            magnifierImg.style.left = -x+size + "px";
+            magnifierImg.style.top = -y+size + "px";
+        }
+
+        magnifier.addEventListener("mousemove", function () {
+            console.log("X, Y ", event.clientX,event.clientY);//Min:665Max:1365
+            // 여기까지 현재의 좌표값
+            var clientX = event.clientX;
+            var clientY = event.clientY;
+            show(clientX, clientY);
+        });
+    })();
+</script>
+</body>
+</html>

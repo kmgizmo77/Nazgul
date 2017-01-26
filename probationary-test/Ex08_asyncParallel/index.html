@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+
+
+    var makeConnectionTime = function () {
+        return Math.round(Math.random() * 1500);
+    };
+
+    function getUserApi(url, callback) {
+        setTimeout(function () {
+            var api = {username: '고석진'};
+            callback(JSON.stringify(api));
+        }, makeConnectionTime());
+    }
+
+
+    function getLocationInfo(url, callback) {
+        setTimeout(function () {
+            var api = {x: 111, y: 222, location: '판교'};
+            callback(JSON.stringify(api));
+        }, makeConnectionTime());
+    }
+
+
+    function getLolApi(url, callback) {
+        setTimeout(function () {
+            var api = {'id': 'troll119', 'rank': 'bronze'};
+            callback(JSON.stringify(api));
+        }, makeConnectionTime());
+    }
+    // 조대협 만세 : http://bcho.tistory.com/1083
+    var dataList = [];
+
+    function response() {
+        var res = "";
+        for (var i = 0; i < dataList.length; i++) {
+            res = res + dataList[i];
+        }
+        return res;
+    }
+
+    //내부에서 함수를 실행해야 하니까 실행시켜줄 함수가 필요
+    function parallel(data) {
+        dataList.push(data);
+        if(dataList.length === 3){
+            console.log(response());
+        }
+    }
+
+    getUserApi("url", function (data) {
+        parallel(data);
+    });
+    getLocationInfo("url", function (data) {
+        parallel(data);
+    });
+    getLolApi("url", function (data) {
+        parallel(data);
+    });
+
+    //요청들을 배열에 담에서 이닛 시키면 더욱 확장성이 좋아질거 같아염
+
+
+</script>
+</html>

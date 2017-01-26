@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>/*CSS RESET*******************************************/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    line-height: 1;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+nav ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #000000;
+    margin: 1em 0;
+    padding: 0;
+}
+
+input, select {
+    vertical-align: middle;
+}
+
+/*RESET END*/
+.wrap {
+    margin: auto;
+    position: relative;
+    width: 370px;
+    height: 100%;
+    border: 1px solid red;
+}
+
+.scrollBox {
+    border: 1px solid greenyellow;
+    width: 370px;
+    height: 800px;
+    overflow-y: scroll;
+
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+
+    width: 300px;
+    height: 200px;
+    border: 5px solid white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.card {
+    padding-top: 25px;
+    padding-left: 20px;
+    text-align: center;
+}
+</style>
+<body>
+<div class="wrap">
+    <div class="scrollBox" onscroll="scrolled(this)">
+        <ul id="scroller">
+
+        </ul>
+    </div>
+</div>
+
+<script>
+    //data tree를 만들고 scroller 에 appendChild 하면 댈거 같음
+    // 더이상 데이터가 없으면 데이터 요청
+    var dataNum = 0;
+    var dataList = [];
+    var scroller = document.getElementById("scroller");
+
+    function Format() {
+        this.dataNum = dataNum;
+        this.li = document.createElement("li");
+        this.div = document.createElement("div");
+        this.img = document.createElement("img");
+    }
+
+    Format.prototype.setCardStyle = function () {
+        var li = this.li;
+        li.setAttribute("id", "data_" + this.dataNum);
+        li.innerHTML = this.dataNum;
+        var div = this.div;
+        div.setAttribute("class", "card");
+        var img = this.img;
+        scroller.appendChild(li).appendChild(div).appendChild(img);
+    };
+
+    function setData() {
+        var format = new Format();
+        dataList.push(format);
+
+        for (var i = 0; i < dataList.length; i++) {
+            dataList[i].setCardStyle();
+        }
+    }
+
+    function getMoreData(ea) {
+        for (var i = 0; i < ea; i++) {
+            setData(dataNum);
+            dataNum++;
+        }
+    }
+
+    function scrolled(evt) {
+        console.log(evt);
+        // <div class="scrollBox" onscroll="scrolled(this)">
+        //이것을 사용하려면 스크롤이 생기는 엘리멘의 상위에 onscroll을 걸어야 한다.
+        console.log(evt.scrollTop);
+        //console.log(+ evt.offsetHeight+50);
+        //console.log(evt.scrollHeight);
+        //visible height + pixel scrolled = total height
+        //evt.offsetHeight + evt.scrollTop >= evt.scrollHeight -100
+        if (evt.offsetHeight + evt.scrollTop >= evt.scrollHeight -100) {
+            //스크롤이 끝날때마다 새롭게 요청
+            console.log("--------------추가 데이터 요청 -----------------");
+            getMoreData(6);
+            console.log("현재 카드 수 : ", dataList.length);
+        }
+    }
+
+    getMoreData(6);
+
+
+</script>
+</body>
+</html>

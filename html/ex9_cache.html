@@ -4,7 +4,113 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    #btn {
+        width: 200px;
+        height: 50px;
+    }
+</style>
 <body>
+<button id="btn">Click</button>
+<script>
+    // http://stackoverflow.com/questions/18980531/javascript-fibonacci-breakdown
+    // fibonacci & memorization cache
 
+    //    var fibonacci = (function () {
+    //        var cache = {}; // 캐시 저장소
+    //        return function (n) {
+    //            var cached = cache[n];
+    //            if (cached) {
+    //                console.log(cached);
+    //                return cached;
+    //            }
+    //
+    //            if (n <= 1) {
+    //                console.log("n <= 1 : " +n);
+    //                return n;
+    //            }
+    //            console.log("id가 가지고 있음 값 : "+n);
+    //
+    //            var result = (cache[n] = fibonacci(n - 2) + fibonacci(n - 1));
+    //            console.log("새로운 값이니까 id를 부여한거임 : "+result);
+    //            return result;
+    //        }
+    //    })();
+    //    console.log("-----1-----");
+    //    fibonacci(1);
+    //    console.log("-----1-----");
+    //    fibonacci(1);
+    //
+    //    console.log("-----2-----");
+    //    fibonacci(2);
+    //    console.log("-----2-----");
+    //    fibonacci(2);
+    //
+    //    console.log("-----3-----");
+    //    fibonacci(66);
+    //    console.log("-----3-----");
+    //    fibonacci(3);
+    (function () {
+
+        var btn = document.getElementById("btn");
+        var cache = [{k: "model4", v: 8}];
+
+        function model(arg) {
+            return arg + arg; //do heavy calculation
+        }
+
+        function cacheStorage(modelID) {
+
+            var result = parseInt(modelID.substring(5));
+            console.log(result);
+            // modelID & result
+
+            for(var i = 0; i < cache.length; i++) {
+                console.log("test : ",modelID,cache[i].k);
+                if (modelID === "d") {
+                    console.log("캐시 정보가 있습니다.");
+                    console.log("cache : " , cache);
+                    result = cache[i].v;
+                    break;
+                } else {
+                    console.log("캐시 정보가 없습니다.");
+                    var newCache = {
+                        k:modelID,
+                        v:model(result)
+                    };
+                    cache.push(newCache);
+                    console.log("cache : " , cache);
+                    result =  newCache.v;
+                }
+            }
+            return result;
+        }
+
+        function searchCache(model, input) {
+            var searchID = model + input;
+            console.log("searchID : " + searchID);
+            var result = cacheStorage(searchID);
+            return result;
+        }
+
+        function controller(input) {
+            //getResult
+            var result = searchCache("model", input);
+            console.log("cache result : ", result);
+            return result;
+        }
+
+        btn.addEventListener("click",function () {
+
+            var input = prompt("수를 입력하세요","0");
+
+            var run = controller(input);
+            console.log("---------------------");
+            console.log("결과 : " +run);
+        });
+    })();
+
+
+</script>
 </body>
 </html>

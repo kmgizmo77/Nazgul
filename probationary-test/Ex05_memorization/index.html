@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //인풋을 받아서 로직검사 수행 후 판별
+    function controller(heavyLogic) {
+        var div = document.createElement('div');
+        div.className = heavyLogic ? 'pass' : 'fail'; //로직을 검사
+        console.log(div);
+    }
+
+    //검사하는 모델 ( 케시의 역할)
+    var model = {
+        nextId: 1,// 아이디
+        cache: {},// 로직수행 결과(아이디가 ) 없으면 아이디 부여 후 결과값 저장
+        add: function (fn) {
+            if (!fn.id) {
+                fn.id = model.nextId++;
+                return !!(model.cache[fn.id] = fn);//!! boolean 값으로 반환
+            } else {
+                console.log(model.cache[fn.id]);// 해당 아이디의 캐시값을 가지고 온다
+            }
+        }
+    };
+
+
+    function logic1() {
+    }
+    function logic2() {
+    }
+    function logic3() {
+    }
+
+    controller(model.add(logic1));
+    controller(model.add(logic2));
+    controller(model.add(logic1));
+    controller(model.add(logic3));
+    controller(model.add(logic3));
+</script>
+</body>
+</html>

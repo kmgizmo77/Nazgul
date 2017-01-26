@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DK Techin 공통플랫폼 파트 신입 FT개발자 코딩 테스트 문제</title>
+	<link href="css/reset.css" rel="stylesheet"/>
+    <link href="css/main.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="dktest_wrap">
+        <header id="dktestHead" class="dktest_head">
+			<div class="wrap_tit"><h1 class="tit_main">CPDev</h1></div>
+            <div class="wrap_btn_nav">
+                <button class="btn_nav">
+					네비게이션
+                </button>
+            </div>
+			<div class="wrap_nav">
+				<h2 class="screen_out">메인 네비게이션 영역</h2>
+				<nav class="wrap_gnb">
+					<span class="logo_main">
+						<img src="images/logo_main.png" alt="디케이테크인" class="img_logo"/>
+					</span>
+					<span class="line_hr"></span>
+					<ul class="gnb">
+						<li><a href="javascript:;" class="link_gnb">Menu1</a></li>
+						<li><a href="javascript:;" class="link_gnb">Menu2</a></li>
+						<li><a href="javascript:;" class="link_gnb">Menu3</a></li>
+						<li><a href="javascript:;" class="link_gnb">Menu4</a></li>
+					</ul>
+				</nav>
+				<span class="dimmed_bg"></span>
+			</div>
+            <div class="wrap_btn_setting">
+				<button class="btn_setting">세팅</button>
+            </div>
+        </header>
+        <hr class="hide">
+        <main id="dktestMain" class="dktest_main">
+            <div id="cMain">
+                <article id="mArticle" class="article_main">
+                    <h2 id="dktestBody" class="screen_out">테스트 본문 영역</h2>
+                    <div class="wrap_visual">
+                        <h3 class="screen_out">슬라이딩 영역</h3>
+                        <div class="wrap_slide">
+                            <ul class="list_slide">
+                                <li>
+									<img src="images/slide_item0.png" alt=""/>
+                                </li>
+								<li>
+									<img src="images/slide_item1.png" alt=""/>
+								</li>
+								<li>
+									<img src="images/slide_item2.png" alt=""/>
+								</li>
+                            </ul>
+							<a href="javascript:;" class="btn_slide btn_prev">왼쪽으로 넘기기</a>
+							<a href="javascript:;" class="btn_slide btn_next">오른쪽으로 넘기기</a>
+							<div class="wrap_slide_nav">
+								<ul class="list_slide_nav">
+									<li class="on"></li><li></li><li></li>
+								</ul>
+							</div>
+                        </div>
+                    </div>
+                    <div class="wrap_friends">
+						<h3 class="screen_out">캐릭터 상품 영역</h3>
+						<div class="tit_friends">
+							<select id="charSelect" class="select_friends">
+								<option value="라이언">라이언</option>
+							</select>
+							<label for="charSelect" >캐릭터 상품</label>
+						</div>
+						<div class="total_items">
+							총 <em class="emph_number"><span class="total_number">n</span>개</em>의 상품이 조회되었습니다.
+						</div>
+						<div class="wrap_list">
+							<ul class="list_friends">
+								<li>
+									<a href="javascript:;" class="link_friends">
+										<span class="wrap_thumb">
+											<img src="images/store_ryan_2.jpg" class="thumb_items" alt=""/>
+											<span class="ico_soldout">Sold out</span>
+										</span>
+										<strong class="tit_item">상품명</strong>
+										<span class="price_item">가격</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+                    </div>
+                </article>
+            </div>
+        </main>
+        <hr class="hide">
+    </div>
+	<footer id="dktestFoot" class="dktest_foot">
+		<div class="inner_foot">
+		<h3 class="screen_out">꼬리말 영역</h3>
+		<p class="txt_copyright">Copyright &copy; dk techin All rights reserved.</p>
+		</div>
+	</footer>
+	<script src="js/answer.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="output">
+
+</div>
+</body>
+<script>
+
+    //    var flour =
+    //    {
+    //        material: '밀가루',
+    //    }
+    var flour = {
+        status: "밀가루",
+        ingredient: "가루"
+    };
+
+    function create(obj) {
+        var newObj = Object.assign({}, obj);
+        return newObj;
+    }
+
+    var newFlour = create(flour);
+
+    var Baker = function (newFlour) {
+        this.productInfo = newFlour;
+    };
+
+    Baker.prototype.knead = function (additives) {
+        this.productInfo = Object.assign({}, this.productInfo,
+            {
+                status: "반죽",
+                additives: additives
+            });
+        return this;
+    };
+
+    Baker.prototype.bake = function (duration) {
+        this.productInfo = Object.assign({}, this.productInfo,
+            {
+                status: "구운빵",
+                duration: duration
+            });
+        console.log(duration + " 분 동안 빵을 굽습니다.");
+        return this;
+    };
+
+    Baker.prototype.slice = function (pieces) {
+        var products = [];
+        for (var i = 0; i < pieces; i++) {
+            var product = Object.assign({}, this.productInfo,
+                {
+                    status: pieces + " 조각으로 잘린 빵",
+                    pieces: (i + 1) + " 번째로 잘린 빵"
+                });
+            products = products.concat(product);
+        }
+        this.productInfo = products;
+        return this;
+    };
+
+    Baker.prototype.bakeCookie = function (duration) {
+        this.productInfo = Object.assign({}, this.productInfo,
+            {
+                status: "쿠키",
+                duration: duration
+            });
+        console.log(duration + " 분 동안 쿠키를 굽습니다.");
+        return this;
+    };
+    var shawn = new Baker(newFlour);
+    var bred = new Baker(newFlour);
+
+    console.log("shawn : ", shawn.knead("물").bake(15).slice(4));
+    console.log("bred : ", bred.knead("물").bakeCookie(10));
+    console.log("org : ", flour);
+
+
+</script>
+</html>
