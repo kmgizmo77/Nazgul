@@ -6,5 +6,109 @@
 </head>
 <body>
 
+
+<script>
+
+    SF.pager = function (t) {
+        this.$list = t.list || null,
+            this.$navigation = t.navigation || null,
+        this.$list && this.$navigation && (
+            this.listCount = this.$list.length,
+            this.viewCount = t.viewCount || 4,
+            this.pageCount = Math.ceil(this.listCount / this.viewCount),
+            this.viewCountQuery = parseInt(this.viewCount, 10) - 1,
+            this.wideViewCount = t.wideViewCount || 0,
+            this.currentPage = 1,
+            this.toggleClass = t.toggleClass || "hide",
+            this.toggleSelector = "." + this.toggleClass,
+            this.isInfinite = t.isInfinite || !1,
+            this.$btnPrev = null,
+            this.$btnNext = null,
+            this.$labelCurrent = null,
+            this.$labelTotalPage = null,
+            this.init())
+    }
+        ,
+        SF.pager.prototype = {
+            getQuery: function (t) {
+                var e = "";
+                return "next" === t ? e = "." + this.toggleClass + ":gt(" + this.viewCountQuery + ")" : "prev" === t && (e = "." + this.toggleClass + ":lt(" + this.viewCountQuery + ")"),
+                    e
+            },
+            renderNavigation: function () {
+                this.$labelCurrent && this.$labelCurrent.get(0) && this.$labelCurrent.text(this.currentPage)
+            },
+            setPageInfo: function () {
+                this.pageCount = Math.ceil(this.listCount / this.viewCount),
+                    this.viewCountQuery = parseInt(this.viewCount, 10) - 1
+            },
+            setWide: function () {
+                if (this.wideViewCount > 0 && jq("body").hasClass("wide") && this.viewCount !== this.wideViewCount) {
+                    this.viewCount = this.wideViewCount,
+                        this.setPageInfo();
+                    var t = this.$list.not(this.toggleSelector)
+                        , e = this;
+                    t.length != this.viewCount && (this.$list.each(function (t, i) {
+                        t < e.viewCount ? jq(i).removeClass("hide") : jq(i).hasClass("hide") || jq(i).addClass("hide")
+                    }),
+                        this.$labelTotalPage.text(this.pageCount))
+                }
+            },
+            setNavigationStyle: function () {
+                this.isInfinite || (this.isLastPage() ? this.$btnNext.addClass("btn_off") : this.$btnNext.removeClass("btn_off"),
+                    this.isFirstPage() ? this.$btnPrev.addClass("btn_off") : this.$btnPrev.removeClass("btn_off"))
+            },
+            isLastPage: function () {
+                return this.currentPage === this.pageCount
+            },
+            isFirstPage: function () {
+                return 1 === this.currentPage
+            },
+            setNavigation: function (t) {
+                "next" === t ? this.isLastPage() ? this.isInfinite && (this.currentPage = 1) : this.currentPage++ : this.isFirstPage() ? this.isInfinite && (this.currentPage = this.pageCount) : this.currentPage--
+            },
+            togglePage: function () {
+                var t = this;
+                this.$list.not(this.toggleSelector).addClass(this.toggleClass),
+                    1 === this.viewCount ? this.$list.eq(this.currentPage - 1).removeClass(this.toggleClass) : this.$list.each(function (e, i) {
+                            var n = t.currentPage * t.viewCount
+                                , s = n - t.viewCount;
+                            e >= s && n > e && jQuery(i).removeClass(t.toggleClass)
+                        })
+            },
+            toggle: function (t) {
+                this.setNavigation(t),
+                    this.setNavigationStyle(),
+                    this.renderNavigation(),
+                    this.togglePage()
+            },
+            bindEvents: function () {
+                var t = this;
+                this.$btnPrev && this.$btnPrev.get(0) && this.$btnPrev.on("click", function () {
+                    t.toggle.call(t, "prev")
+                }),
+                this.$btnNext && this.$btnNext.get(0) && this.$btnNext.on("click", function () {
+                    t.toggle.call(t, "next")
+                })
+            },
+            initNavigationElements: function () {
+                var t = this.$navigation.find(".btn_page")
+                    , e = this;
+                t && t.length > 0 && t.each(function (t, i) {
+                    var n = jQuery(i);
+                    n.find(".ico_prev").get(0) && (e.$btnPrev = n),
+                    n.find(".ico_next").get(0) && (e.$btnNext = n)
+                }),
+                    this.$labelCurrent = this.$navigation.find("em.emph_num"),
+                    this.$labelTotalPage = this.$navigation.find(".total_page")
+                console.log(this.$labelTotalPage);
+            },
+            init: function () {
+                this.initNavigationElements(),
+                    this.setWide(),
+                    this.bindEvents()
+            }
+        };
+</script>
 </body>
 </html>

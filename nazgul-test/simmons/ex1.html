@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ex1</title>
+</head>
+<style>
+    #wrap {
+        position: relative;
+        margin: auto;
+        width: 1080px;
+        height: 1920px;
+    }
+    li{
+        list-style: none;
+        border: 1px solid darkblue;
+    }
+    #scroller {
+
+    }
+    #listView {
+        width: 1080px;
+        height:1920px;
+        background-color: #fff7d1;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+</style>
+<body>
+
+<div id="wrap">
+    <div id="scoller">
+
+        <ul id="listView">
+
+        </ul>
+
+    </div>
+</div>
+<script>
+    (function () {
+        var DATA = [
+            {
+                "foodname": "김치찌개",
+                "foodImage": "www.kimchi"
+            },
+            {
+                "foodname": "된장찌개",
+                "foodImage": "www.denjang"
+            },
+            {
+                "foodname": "미역국",
+                "foodImage": "www.miyork"
+            },
+            {
+                "foodname": "북어국",
+                "foodImage": "www.bukukook"
+            },
+            {
+                "foodname": "순두부찌개",
+                "foodImage": "www.soontuboo"
+            }
+        ];
+        var listView = document.getElementById("listView");
+
+
+
+        for(var i = 0; i<DATA.length; i++){
+            var li = document.createElement("li");
+            var img = document.createElement("div");
+            var span = document.createElement("div");
+            listView.appendChild(li).appendChild(img);
+            li.appendChild(span);
+            img.innerHTML = DATA[i].foodImage;
+            span.innerHTML = DATA[i].foodname;
+
+        }
+    })();
+</script>
+</body>
+</html>
