@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div style="width: 600px; height: 200px; border: 1px solid darkblue;margin: auto;">
+    <div class="progress">
+        <div id="exp" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+             style="min-width: 2em;">
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function exp() {
+        var exp = document.getElementById("exp");
+        var myFood = 2;
+        var food = 0;
+        var per = 0;
+        setInterval(function () {
+            food = Math.floor(Math.random() * 3) + 1;
+            console.log(food + " : " + myFood);
+            if (myFood === food) {
+                per++;
+                exp.style.width = per + "%";
+                exp.innerHTML = per + "%";
+            }
+        }, 1000);
+    }
+
+    exp();
+
+
+</script>
+</body>
+</html>
