@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    <h2 class="tt-item-title tit_main tit_type2"><span class="tt-item-title-bg"><span class="tt-item-title-inner">[##_item_title_##]</span></span>
+    </h2>
+    <ul class="list_latest tt-wrap-item ">
+        <s_tabloid>
+        <s_article_rep>
+        <li>
+        <div class="thumb_info">
+        <a href="[##_article_rep_link_##]" title="[##_article_rep_title_##]"
+    class="ir_pm link_thumb" style="background-image:url(http://[##_article_rep_thumb_host_##]/T550x550/[##_article_rep_thumb_hash_##]);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://[##_article_rep_thumb_host_##]/T550x550/[##_article_rep_thumb_hash_##],sizingMethod='scale')">
+    [##_article_rep_title_##]
+    </a>
+    </div>
+    <div class="cont_info">
+        <a href="[##_article_rep_link_##]" class="link_tit">
+        <strong class="txt_subject">[##_article_rep_title_excerpt_##]</strong>
+    <span class="txt_default">[##_article_rep_category_##]</span>
+    <span class="txt_dot">&middot;</span>
+    <span class="num_date">[##_article_rep_date_##]</span>
+    </a>
+    </div>
+    </li>
+    </s_article_rep>
+    </s_tabloid>
+    </ul>
+    <script>
+    var $listLatest = $(".list_latest .txt_default");
+    var txtColor = {
+        "새소식": "txt_notice",
+        "검색이야기": "txt_story",
+        "알립니다": "txt_event",
+        "": "txt_default"
+    };
+    $listLatest.each(function () {
+        var value = $(this).text();
+        this.className = txtColor[value];
+    });
+</script>
+</script>
+</body>
+</html>
