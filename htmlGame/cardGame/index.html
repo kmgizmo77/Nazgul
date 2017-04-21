@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="gameColl" class="wrapper">
+    <div class="team">
+        <div class="control_panel">
+            <div>
+                <ul class="card_list">
+                    <li>
+                        <div class="each_card">
+                            <img height="200" width="150">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            cards & control</div>
+        <div>field</div>
+    </div>
+    <div>announcement</div>
+    <div class="team">
+    </div>
+</div>
+<script>
+    var $ctx = $('#gameColl');
+    var $cardList = $ctx.find('.card_list');
+    var cardImgSrc = 'https://image-proxy.namuwikiusercontent.com/r/http%3A%2F%2Fimg4.wikia.nocookie.net%2F__cb20141203045844%2Fhearthstone%2Fimages%2F7%2F71%2FLightbomb.png';
+    var cardElem = '';
+        cardElem += '<div class="each_card">';
+        cardElem += '<img height="200" width="150">';
+        cardElem += '<div>';
+    $cardList.write = cardElem;
+    $('img').attr('src',cardImgSrc);
+
+</script>
+</body>
+</html>

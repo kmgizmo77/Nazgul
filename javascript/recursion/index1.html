@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>recursion</title>
+</head>
+<body>
+<script type="text/javascript">
+    //재귀함수에 대해 공부해 보자
+
+    // Your code here.
+
+    var isEven = function(n){
+        if(n > -1){
+            if(n === 0){
+                return true;
+            }else if(n === 1){
+                return false;
+            }
+            else{
+                return isEven(n % 2);
+            }
+        }
+    };
+
+    //-------------------------------->
+    console.log(isEven(50));
+    // → true
+    console.log(isEven(75));
+    // → false
+    console.log(isEven(-1));
+    // → ??
+
+
+</script>
+</body>
+</html>

@@ -9,6 +9,8 @@ font-style: normal;
 font-weight: normal;
 }
 
+
+
 /* reset */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button{margin:0;padding:0}
 fieldset,img{border:0 none}
@@ -28,15 +30,15 @@ input[type='text'],input[type='password'],input[type='submit'],input[type='searc
 input[type='search']::-webkit-search-cancel-button {-webkit-appearance:none}
 
 /* 긴급수정사항 */
-#content #ttCanvas{margin: 0 auto}
+#content #ttCanvas{position:relative;margin: 0 auto}
 #ttCanvas .tt-panel{position:relative}
-.link_top{position:absolute;bottom:130px;}
+/*메인화면 위로가기 버튼*/
+#ttCanvas .link_top{position:absolute;right:inherit;bottom:130px;}
 .tit_category{display:none;}
 .cont_daumkakao .search_none+.list_category{padding:0;}
 #tt-body-index .cont_daumkakao > .paging_blog{display:none;}
-
 .list_category{position:relative;}
-.list_category .link_top{position:absolute;bottom:0;right:-71px;}
+.list_category .link_top{position:absolute;bottom:0;/*right:-71px;*/}
 
 /* global */
 #daumIndex {overflow:hidden;position:absolute;left:-9999px;width:0;height:1px;margin:0;padding:0}
@@ -62,7 +64,7 @@ input[type='search']::-webkit-search-cancel-button {-webkit-appearance:none}
 .head_daumkakao:after{display:block;position:absolute;bottom:0;left:0;content:'';width:100%;height:1px;background: linear-gradient(to right, rgba(122,158,248,1) 0%,rgba(197,200,135,1) 27%,rgba(232,177,68,1) 48%,rgba(234,108,117,1) 73%,rgba(125,158,245,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', endColorstr='#7d9ef5',GradientType=1 );opacity:0.1}
 .cont_daumkakao {position:relative;width:100%;min-width:768px;padding:95px 0 60px;background:#f9f9f9}
-.cont_daumkakao.content_type{padding:95px 0 0;background:#fff}
+.cont_daumkakao.content_type{padding:95px 0 100px;background:#fff}
 .searchList{padding: 0 10px}
 .foot_daumkakao {width:100%;min-width:768px;height:430px;background:#2e2e2e}
 .daumkakao_blog input::-webkit-input-placeholder {color:#808080}
@@ -74,7 +76,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 .daumkakao_blog textarea::-moz-placeholder {color:#808080}
 .daumkakao_blog textarea:-ms-input-placeholder {color:#808080}
 .logo_daumkakao .link_logo {display:inline-block;margin:38px 0 0 28px;vertical-align:top}
-.logo_daumkakao .ico_logo {display:block;width:188px;height:14px;background-position:0 0}
+.logo_daumkakao .ico_logo {display:block;width:188px;height:18px;background-position:0 0}
 .services_relation {position:absolute;top:0;left:0;width:100%;height:24px;background:#2e2e2e;text-align:center}
 .services_relation .link_services {font-size:12px;line-height:24px;font-family:'NanumSquareOTFB', '맑은 고딕',Helvetica,'Apple SD Gothic Neo',AppleGothic,Dotum,'돋움',Arial,sans-serif;color:#9e9e9e}
 .services_relation .txt_bar {display:inline-block;overflow:hidden;width:1px;height:8px;margin:8px 6px 0;font-size:0;line-height:0;background:#9e9e9e;text-indent:-9999px;vertical-align:top}
@@ -105,7 +107,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 .on_search .wrap_search {display:block}
 .on_search .btn_search {display:none}
 .on_search .gnb_blog {display:none}
+
 #tt-body-index .cont_daumkakao .paging_blog {display:block;text-align:center;background:#fff;border-top:1px solid rgba(0, 0, 0, 0.11)}
+
 .paging_blog .inner_paging {display:inline-block;overflow:hidden;padding:26px 0}
 .paging_blog .btn_page {float:left;width:48px;height:48px;background:#fff}
 .btn_page.btn_center{margin:0 300px}
@@ -153,8 +157,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 
 /* main */
 #ttLinkEditMode {z-index:40 !important}
-.tt_article_useless_p_margin > div{display:none}
-#tt-body-index #ttCanvas {overflow:hidden;width:100%;max-width:960px}
+/* .tt_article_useless_p_margin > div{display:none} */
+#tt-body-index #ttCanvas {width:100%;max-width:960px}
 #tt-body-index #ttCanvas .tt-panel {width:100%;max-width:960px;padding:0}
 #tt-body-index #ttCanvas .tt-item {width:100%;max-width:960px;padding:0}
 #ttCanvas .tit_main {display:block;padding:35px 9px 4px;font-weight:normal;font-size:14px;color:#000;opacity:0.4}
@@ -208,8 +212,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 #ttCanvas .ico_more {margin:18px 0 0 13px}
 #ttCanvas .link_more .current_load{float:right;margin-right:22px;font-size:13px;color:#979797}
 .current_load .num_loaded{color:#000}
-.
-{position:absolute;right:50%;bottom:130px;margin-right:-540px}
+.link_top {position:absolute;right:50%;bottom:130px;margin-right:-540px}
 .link_top .img_blog{display:block;width:50px;height:50px;background-position: 0 -110px}
 .link_more {display:block;max-width:940px; height:48px;margin:20px auto 0;border: solid 1px #f2f2f2;font-size:14px;line-height:48px;color:#000;text-align:center;background: #fff}
 .link_more .ico_more {display:inline-block;width:12px;height:12px;margin:18px 0 0 13px;background-position:-60px -110px;text-indent:0;vertical-align:top}
@@ -217,9 +220,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 
 
 /* category */
+.tit_category{display:none;}
 #tt-body-category .entry {display:none}
 #tt-body-category .link_top {bottom:130px}
-.tit_category {position:absolute;top:95px;left:0;z-index:20;width:100%;height:74px;padding-top:43px;font-size:14px;font-weight:normal;color:#000;text-align:center}
+.tit_category {top:95px;left:0;z-index:20;width:100%;height:74px;padding-top:43px;font-size:14px;font-weight:normal;color:#000;text-align:center}
 .tit_category .txt_search{color:#2f59f8}
 .search_none+.list_category {max-width:940px;margin:0 auto;padding:120px 0 0 0}
 .list_category {max-width:940px;margin:0 auto;padding:7px 0 0 0}
@@ -228,10 +232,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 .list_category .cont_category:after{display:block;content:'';height:1px;clear:both;background-image:transparent}
 .list_category .cont_category:hover:after{background: linear-gradient(to right, rgba(122,158,248,1) 0%,rgba(197,200,135,1) 27%,rgba(232,177,68,1) 48%,rgba(234,108,117,1) 73%,rgba(125,158,245,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', endColorstr='#7d9ef5',GradientType=1 );opacity:0.5}
-.list_category .link_thumb {display:block;float:left;width:26%;height:157px;padding:19px 0 18px 2%;background-position:50% 50%;background-size:cover}
+.list_category .link_thumb {display:block;float:left;width:295px;height:157px;padding:19px 30px 18px 2%;background-position:50% 50%;background-size:cover}
 .list_category .thumb_img {display:block;width:100%;height:157px}
-.list_category .link_cont {float:left;width:66%;height:194px;padding-left:3%}
-.list_category .tit_subject {display:block;overflow:hidden;width:100%;padding:32px 0 8px 0;font-weight:normal;font-size:22px;line-height:34px;color:#000;text-overflow:ellipsis;white-space:nowrap}
+.list_category .link_cont {display:block}
+.list_category .tit_subject {display:block;overflow:hidden;padding:32px 0 8px 0;font-weight:normal;font-size:22px;line-height:34px;color:#000;text-overflow:ellipsis;white-space:nowrap}
 .list_category .link_cont:hover .tit_subject {text-decoration:underline}
 .list_category .data_append {padding:3px 0 11px;font-size:14px;line-height:22px;color:#000}
 .list_category .txt_desc {display:block;display:-webkit-box;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical;height:40px;margin-bottom:30px;font-size:13px;line-height:20px;color:#6a6a6a;text-overflow:ellipsis;word-wrap:break-word}
@@ -248,6 +252,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 .search_none .list_check {padding:36px 0 58px;font-size:14px;line-height:20px;color:#909090}
 
 /* entry */
+.entry .img_main{position:relative;margin-bottom:60px;}
 #tt-body-index .paging_blog {display:none}
 .cont_etc:before{display:block;content:'';width:40px;height:1px;margin:0 auto 30px;background:#000;opacity:0.11}
 .cont_etc .list_sns{overflow:hidden;width:208px;margin:0 auto;}
@@ -259,13 +264,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 .link_twitter .img_blog{background-position: -150px -230px}
 .link_url .img_blog{background-position: 0 -270px}
 .entry {overflow:hidden;max-width:940px;width:100%;padding:100px 0 0;margin:0 auto}
-.intro_entry {display:inline-block;position:relative;width:83%;padding:60px 8% 0;background:#fff}
+.intro_entry {display:inline-block;width:83%;padding:60px 8% 0;background:#fff}
 .intro_entry .line_intro {display:block;width:10px;height:2px;background:#000}
 .intro_entry .tit_subject {padding-top:13px;font-size:34px;line-height:normal;text-align:center}
 .intro_entry .tit_subject:after{display:block;content:'';width:20px;height:1px;margin:0 auto;border-top:1px solid #000;opacity:0.1}
 .intro_entry .link_tit {display:block;padding-bottom:21px;color:#000}
 .intro_entry .data_append {padding:20px 0 70px 0;text-align:center;font-size:12px;line-height:22px;letter-spacing:1px;color:#979797;white-space:nowrap}
-.img_main .admin_append {position:absolute;bottom:10px;right:0;height:42px;clear:both}
+.admin_append {position:absolute;bottom:-50px;right:0;height:42px;clear:both}
 .admin_append .btn_admin {width:140px;height:40px;border:1px solid #ff0000;font-size:14px;color:#ff0000;background:#fff}
 .admin_append .layer_admin {display:none;width:138px;border-left:1px solid #ff0000;border-right:1px solid #ff0000}
 .admin_append .btn_cancel {display:none}
@@ -288,7 +293,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7a9ef8', end
 .cont_entry ul span {padding:0}
 .cont_entry div div {padding:0 !important}
 .cont_entry div ul {padding:0 !important}
-.cont_entry div p {padding:0 !important}
+/*.cont_entry div p {padding:0 !important}*/
 .cont_entry div span {padding:0 !important}
 .cont_entry span div {padding:0 !important}
 .cont_entry table {width:auto !important;max-width:100% !important;margin:0 auto !important}
@@ -467,12 +472,14 @@ body, th, td, input, select, textarea, button {font-family:'NanumSquareOTFB', '�
 .daumkakao_blog {min-width:100%}
 .head_daumkakao {min-width:100%;height:50px;padding:0}
 .cont_daumkakao {min-width:100%;padding:51px 0 30px}
-.cont_daumkakao.cont_daumkakao {padding:51px 0 0}
+/*.cont_daumkakao.cont_daumkakao {padding:51px 0 0}*/
+/*모바일 메인컨텐츠 페딩 수정*/
+.cont_daumkakao.content_type{padding:95px 0 60px;}
 .foot_daumkakao {position:relative;min-width:100%;height:auto;padding-bottom:166px}
 .foot_daumkakao .link_daumkakao{margin:88px auto 10px}
 .logo_daumkakao {text-align:center}
 .logo_daumkakao .link_logo {height:29px;margin:0;padding-top:18px}
-.logo_daumkakao .ico_logo {width:130px;height:14px;background-position:0 -30px}/* 2015-09-21 수정 */
+.logo_daumkakao .ico_logo {width:67px;height:18px;background-position:0 -30px}/* 2015-09-21 수정 */
 .btn_sidemenu {display:block;position:absolute;top:0;left:0;width:50px;height:50px}
 .btn_sidemenu .ico_sidemenu {display:inline-block;width:20px;height:14px;background-position:-170px -60px}
 .menu_side {position:fixed;top:0;left:0;z-index:40;width:100%;height:100%;background:rgba(0,0,0,.75)}
@@ -628,7 +635,7 @@ body, th, td, input, select, textarea, button {font-family:'NanumSquareOTFB', '�
 .intro_entry .tit_subject {display:block;float:none;width:auto;font-size:24px;line-height:14px}
 .intro_entry .data_append {display:block;float:none;padding:7px 0 0 0;font-size:12px}
 .intro_entry .link_tit{font-size:20px}
-.img_main .admin_append {right:0;bottom:-12px;}
+.img_main .admin_append {right:0;}
 .admin_append .btn_admin {width:115px;height:31px;font-size:12px}
 .admin_append .layer_admin {position:fixed;top:0;left:0;z-index:40;width:100%;height:100%;border:0 none;background:rgba(0,0,0,.4)}
 .admin_append .inner_layer {position:absolute;bottom:15px;width:100%}
@@ -779,6 +786,9 @@ body, th, td, input, select, textarea, button {font-family:'NanumSquareOTFB', '�
 .paging_entry .ico_next {width:20px;height:9px;margin-top:10px;background-position:-30px -80px}
 .paging_entry .txt_paging {padding-top:7px;font-size:12px}
 .paging_entry .count_page {padding-top:13px;font-size:17px}
+
+
+
 
 @keyframes ani_side {
 0% {left:-278px}
