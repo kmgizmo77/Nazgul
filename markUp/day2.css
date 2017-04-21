@@ -1,0 +1,146 @@
+@charset "utf-8";
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4,
+h5, h6, pre, code, form, fieldset, legend, textarea, p,
+blockquote, th, td, input, select, button {
+    margin: 0;
+    padding: 0
+}
+
+fieldset, img {
+    border: 0 none
+}
+
+dl, ul, ol, menu, li {
+    list-style: none
+}
+
+blockquote, q {
+    quotes: none
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none
+}
+
+input, select, textarea, button {
+    vertical-align: middle
+}
+
+input::-ms-clear {
+    display: none
+}
+
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer
+}
+
+body {
+    background: #fff;
+    direction: ltr;
+    -webkit-text-size-adjust: none
+}
+
+body, th, td, input, select, textarea, button {
+    font-size: 13px;
+    line-height: 1.5;
+    font-family: AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
+    color: #222;
+    letter-spacing: -1px
+}
+
+.os_mac body, .os_mac th, .os_mac td, .os_mac input, .os_mac select, .os_mac textarea, .os_mac button {
+    letter-spacing: 0
+}
+
+a {
+    color: #222;
+    text-decoration: none
+}
+
+a:hover {
+    color: #118eff;
+    text-decoration: underline
+}
+
+a:active {
+    background-color: transparent
+}
+
+address, caption, cite, code, dfn, em, var {
+    font-style: normal;
+    font-weight: normal
+}
+.cont_tit{
+    padding: 20px;
+    text-align: center
+}
+.cont_tit h3{
+    font-size: 30px
+}
+.cont_tit strong{
+    font-weight: normal;
+    font-size: 20px
+}
+.cont_items_wrap{
+    margin: 50px auto;
+    background-color: yellow;
+    width: 690px;
+}
+.black_out{display: none}
+
+.cont_items{
+    overflow: hidden;
+    margin-right: -15px;
+}
+.cont_items li{
+    float: left;
+    width: 220px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    background: url(https://www.huvis.com/resource/kor/images/main/bg_product1.png) no-repeat right top;
+    background-color: white;
+    background-size: 50px 50px;
+
+}
+
+.cont_items li:hover{
+    background: url(https://www.huvis.com/resource/kor/images/main/bg_product1_hover.png) no-repeat right top;
+    background-color: #33dcff;
+    background-size: 50px 50px;
+}
+.cont_items li:hover .black_in{
+    display: none;
+}
+.cont_items li:hover .black_out{
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

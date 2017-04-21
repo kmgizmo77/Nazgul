@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="http://www.nextree.co.kr/p7323/">http://www.nextree.co.kr/p7323/</a>
+<script>
+    //생성자
+    function Person() {
+        console.log(this);
+    }
+    //객체를 생성
+    var brad = new Person();
+    var gilbert = new Person();
+
+    //person의 원형 - 공통적으로 적용
+    Person.prototype.getType = function () {
+        return '인간';
+    };
+    console.log(brad.getType()); //인간
+    console.log(gilbert.getType()); //인간
+
+    // 개별적용
+    brad.getType = function () {
+        return '사람';
+    };
+    console.log(brad.getType()); //사람
+    console.log(gilbert.getType()); //인간
+
+    //프로토타입 멤버를 읽을 때는 함수안의 prototype 속성 또는 객체의 이름으로 접근
+    brad.age = 25;
+    console.log(brad.age); //25
+    console.log(gilbert.age); //undefined
+
+    //전체 적용
+    Person.prototype.getType = function () {
+        return '사람';
+    };
+    console.log(brad.getType()); //사람
+    console.log(gilbert.getType()); //사람
+
+
+
+</script>
+</body>
+</html>

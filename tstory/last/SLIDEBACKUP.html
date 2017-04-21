@@ -8,7 +8,7 @@
                 </a>
                 <div class="cont_info">
 				<span class="info_append">
-					<span class="txt_category"><a href="[##_article_rep_category_link[0]_##]">[##_article_rep_category[0]_##]</a></span>
+					<span class="txt_category"><a href="[##_article_rep_category_link[0]_##]" class="txt_default">[##_article_rep_category[0]_##]</a></span>
 					<span class="txt_bar">|</span>
 					<span class="num_date">[##_article_rep_date[0]_##]</span>
 				</span>
@@ -23,7 +23,7 @@
                 </a>
                 <div class="cont_info">
 				<span class="info_append">
-					<span class="txt_category"><a href="[##_article_rep_category_link[1]_##]">[##_article_rep_category[1]_##]</a></span>
+					<span class="txt_category"><a href="[##_article_rep_category_link[1]_##]" class="txt_default">[##_article_rep_category[1]_##]</a></span>
 					<span class="txt_bar">|</span>
 					<span class="num_date">[##_article_rep_date[1]_##]</span>
 				</span>
@@ -38,7 +38,7 @@
                 </a>
                 <div class="cont_info">
 				<span class="info_append">
-					<span class="txt_category"><a href="[##_article_rep_category_link[2]_##]">[##_article_rep_category[2]_##]</a></span>
+					<span class="txt_category"><a href="[##_article_rep_category_link[2]_##]" class="txt_default">[##_article_rep_category[2]_##]</a></span>
 					<span class="txt_bar">|</span>
 					<span class="num_date">[##_article_rep_date[2]_##]</span>
 				</span>
@@ -53,7 +53,7 @@
                 </a>
                 <div class="cont_info">
 				<span class="info_append">
-					<span class="txt_category"><a href="[##_article_rep_category_link[3]_##]">[##_article_rep_category[3]_##]</a></span>
+					<span class="txt_category"><a href="[##_article_rep_category_link[3]_##]" class="txt_default">[##_article_rep_category[3]_##]</a></span>
 					<span class="txt_bar">|</span>
 					<span class="num_date">[##_article_rep_date[3]_##]</span>
 				</span>
@@ -104,3 +104,16 @@
         </script>
     </s_tabloid>
 </div>
+<script>
+    var $featured_main = $(".featured_main .txt_default");
+    var txtColor = {
+        "새소식": "txt_notice",
+        "검색이야기": "txt_story",
+        "알립니다": "txt_event",
+        "": "txt_default"
+    };
+    $featured_main.each(function () {
+        var value = $(this).text();
+        this.className = txtColor[value];
+    });
+</script>

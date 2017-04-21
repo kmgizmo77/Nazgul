@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>자판기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            width: 100px;
+            height: 50px;
+            float: left;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        input {
+            width: 298px;
+            height: 48px;
+            font-size: 40px;
+        }
+
+        #wrapper {
+            position: relative;
+            margin: 50px 0 0 200px;
+            background-color: #0fff10;
+            width: 300px;
+        }
+
+        #goods {
+            list-style: none;
+        }
+
+        #return_lever {
+            width: 200px;
+        }
+
+        .on {
+            background: #f00;
+            color: #fff
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="wrapper">
+    <ul id="goods">
+        <li>
+            <button>품절</button>
+        </li>
+        <li>
+            <button>품절</button>
+        </li>
+        <li>
+            <button>품절</button>
+        </li>
+        <li>
+            <button>품절</button>
+        </li>
+        <li>
+            <button>품절</button>
+        </li>
+        <li>
+            <button>품절</button>
+        </li>
+    </ul>
+    <input type="number" id="insert_money">
+    <button id="insert_btn">투입</button>
+    <button id="return_lever">반환레버</button>
+    <button id="admin">관리자 모드</button>
+    <button id="open_btn">자판기 열기</button>
+    <button id="close_btn">자판기 닫기</button>
+    <button id="insert_good">상품 넣기</button>
+</div>
+<div class="test" data-click-p="1">777</div>
+<div class="test" data-click-p="3">777</div>
+<div class="test" data-click-p="2">777</div>
+<div class="test" data-click-p="5">777</div>
+<div class="test" data-click-p="7">777</div>
+<div class="test" data-click-p="8">777</div>
+<div class="test" data-click-p="9">777</div>
+
+<script>
+    $('[data-click-p]')
+    'use strict';
+    var P = {};
+    (function (exports) {
+        exports.VM = function (context) {
+            var ctx = document.getElementById(context);
+
+            var machine = function () {
+                var machinePWD = '1234';
+                var goodsList = [];
+
+                var pwdChecker = function (adminPWD) {
+                    if (machinePWD === adminPWD.toString()) {
+                        return console.log('자판기 오픈에 성공하였습니다.');
+                    }
+                    return console.log('자판기 오픈에 실패하였습니다.');
+                };
+                var closeDoor = function () {
+                    console.log('자판기 닫혔습니다.');
+                };
+                var checkPop = function (popList, name) {
+                    var index = 0;
+                    if (popList.constructor === Array) {
+                        popList.forEach(function (pop, idx) {
+                            pop[0] === name ? index = idx : index = null;
+                        });
+                    }
+
+                    return index;
+                }; //수정
+                var insertGoods = function (name, price, count) {
+                    var length = goodsList.length,
+                        good = [],
+                        idx = 0;
+
+                    if (length != 0) {
+                        idx = checkPop(goodsList, name);
+                        if (idx !== null) { // 음료가 존재하면 수량만 늘려준다.
+                            goodsList[idx][2] += count;
+                            console.log(name + " 가 " + count + "개 추가 되었습니다.");
+                            console.log(name + " 의 총 갯수는 " + goodsList[idx][2] + "개 입니다.");
+                        } else { // 존재하지 않는 음료는 새로 등록한다.
+                            good = [name, price, count];
+                            goodsList.push(good);
+                            console.log(name + " 음료가 " + count + " 개 들어갔습니다.")
+                        }
+                    } else if (length == 0) {
+                        good = [name, price, count];
+                        goodsList.push(good);
+                        console.log('첫 음료 입니다.' + goodsList[0][0] + "가 " + goodsList[0][2] + "개 들어갔습니다.")
+                    }
+                    console.log(goodsList);
+                }; //수정
+
+                return {
+                    pwdChecker: pwdChecker,
+                    closeDoor: closeDoor,
+                    insertGoods: insertGoods
+                }
+            };
+
+            var admin = function (machine) {
+                var openBtn = ctx.querySelector('#open_btn');
+                var closeBtn = ctx.querySelector('#close_btn');
+                var insertGood = ctx.querySelector('#insert_good');
+
+                var addEvent = function () {
+                    openBtn.addEventListener('click', function () {
+                        var adminPWD = prompt('비밀번호를 입력하세요');
+                        machine.pwdChecker(adminPWD);
+                    });
+
+                    closeBtn.addEventListener('click', function () {
+                        machine.closeDoor();
+                    });
+
+                    insertGood.addEventListener('click', function () {
+
+                    });
+
+                };
+
+                return {
+                    doSomething: function () {
+                        addEvent();
+                    }
+                }
+            };
+
+            return {
+                init: function () {
+                    var myMachine = machine();
+                    var merlin = admin(myMachine);
+                    merlin.doSomething();
+
+
+                }
+            }
+        }
+    })(P = P || {});
+    P.VM('wrapper').init();
+
+
+
+</script>
+
+</body>
+</html>

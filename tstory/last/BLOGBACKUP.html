@@ -1,5 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"> <!--//여기 클래스들은 모두 html태그에 사용됩니다. 검색창 활성화시 on_search 클래스 활성화, 메뉴 활성화시 menu_open 클래스 활성, 포스트 수정 레이어 활성화시 open_admin 활성화, sns 활성화시 open_sns 활성화-->
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- // 검색창 활성화시 on_search 클래스 활성화, 메뉴 활성화시 menu_open 클래스 활성, 포스트 수정 레이어 활성화시 open_admin 활성화, sns 활성화시 open_sns 활성화 -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
@@ -8,93 +15,17 @@
     <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
     <link rel="shortcut icon" href="[##_blog_link_##]favicon.ico" />
     <title>[##_title_##]</title>
+
     <!--[if lt IE 9]>
     <script type="text/javascript" src="//s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-1.11.1.min.js"></script>
     <![endif]-->
     <!--[if gte IE 9]><!-->
     <script type="text/javascript" src="//s1.daumcdn.net/svc/original/U03/cssjs/jquery/jquery-2.1.1.min.js"></script>
     <!--<![endif]-->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <style type="text/css">#daumSearchBox {
-        height: 21px;
-        background-image : url(http://i1.daumcdn.net/imgsrc.search/search_all/show/tistory/plugin/bg_search2_2.gif);
-        margin: 5px auto ;
-        padding: 0;
-    }
-    #daumSearchBox input {
-        background: none;
-        margin : 0;
-        padding : 0;
-        border : 0;
-    }
-    #daumSearchBox #daumLogo {
-        width: 34px;
-        height: 21px;
-        float: left;
-        margin-right: 5px;
-        background-image : url(http://i1.daumcdn.net/img-media/tistory/img/bg_search1_2_2010ci.gif);
-    }
-    #daumSearchBox #show_q {
-        background-color: transparent;
-        border: none;
-        font: 12px Gulim, Sans-serif;
-        color: #555;
-        margin-top: 4px;
-        margin-right: 15px;
-        float: left;
-    }
-
-    #daumSearchBox #show_btn {
-        background-image : url(http://i1.daumcdn.net/imgsrc.search/search_all/show/tistory/plugin/bt_search_2.gif);
-        width: 37px;
-        height: 21px;
-        float: left;
-        margin:0;
-        cursor:pointer;
-        text-indent:-1000em;
-    }</style>
-    <link rel="stylesheet" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/plugins/TistoryProfileLayer/style.css" />
-    <link rel="stylesheet" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/style/dialog.css"/>
-    <link rel="stylesheet" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/plugins/Tabloid/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/plugins/Tabloid/css/tabloid.css" />
-    <link rel="stylesheet" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/plugins/Tabloid/css/items.css" />
-    <link rel="stylesheet" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/plugins/Tabloid/css/util.css" />
-    <link rel="stylesheet" id="ttTabloidGridCSS" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/plugins/Tabloid/css/grid/tistory-grid-min.css" />
-    <style type="text/css">div#ttCanvas .tt-item .tt-post-title, div#ttCanvas .tt-item .tt-post-title a, div#ttCanvas .tt-post-title a {color: #1e1e1e; font-family: 'Malgun Gothic', '맑은 고딕', sans-serif; }div#ttCanvas .tt-post-summary a, div#ttCanvas .tt-post-summary { color: #1e1e1e }div#ttCanvas .tt-post-etcinfo, div#ttCanvas .tt-post-etcinfo span, div#ttCanvas .tt-post-etcinfo span a {
-                                                                                                                                                                                                                                                                                                 color: #1e1e1e;
-                                                                                                                                                                                                                                                                                                 opacity: 0.6; filter:alpha(opacity=60);
-                                                                                                                                                                                                                                                                                                 _display: inline-block;
-                                                                                                                                                                                                                                                                                             }div#ttCanvas hr.tt-line { border-color: #1e1e1e; opacity: 0.3; filter:alpha(opacity=30);}div#ttCanvas {margin-left : auto;  }div#ttCanvas {margin-top : 0; }</style>
-    <link rel="stylesheet" type="text/css" href="//s1.daumcdn.net/cfs.tistory/resource/0c59a9d20b31be342e2141a1d0559a4755f3d334/blog/style/menubar.css"/>
-    <style type="text/css">.tt_article_useless_p_margin p {padding-top:0 !important;padding-bottom:0 !important;margin-top:0 !important;margin-bottom:0 !important;}</style>
-    <meta name="referrer" content="always"/>
-    <link rel="shortcut icon" href="http://i1.daumcdn.net/cfs.tistory/static/top/favicon_0630.ico"/>
-    <meta name="description" content=""/>
-    <!--BEGIN OPENGRAPH-->
-    <link rel="canonical" href="http://daumdam.tistory.com" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="테스트담" />
-    <meta property="og:title" content="테스트담" />
-    <meta property="og:description" content="" />
-    <meta property="og:image" content="http://cfile24.uf.tistory.com/image/2538FE345549959F21EC38" />
-    <!--END OPENGRAPH-->
-    <!--BEGIN TWITTERCARD-->
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:site" content="@TISTORY"/>
-    <meta name="twitter:title" content="테스트담" />
-    <meta name="twitter:description" content="" />
-    <meta property="twitter:image" content="http://cfile24.uf.tistory.com/image/2538FE345549959F21EC38" />
-    <!--END TWITTERCARD-->
-    <!--BEGIN STRUCTURED_DATA-->
-    <!--END STRUCTURED_DATA-->
-    <link rel="apple-touch-icon" href="//i1.daumcdn.net/thumb/C180x180/?fname="/>
-    <link rel="apple-touch-icon" sizes="76x76" href="//i1.daumcdn.net/thumb/C76x76/?fname="/>
-    <link rel="apple-touch-icon" sizes="120x120" href="//i1.daumcdn.net/thumb/C120x120/?fname="/>
-    <link rel="apple-touch-icon" sizes="152x152" href="//i1.daumcdn.net/thumb/C152x152/?fname="/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
-<body class="[##_body_id_##]" id="tt-body-index">
-<div style="margin:0; padding:0; border:none; background:none; float:none; clear:none; z-index:0"></div>
+<body id="[##_body_id_##]">
 <s_t3>
     <div id="daumIndex">
         <a href="#daumBody">본문 바로가기</a>
@@ -103,14 +34,18 @@
     <div id="container" class="daumkakao_blog">
         <div id="header" class="head_daumkakao">
             <h1 class="logo_daumkakao">
-                <a href="[##_blog_link_##]" class="link_logo"><span class="img_blog ico_logo">다음 검색 블로그</span></a>
+                <a href="[##_blog_link_##]" class="link_logo"><span class="img_blog ico_logo">kakao 블로그</span></a>
             </h1>
-            <!-- <div class="services_relation">
+            <div class="services_relation">
                 <h2 class="screen_out">관련서비스</h2>
-                <a href="http://www.daumkakao.com/pr/pressRelease" target="_blank" class="link_services"> NEWSROOM </a>
+                <a href="http://www.daumkakao.com/pr/pressRelease" target="_blank" class="link_services">
+                    NEWSROOM
+                </a>
                 <span class="txt_bar">|</span>
-                <a href="https://blog.daumkakao.com/" target="_blank" class="link_services"> GLOBAL BLOG </a>
-            </div> -->
+                <a href="https://blog.kakaocorp.com/" target="_blank" class="link_services">
+                    GLOBAL BLOG
+                </a>
+            </div>
             <div id="daumGnb" class="gnb_blog">
                 <h2 class="tit_blog"><a href="[##_blog_link_##]" class="img_blog link_tit">kakao 블로그 메인 메뉴</a></h2>
                 <ul class="list_menu">
@@ -137,12 +72,12 @@
                 </ul>
             </div>
             <button type="button" class="btn_sidemenu">
-                <span class="img_blog ico_sidemenu">다음 검색 블로그 메인메뉴 열기</span>
+                <span class="img_blog ico_sidemenu">kakao 블로그 메인메뉴 열기</span>
             </button>
             <div class="menu_side">
                 <div class="inner_side">
-                    <strong class="tit_sidemenu"><a href="[##_blog_link_##]" class="link_tit">DAUM SEARCH<br />BLOG</a></strong>
-                    <strong class="screen_out">다음 검색 블로그 메인 메뉴</strong>
+                    <strong class="tit_sidemenu"><a href="[##_blog_link_##]" class="link_tit">KAKAO<br />OFFICAIAL BLOG</a></strong>
+                    <strong class="screen_out">kakao 블로그 메인 메뉴</strong>
                     <ul class="list_menu">
                         <li><!-- // 선택되었을 시 on 클래스 활성화 -->
                             <a href="/category/새소식" class="link_menu">
@@ -166,63 +101,33 @@
                         </li>
                     </ul>
                     <div class="foot_side">
-                        <!-- <div class="services_relation">
-                            <strong class="screen_out">관련서비스</strong>
-                            <a href="http://www.daumkakao.com/pr/pressRelease" target="_blank" class="link_services"> NEWSROOM </a>
-                            <span class="txt_bar">|</span>
-                            <a href="https://blog.daumkakao.com/" target="_blank" class="link_services"> GLOBAL BLOG </a>
-                        </div> -->
-                        <!-- 2017 03 09 에반 추가 -->
                         <div class="services_relation">
-                            <p class="desc_links">다음검색 소식을 공식채널로 만나보세요</p>
-                            <ul class="list_channel">
-                                <li>
-                                    <a href="#none" target="_blank" class="link_services link_daumsearch">
-                                        <span class="img_blog"></span>
-                                        <span class="txt_channel">다음검색</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#none" target="_blank" class="link_services link_fbook">
-                                        <span class="img_blog"></span>
-                                        <span class="txt_channel">다음검색</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#none" target="_blank" class="link_services link_plus">
-                                        <span class="img_blog"></span>
-                                        <span class="txt_channel">다음검색</span>
-                                    </a>
-                                </li>
+                            <strong class="screen_out">관련서비스</strong>
+                            <a href="http://www.daumkakao.com/pr/pressRelease" target="_blank" class="link_services">
+                                NEWSROOM
+                            </a>
+                            <span class="txt_bar">|</span>
+                            <a href="https://blog.kakaocorp.com/" target="_blank" class="link_services">
+                                GLOBAL BLOG
+                            </a>
+                        </div>
+                        <small class="txt_foot info_copyright">Copyright <a href="http://kakaocorp.com/" target="_blank" class="link_copyright">© Kakao Corp.</a></small> <!-- 2015-09-18 수정 -->
+                        <div class="opt_foot"><!-- opt_open 시 열림 -->
+                            <span class="screen_out">선택내용 : </span>
+                            <a href="javascript:;" class="link_relation">
+                                <span class="txt_year">관련사이트</span>
+                                <span class="img_blog ico_arrow">열기</span><!-- 활성화시 접기, 비활성화시 열기 -->
+                            </a>
+                            <span class="screen_out">선택옵션</span>
+                            <ul class="list_relation">
+                                <li><a href="http://kakaocorp.com" class="link_option" target="_blank">카카오</a></li>
+                                <li><a href="http://www.daum.net" class="link_option" target="_blank">다음 포털사이트</a></li>
+                                <li><a href="http://www.kakao.com" class="link_option" target="_blank">카카오 서비스</a></li>
                             </ul>
                         </div>
-                        <small class="txt_foot info_copyright">Copyright <a href="http://kakaocorp.com/" target="_blank" class="link_copyright">© Kakao Corp.</a></small>
-                        <!--2015-09-18 수정-->
-                        <!-- <div class="opt_foot"> -->
-                        <!--opt_open 시 열림-->
-                        <!-- <span class="screen_out">선택내용 : </span>
-                        <a href="javascript:;" class="link_relation">
-                            <span class="txt_year">관련사이트</span>
-                            <span class="img_blog ico_arrow">열기</span> -->
-                        <!--활성화시 접기, 비활성화시 열기-->
-                        <!-- </a>
-                        <span class="screen_out">선택옵션</span>
-                        <ul class="list_relation">
-                            <li>
-                                <a href="http://kakaocorp.com" class="link_option" target="_blank">카카오</a>
-                            </li>
-                            <li>
-                                <a href="http://www.daum.net" class="link_option" target="_blank">다음 포털사이트</a>
-                            </li>
-                            <li>
-                                <a href="http://www.kakao.com" class="link_option" target="_blank">카카오 서비스</a>
-                            </li>
-                        </ul>
-                    </div> -->
                     </div>
                     <button type="button" class="btn_close">
-                        <span class="img_blog ico_close">다음 검색 블로그 메인메뉴 닫기</span>
-                        <!--2015-09-18 수정-->
+                        <span class="img_blog ico_close">kakao 블로그 메인메뉴 닫기</span><!-- 2015-09-18 수정 -->
                     </button>
                 </div>
             </div>
@@ -232,18 +137,15 @@
                         <span class="img_blog ico_search">검색창 펼치기</span>
                     </button>
                     <div class="wrap_search">
-                        <div class="inner_search">
-						<span class="box_search">
-							<span class="inner_box"><input type="search" id="tfSearch" name="search" class="tf_search" value="" onkeypress="if (event.keyCode == 13) { try{window.location.href='/search/'+looseURIEncode(document.getElementsByName('search')[0].value);document.getElementsByName('search')[0].value='';return false;}catch(e){} }" title="검색어" placeholder="게시글 검색" />
-								<button type="submit" class="btn_submit" onclick="try{window.location.href='/search/'+looseURIEncode(document.getElementsByName('search')[0].value);document.getElementsByName('search')[0].value='';return false;}catch(e){}">
-									<span class="img_blog ico_submit">검색</span>
-								</button>
-							</span>
-						</span>
-                            <button type="button" class="btn_close">
-                                <span class="img_blog ico_close">검색창 닫기</span>
-                            </button>
-                        </div>
+                        <s_search>
+        <span class="box_search">
+          <span class="inner_box">
+            <input type="search" id="tfSearch" name="[##_search_name_##]" class="tf_search" value="[##_search_text_##]" onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }" title="검색어" placeholder="Search" />
+            <button type="submit" class="btn_submit" onclick="[##_search_onclick_submit_##]"><span class="img_blog ico_submit">검색</span></button>
+          </span>
+        </span>
+                            <button type="button" class="btn_close"><span class="img_blog ico_close">검색창 닫기</span></button>
+                        </s_search>
                     </div>
                 </div>
             </s_sidebar_element>
@@ -251,7 +153,6 @@
         <hr class="hide" />
         <div id="content" class="cont_daumkakao">
             <h2 id="daumBody" class="screen_out">kakao 블로그 본문</h2><!-- 2015-09-18 수정 -->
-
             <s_list>
                 <div class="searchList">
                     <h3 class="tit_category"><!-- // scroll 내릴시 ani_opacity 클래스 활성화, scroll 올릴시 ani_opacity 클래스 활성화 -->
@@ -317,36 +218,85 @@
                     <div class="cont_entry">
                         [##_article_rep_desc_##]
                     </div>
-                    <div class="cont_etc">
-                        <strong class="screen_out">공유하기</strong>
-                        <ul class="list_sns">
-                            <li>
-                                <a class="link_kakaostory"><span class="img_blog">카카오 스토리</span></a>
-                            </li>
-                            <li>
-                                <a class="link_facebook"><span class="img_blog">페이스북</span></a>
-                            </li>
-                            <li>
-                                <a class="link_twitter"><span class="img_blog">트위터</span></a>
-                            </li>
-                            <li>
-                                <a class="link_url"><span class="img_blog">현재페이지 링크 복사</span></a>
-                            </li>
-                        </ul>
-                    </div>
+                    <a href="#rp"  onclick="[##_article_rep_rp_link_##]" class="link_cmt"><span class="img_blog ico_cmt">댓글 갯수</span><span class="num_cmt">[##_article_rep_rp_cnt_##]</span></a>
+                    <s_rp>
+                        <div class="cmt_entry">
+                            <div class="list_cmt">
+                                <s_rp_container>
+                                    <s_rp_rep>
+                                        <div id='[##_rp_rep_id_##]' class="item_cmt [##_rp_rep_class_##]">
+						<span class="info_append">
+							<span class="writer_info">[##_rp_rep_name_##]</span>
+							<span class="txt_time"> [##_rp_rep_date_##]</span>
+						</span>
+                                            <p class="txt_desc">[##_rp_rep_desc_##]</p>
+                                            <div class="control_cmt"><!-- // 댓글 관리 레이어 활성화시 open_control 클래스 활성화 -->
+                                                <button type="button" class="btn_control"><span class="img_blog ico_control">댓글 관리</span></button>
+                                                <div class="wrap_control">
+                                                    <span class="img_blog ico_arrow"></span>
+                                                    <a href="[##_rp_rep_link_##]" class="link_control">댓글주소</a>
+                                                    <a href="#" onclick="[##_rp_rep_onclick_delete_##]" class="link_control">수정/삭제</a>
+                                                    <a href="#" onclick="[##_rp_rep_onclick_reply_##]" class="link_control">댓글쓰기</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <s_rp2_container>
+                                            <s_rp2_rep>
+                                                <div id='[##_rp_rep_id_##]' class="item_reply [##_rp_rep_class_##]">
+                                                    <div class="inner_reply">
+							<span class="info_append">
+								<span class="writer_info">[##_rp_rep_name_##]</span>
+								<span class="txt_time">[##_rp_rep_date_##]</span>
+							</span>
+                                                        <p class="txt_desc">[##_rp_rep_desc_##]</p>
+                                                        <div class="control_cmt"><!-- // 댓글 관리 레이어 활성화시 open_control 클래스 활성화 -->
+                                                            <button type="button" class="btn_control"><span class="img_blog ico_control">댓글 관리</span></button>
+                                                            <div class="wrap_control">
+                                                                <span class="img_blog ico_arrow"></span>
+                                                                <a href="[##_rp_rep_link_##]" class="link_control">댓글주소</a>
+                                                                <a href="#" onclick="[##_rp_rep_onclick_delete_##]" class="link_control">수정/삭제</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </s_rp2_rep>
+                                        </s_rp2_container>
+                                    </s_rp_rep>
+                                </s_rp_container>
+                            </div>
+                            <s_rp_input_form>
+                                <div class="write_cmt">
+                                    <s_rp_member>
+                                        <s_rp_guest>
+                                            <dl class="info_user">
+                                                <dt class="screen_out"><label for="userName">이름</label></dt>
+                                                <dd class="desc_user">
+                                                    <span class="inner_desc"><input type="text" id="userName" name="[##_rp_input_name_##]" class="tf_cmt tf_user" value="[##_guest_name_##]" placeholder="이름" /></span>
+                                                </dd>
+                                                <dt class="screen_out"><label for="userPassword">암호</label></dt>
+                                                <dd class="desc_user">
+                                                    <span class="inner_desc"><input type="password" id="userPassword" maxlength="8" name="[##_rp_input_password_##]" class="tf_cmt tf_user" value="[##_rp_admin_check_##]" placeholder="암호" /></span>
+                                                </dd>
+                                            </dl>
+                                        </s_rp_guest>
+                                    </s_rp_member>
+                                    <textarea name="[##_rp_input_comment_##]" rows="4" cols="50" class="tf_cmt tf_area" placeholder="덧글을 입력해 주세요."></textarea>
+                                    <button type="submit" class="btn_submit" onclick="[##_rp_onclick_submit_##]">댓글입력</button>
+                                </div>
+                            </s_rp_input_form>
+                        </div>
+                    </s_rp>
                 </div>
-
             </s_article_rep>
-
             <s_paging>
                 <div class="paging_blog">
-									<span class="inner_paging">
-									<!-- 2017년 03 11 에반 수정 -->
-										<a [##_prev_page_##] class="btn_page btn_prev [##_no_more_prev_##] "><span class="img_blog ico_prev">이전</span></a>
-										<a href='#none' class="btn_page btn_center"><span class="img_blog ico_center">목록으로</span></a>
-										<a [##_next_page_##] class="btn_page btn_next "><span class="img_blog ico_next [##_no_more_next_##]">다음</span></a>
-                                        <!-- 수정 끝 -->
-									</span>
+				<span class="inner_paging">
+					<a [##_prev_page_##] class="btn_page btn_prev [##_no_more_prev_##]"><span class="img_blog ico_prev"></span><span class="txt_paging">이전</span></a>
+					<span class="wrap_paging">
+						<s_paging_rep> <a [##_paging_rep_link_##] class="link_page">[##_paging_rep_link_num_##]</a> </s_paging_rep><!-- // 선택시 on_page 클래스 활성화 -->
+					</span>
+					<a [##_next_page_##] class="btn_page btn_next [##_no_more_next_##]"><span class="txt_paging">다음</span><span class="img_blog ico_next"></span></a>
+				</span>
                 </div>
             </s_paging>
             <a href="javascript:void(0)" class="img_blog link_top">TOP</a>
@@ -359,34 +309,44 @@
                     <a href="http://kakaocorp.com/" class="link_daumkakao"><span class="img_blog ico_daumkakao">kakao</span></a>
                     <small class="txt_foot info_copyright">Copyright <a href="http://kakaocorp.com/" target="_blank" class="link_copyright">© Kakao Corp.</a></small>
                 </div>
+                <div class="wrap_foot f_r">
+                    <div id="subRssFeed" class="email_send">
+                        <strong class="tit_foot">SUBSCRIBE</strong>
+                        <p class="txt_foot">카카오 이야기, 이메일로 받아보세요.</p>
+                        <form action="http://feedburner.google.com/fb/a/mailverify" class="email_form" method='post'
+                              target='popupwindow' onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=kakaoblog', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true;">
+                            <fieldset class="fld_email">
+                                <legend class="screen_out">이메일 받아보기 폼</legend>
+                                <label class="lab_email screen_out" for="formEmail">이메일 주소 입력</label>
+                                <input type='text' class="tf_mail bg_on" id="formEmail"
+                                       onfocus="this.className='tf_mail';document.getElementById('subRssFeed').setAttribute('class','email_send email_on');"
+                                       onblur="this.className='tf_mail bg_on';document.getElementById('subRssFeed').setAttribute('class','email_send');" name='email' title="이메일 받아보기" placeholder="example@example.com" />
+                                <input type="hidden" value="kakaocorpblog" name="uri"/>
+                                <input type="hidden" name="loc" value="en_US"/>
+                                <button class="btn_send" type="submit" name='imageField' value='Subscribe'><span class="img_blog ico_send">이메일 보내기</span></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
                 <div class="wrap_foot f_l">
+                    <div class="area_foot">
+                        <img src="//s1.daumcdn.net/cfs.tistory/custom/blog/159/1599719/skin/images/thumb_img.png" class="thumb_bnr" alt="Connect Everything." />
+                    </div>
                     <div class="version_pc">
-                        <ul class="list_info">
-                            <li><a href="#none" class="link_info">다음검색 바로가기</a></li>
-                            <li><a href="#none" class="link_info">블로그 소개</a></li>
-                            <li><a href="#none" class="link_info">블로그 운영원칙</a></li>
-                        </ul>
-                        <div class="opt_foot">
-                            <!--opt_open 시 열림-->
+                        <strong class="tit_foot">ABOUT US</strong>
+                        <p class="txt_foot">The official blog of Kakao,<br />a Mobile Lifestyle Platform company.</p>
+                        <div class="opt_foot"><!-- opt_open 시 열림 -->
                             <span class="screen_out">선택내용 : </span>
                             <a href="javascript:;" class="link_relation">
-                                <span class="txt_year">관련 사이트</span>
-                                <span class="img_blog ico_arrow"></span>
-                                <!--활성화시 접기, 비활성화시 열기-->
+                                <span class="txt_year">관련사이트</span>
+                                <span class="img_blog ico_arrow">열기</span><!-- 활성화시 접기, 비활성화시 열기 -->
                             </a>
                             <span class="screen_out">선택옵션</span>
                             <ul class="list_relation">
-                                <li>
-                                    <a href="http://kakaocorp.com" class="link_option" target="_blank">카카오 기업 홈페이지</a>
-                                </li>
-                                <li>
-                                    <a href="http://blog.kakaocorp.com" class="link_option" target="_blank">카카오 공식 블로그</a>
-                                </li>
+                                <li><a href="http://kakaocorp.com" class="link_option" target="_blank">카카오</a></li>
+                                <li><a href="http://www.daum.net" class="link_option" target="_blank">다음 포털사이트</a></li>
+                                <li><a href="http://www.kakao.com/main" class="link_option" target="_blank">카카오 서비스</a></li>
                             </ul>
-                        </div>
-                        <div class="box_links">
-                            <a href="#none" class="img_blog link_fbook">다음검색 페이스북</a>
-                            <a href="#none" class="img_blog link_plus">카카오톡 플러스친구</a>
                         </div>
                     </div>
                 </div>
@@ -394,6 +354,8 @@
         </div>
     </div>
 </s_t3>
+
+
 
 <script type="text/javascript" src="//s1.daumcdn.net/svc/original/U03/cssjs/pcsocialshare/pcSocialshare-1.5.3.min.js"></script>
 
@@ -550,7 +512,6 @@
                         case "view"      : pageType = "view";
                             break;
                         default          : pageType = "main";
-
                             $.cookie('categoryType', null);
                             break;
                     }
@@ -663,19 +624,23 @@
             ,
             "page"  : {
                 "main" : function(){
+                    var top_title = "";
+                    top_title += '<div class="intro_main">';
+                    top_title += '  <strong class="tit_intro">새로운 연결, 더 나은 세상</strong>';
+                    top_title += '  <p class="txt_intro">Connect Everything</p>';
+                    top_title += '</div>';
+
+                    $("#daumBody").after(top_title);
 
                     // 더보기 버튼 삽입
                     var btn_view_more = "";
-                    btn_view_more = '<a href="#none" class="link_more">더보기<span class="img_blog ico_more"></span></a>';
+                    btn_view_more ='<a href="#none" class="link_more">더보기<span class="img_blog ico_more"></span></a>';
                     $(".list_latest").after(btn_view_more);
 
                     // 더보기 버튼 기능구현.
                     $(".list_latest li").hide();
 
-
-
                     var listCnt = $(".list_latest li").length;
-                    console.log("listLatest_Size : ",listCnt);
                     $(".list_latest li").each(function(i){
                         if(i>3 && i<listCnt-2){
                             if($(this).html()){
@@ -687,7 +652,7 @@
                         var sub_title = $(this).find(".txt_subject").text().replace("<br />","").replace("<br/>","");
                         $(this).find(".txt_subject").text(sub_title);
 
-                        //$(this).remove();
+                        $(this).remove();
                     })
 
 
@@ -790,7 +755,7 @@
                                 $(this).remove();
                             }
                             if( !$(this).find("span").html() ){
-                                $(this).remove();
+                                //$(this).remove();
                             }
                         })
 
@@ -886,9 +851,9 @@
                 "show_list" : function(listObj) {
 
                     (listObj.length>= 6) ? cnt= 6 : cnt=listObj.length;
-                    console.log("listObj_Size : ",listObj.length)
+
                     for( var i = 0; i< cnt; i++){
-                        $(".list_latest").append(listObj.shift());
+                        $(".list_latest").append( listObj.shift() );
                     }
                     $(".list_latest li").fadeIn(1000);
                     if(listObj.length == 0) { $(".link_more").hide(); return false; }
@@ -1103,5 +1068,8 @@
 
     // 341,333
 </script>
+
+</body>
+</html>
 </body>
 </html>
