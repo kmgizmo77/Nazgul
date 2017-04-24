@@ -1,0 +1,197 @@
+@charset "utf-8";
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4,
+h5, h6, pre, code, form, fieldset, legend, textarea, p,
+blockquote, th, td, input, select, button {
+  margin: 0;
+  padding: 0
+}
+
+fieldset, img {
+  border: 0 none
+}
+
+dl, ul, ol, menu, li {
+  list-style: none
+}
+
+blockquote, q {
+  quotes: none
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none
+}
+
+input, select, textarea, button {
+  vertical-align: middle
+}
+
+input::-ms-clear {
+  display: none
+}
+
+button {
+  border: 0 none;
+  background-color: transparent;
+  cursor: pointer
+}
+
+body {
+  background: #fff;
+  direction: ltr;
+  -webkit-text-size-adjust: none
+}
+
+body, th, td, input, select, textarea, button {
+  font-size: 13px;
+  line-height: 1.5;
+  font-family: AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, '돋움', sans-serif;
+  color: #222;
+  letter-spacing: -1px
+}
+
+.os_mac body, .os_mac th, .os_mac td, .os_mac input, .os_mac select, .os_mac textarea, .os_mac button {
+  letter-spacing: 0
+}
+
+a {
+  color: #222;
+  text-decoration: none
+}
+
+a:hover {
+  text-decoration: none
+}
+
+a:active {
+  background-color: transparent
+}
+
+address, caption, cite, code, dfn, em, var {
+  font-style: normal;
+  font-weight: normal
+}
+
+li {
+  list-style: none
+}
+
+.hide {
+  display: none;
+}
+
+#myColl .coll_tabs_wrap > li.on {
+  border-bottom: 2px solid #007aff;
+}
+
+#myColl .coll_tabs_wrap > li.on a {
+  color: #007aff;
+}
+
+#myColl h1{
+  font-size: 20px;
+  padding-left: 15px;
+  text-decoration: underline;
+}
+
+#myColl .time_issue {
+  position: absolute;
+  color: grey;
+  padding-left: 20px;
+  font-size: 12px;
+  line-height: 30px;
+}
+
+#myColl .coll_tabs {
+  overflow: hidden;
+  text-align: center;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+#myColl .coll_tabs_wrap > li {
+  width: 25%;
+  height: 40px;
+  float: left;
+  border-bottom: 2px solid #eee;
+}
+
+#myColl .coll_tabs_wrap a {
+  display: inline-block;
+  line-height: 40px;
+}
+
+#myColl .coll_cont {
+  margin-top: 5px;
+  overflow: hidden;
+  padding-left: 20px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+#myColl .coll_cont_wrap > li {
+  width: 50%;
+  height: 30px;
+  float: left;
+}
+
+#myColl .coll_cont_wrap a {
+  display: inline-block;
+  line-height: 30px;
+}
+#myColl .coll_cont_wrap a:active {
+  color: #007aff;
+}
+
+#myColl .coll_cont_wrap a > span {
+  color: #007aff;
+  padding-right: 10px;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+#myColl .list_dots {
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+  border-bottom: 5px solid #eee;
+}
+#myColl .list_dots >li {
+  display: inline-block;
+  border: 1px solid grey;
+  border-radius: 100%;
+  height: 4px;
+  width:  4px;
+}
+
+#myColl .list_dots >li.on {
+  background-color: #007aff;
+  border-color: #007aff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
