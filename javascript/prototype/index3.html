@@ -6,5 +6,56 @@
 </head>
 <body>
 
+<script>
+  //speaking javascript - 3부 객체와 상속
+
+  //  var proto = {};
+  //  var obj = Object.create(proto);
+  //
+  //  console.log(proto.isPrototypeOf(obj)); //true
+  //  console.log(obj.isPrototypeOf(obj)); //false
+
+  //  var proto = {foo:'abc'};
+  //  var obj = Object.create(proto);
+  //  obj.bar = 'def';
+  //  console.log(Object.prototype.hasOwnProperty.call(obj, 'foo')); //false
+  //  console.log(Object.prototype.hasOwnProperty.call(obj, 'bar')); //true
+
+  //  var obj = {foo:'abc'};
+  //  obj.propertyIsEnumerable('foo');
+  //  console.log(obj.propertyIsEnumerable('toString')); //false
+  //  console.log(obj.propertyIsEnumerable('unknown')); //false
+
+//  function Wine(age) {
+//    this.age = age;
+//  }
+//  Wine.prototype.incAge = function (years) {
+//    this.age += years;
+//  };
+//  var chablis = new Wine(3);
+//  Wine.prototype.incAge.call(chablis, 1);
+//  var margaux = new Wine(4);
+//  chablis.incAge(1);
+//  chablis.incAge(4);
+//  console.log(chablis.age);
+//  console.log(margaux.age);
+//  var john = {age:51};
+//  Wine.prototype.incAge.call(john, 3);
+//  console.log(john.age);
+
+  var arr1 = ['a','b'];
+  var arr2 = ['c','d'];
+  Array.prototype.push.apply(arr1, arr2);
+  console.log(arr1);
+  var str = 'abc';
+  str = Array.prototype.join.call(str,'-');
+  console.log(str);
+  str = Array.prototype.map.call(str, function (x) {
+    return x.toUpperCase();
+  });
+  console.log(str);
+
+
+</script>
 </body>
 </html>
