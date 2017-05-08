@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1 id="demo">My Web Page</h1>
+<button type="button" onclick="myFunction()">Click me</button>
+<script src="externalJavascript.js"></script>
+<script>
+  window.alert("alert");
+  document.write("document.write");
+  document.getElementById("demo").innerHTML = "innerHTML";
+  console.log("console.log");
+</script>
+<script>
+  var x = 5;
+  var y = 6;
+  var z = x + y;
+  document.getElementById("demo").innerHTML = z;
+  function myFunction(x, y) {
+    return x + y;
+  }
+
+  var time = 10;
+  var greeting;
+
+  if (time < 10) {
+    greeting = "Good morning";
+  } else if (time < 20) {
+    greeting = "Good day";
+  } else {
+    greeting = "Good evening";
+  }
+
+  console.log(greeting);
+
+  var a = 1;
+  console.log(a);
+  {
+    var a = 2;
+  }
+  console.log(a);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    *{margin: 0;padding: 0}
+    ul{list-style: none}
+    .graph_wrapper{position: relative;height: 300px;width: 100%}
+    .graph_wrapper .graph_y{position: absolute;height: 100%;width: 100%;;float: left}
+    .graph_wrapper .graph_y ul{border-bottom: 1px solid red;}
+
+    .graph_wrapper .graph_x{position: absolute;height: 100%;width: 100%;background-color: yellow;float: left;left: 10%}
+
+
+  </style>
+</head>
+<body>
+  <div class="graph_wrapper">
+    <div class="graph_y">
+      <ul>
+        <li>100</li>
+        <li>80</li>
+        <li>60</li>
+        <li>40</li>
+        <li>20</li>
+        <li>0</li>
+      </ul>
+    </div>
+    <div class="graph_x">
+      <ul>
+        <li>
+          <div>
+            <span></span>
+            <div class="bar"></div>
+            <span></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
