@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+
+
+<script>
+  // 핵심은 기본 자료형을 제외한 나머지는 모두 객체형이고 객체형들은 변경가능하다는 점 그러나 기본 자려형은 변경이 불가능 하다.
+  var statement = 'i am an immutable value'; // string  is immutable value;
+
+  var otherStr = statement.slice(8,17);
+
+  console.log(otherStr);
+  console.log(statement);
+
+  var arr = [];
+  console.log(arr.length); // 0
+
+  var v2 = arr.push(2);
+  console.log(arr.length); // 1
+
+  var user = {
+    name:'Lee',
+    address:{
+      city:'Seoul'
+    }
+  };
+
+  var myName = user.name; //string type
+
+  user.name = 'Kim';
+  console.log(myName); //Lee
+
+  myName = user.name;
+  console.log(myName); //Kim
+
+  // ES6 추가 Object.assign , Object.freeze
+</script>
+</body>
+</html>

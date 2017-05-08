@@ -5,44 +5,35 @@ blockquote, th, td, input, select, button {
   margin: 0;
   padding: 0
 }
-
 fieldset, img {
   border: 0 none
 }
-
 dl, ul, ol, menu, li {
   list-style: none
 }
-
 blockquote, q {
   quotes: none
 }
-
 blockquote:before, blockquote:after, q:before, q:after {
   content: '';
   content: none
 }
-
 input, select, textarea, button {
   vertical-align: middle
 }
-
 input::-ms-clear {
   display: none
 }
-
 button {
   border: 0 none;
   background-color: transparent;
   cursor: pointer
 }
-
 body {
   background: #fff;
   direction: ltr;
   -webkit-text-size-adjust: none
 }
-
 body, th, td, input, select, textarea, button {
   font-size: 13px;
   line-height: 1.5;
@@ -50,29 +41,23 @@ body, th, td, input, select, textarea, button {
   color: #222;
   letter-spacing: -1px
 }
-
 .os_mac body, .os_mac th, .os_mac td, .os_mac input, .os_mac select, .os_mac textarea, .os_mac button {
   letter-spacing: 0
 }
-
 a {
   color: #222;
   text-decoration: none
 }
-
 a:hover {
   text-decoration: none
 }
-
 a:active {
   background-color: transparent
 }
-
 address, caption, cite, code, dfn, em, var {
   font-style: normal;
   font-weight: normal
 }
-
 li {
   list-style: none
 }
@@ -131,7 +116,9 @@ li {
   font-style: normal;
   font-weight: 500;
 }
-
+#myColl .coll_cont_wrap {
+  float: left;
+}
 #myColl .coll_cont_wrap > li {
   width: 50%;
   height: 30px;

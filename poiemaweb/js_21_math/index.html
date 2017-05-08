@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<script>
+  // 그럼 개발자도구 소스 - 디버거 이용
+  //절대값
+  var test = null;
+  test = Math.abs('-1');     // 1
+  test = Math.abs(-2);       // 2
+  test = Math.abs(null);     // 0
+  test = Math.abs("string"); // NaN
+  test =  Math.abs();         // NaN
+
+  //제곱근
+  test = Math.sqrt(9); // 3
+
+  // 첫번째 인수를 밑, 두번째 인수를 지수로 하여 거듭제곱
+  test =  Math.pow(7, 2);    // 49
+  test = Math.pow(7, 3);    // 343
+  test = Math.pow(2, 10);   // 1024
+  //최대수
+  test = Math.max(1, 2, 3);  // 3
+
+  var arr = [1, 2, 3];
+  var max = Math.max.apply(null, arr); // 3
+
+  // ES6
+  //  var max = Math.max(...arr); // 3
+
+  //최소수
+  Math.min(1, 2, 3);  // 1
+
+  var arr = [1, 2, 3];
+  var min = Math.min.apply(null, arr); // 1
+
+  // ES6
+  //  var min = Math.min(...arr); // 1
+</script>
+</body>
+</html>

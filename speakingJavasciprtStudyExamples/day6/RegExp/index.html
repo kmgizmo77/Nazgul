@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    *{margin: 0;padding: 0}
+    .wrapper {width: 500px;height:400px; border: 1px solid red; margin:  auto}
+    .wrapper div {width: 100%;height:100px;text-align: center;font-size: large;  line-height: 100px;}
+    .wrapper div input {width: 50%; height: 50%; text-align: center}
+    .wrapper button{width: 100%;height:100px;text-align: center;font-size: large; background-color: bisque}
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div>
+    <input id="user_id" type="text" value="(아이디 : 4~10자 문자+숫자)">
+  </div>
+  <div>
+    <input id="user_pwd" type="text" value="(비밀번호 : 특수문자+문자+숫자)">
+  </div>
+  <div>
+    <input id="user_phone" type="text" value="(전화번호 : 010-xxxx-xxxx)">
+  </div>
+  <button id="btn">중복체크</button>
+</div>
+<script>
+  var userId = document.getElementById('user_id');
+  var userPwd = document.getElementById('user_pwd');
+  var userPhone = document.getElementById('user_phone');
+  var btn = document.getElementById('btn');
+
+  function userIdChecker(){
+    var userIdVal = document.getElementById('user_id').value;
+    var regExp = /^[A-Za-z0-9]{4,10}$/;
+    return regExp.test(String(userIdVal));
+  }
+  function userPwdChecker(){
+    var userPwdVal = document.getElementById('user_pwd').value;
+    var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+    return regExp.test(userPwdVal);
+  }
+  function userPhoneChecker(){
+    var userPhoneVal = document.getElementById('user_phone').value;
+    var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+    return regExp.test(userPhoneVal);
+  }
+
+  btn.addEventListener('click', function () {
+    userIdChecker() ? userId.style.color = 'skyblue' : userId.style.color = 'red';
+    userPwdChecker() ? userPwd.style.color = 'skyblue' : userPwd.style.color = 'red';
+    userPhoneChecker() ? userPhone.style.color = 'skyblue' : userPhone.style.color = 'red';
+
+  });
+
+</script>
+</body>
+</html>

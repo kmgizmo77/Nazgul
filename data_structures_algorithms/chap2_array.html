@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<script>
+  // shallow copy
+  var nums = [];
+  for (var i = 0; i < 10; ++i) {
+    nums[i] = i + 1;
+  }
+
+  var sameNums = nums;
+  console.log(nums);
+  console.log(sameNums);
+
+  nums[0] = 400;
+
+  console.log(sameNums[0]);
+
+  //deep copy
+
+  var targetArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  var copiedArray = [];
+  function doDeepCopy(targetArray, copiedArray) {
+    for (var i = 0; i < targetArray.length; ++i) {
+      copiedArray[i] = targetArray[i];
+    }
+  }
+
+  doDeepCopy(targetArray, copiedArray);
+  targetArray[0] = 400;
+  console.log(copiedArray[0]);
+
+  // accessor function 접근자 함수
+
+  // indexOf() - 찾은 첫번쨰 놈 반환, lastIndexOf() 마지막놈 반환
+
+  var names = ['David', 'Cynthia', 'Raymond', 'Clayton', 'Jjennifer'];
+  var name = 'David';
+  var position = names.indexOf(name);
+  if (position >= 0) {
+    console.log('Found ' + name + 'at position ' + position);
+  } else {
+    console.log(name + ' no found in array.');
+  }
+  // join(), toString()
+  var testJoin = names.join(' & ');
+  console.log(testJoin);
+  var testToString = names.toString();
+  console.log(testToString);
+
+  // 기존의 배열을 이용해서 새 배열 만들기
+  // concat()
+
+  var cisDept = ['Mike', 'Clayton', 'Terrill', 'Danny', 'Jennifer'];
+  var dmpDept = ['Raymond', 'Cynthia', 'Bryan'];
+  var itDiv = cisDept.concat(dmpDept);
+  console.log(itDiv);
+  itDiv = dmpDept.concat(cisDept);
+  console.log(itDiv);
+
+  //splice()
+  var list = ['Mike', 'Clayton', 'Terrill', 'Raymond', 'Danny', 'Cynthia', 'Jennifer'];
+  var testSpliceList1 = list.splice(3, 3);
+  var testSpliceList2 = list;
+  console.log(testSpliceList1);
+  console.log(testSpliceList2);
+
+  //mutator function 변형자 함수
+
+  //push() - 알고 있음 패스 , unshift()
+
+  var shiftList = [2, 3, 4, 5];
+  //  shiftList.unshift(1);
+  shiftList.unshift(1, 2);
+  console.log(shiftList);
+
+  // pop(), splice() 패스
+  // reverse() 정렬함수 패스
+
+  //반복자 함수 - forEach()
+  function square(num) {
+    console.log(num, num * num);
+  }
+
+  var forEachTestList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  forEachTestList.forEach(square);
+
+  //every() - 배열의 모든 요소가 참이면 true
+
+  function isEven(num) {
+    return num % 2 === 0;
+  }
+  var everyTestList = [2, 4, 6, 8, 10];
+  var even = everyTestList.every(isEven);
+  if (even) {
+    console.log('모두 짝수');
+  } else {
+    console.log('모두 짝수는 아님');
+  }
+
+  //some() 일부만 참이여도 true
+  //reduce() 함수는 누적자 함수를 인자로 받은 다음 배열의 요소를 적용
+
+  //  function add(runningTotal, currentValue) {
+  //    return runningTotal + currentValue;
+  //  }
+
+  var ruduceNums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  //  var sum = ruduceNums.reduce(add);
+  //  console.log(sum);
+  // 추가 reduceRight()는 오른쪽부터 시작
+
+  //새 배열을 반환하는 반복자 함수
+
+  // map() - forEach()처럼 각 요소에 대입하는것은 같지만 새로운 배열을 반환하는 것이 특징
+  function curve(grade) {
+    return grade += 5;
+  }
+
+  //  var grades = [77, 65, 81, 92, 83];
+  //  var newgrades = grades.map(curve);
+  //  console.log(newgrades);
+
+  //filter() - 불린 함수를 만족하는 요소를 포함하는 새로운 배열을 반환
+  function isOdd(num) {
+    return num % 2 != 0;
+  }
+
+  var testlist = [];
+  for (var i = 0; i < 20; ++i) {
+    testlist[i] = i + 1;
+  }
+
+  function customCopy(something) {
+    return something == something;
+  }
+
+  var evens = testlist.filter(isEven);
+  console.log(evens);
+  var odds = testlist.filter(isOdd);
+  console.log(odds);
+  var testCC = testlist.filter(customCopy);
+  testCC[0] = 400;
+  console.log(testCC);
+  console.log(testlist);
+
+  // 이차원, 다차원 배열 만들기
+
+  var twod = [];
+  var rows = 5;
+  for (var i = 0; i < rows; ++i) {
+    twod[i] = [];
+  } // 배열의 모든 요소가 undefined로 되는 단점이 있음
+
+
+  // 배열의 요소를 함수로 확장한 크락포드 의 코드
+  Array.matrix = function (numrows, numcols, initial) {
+    var arr = [];
+    for (var i = 0; i < numrows; ++i) {
+      var columns = [];
+      for (var j = 0; j < numcols; ++j) {
+        columns[j] = initial;
+      }
+      arr[i] = columns;
+    }
+    return arr;
+  };
+
+  var numberList = Array.matrix(5, 5, 0);
+  console.log(numberList[1][1]);
+  var nameList = Array.matrix(3, 3, "");
+  nameList[1][2] = "joe";
+  console.log(nameList[1][2]);
+
+  //이차원 배열요소 처리
+
+  //  var grades = [[89,77],[76,82,81],[91,94,89,99]];
+  //  var total = 0;
+  //  var average = 0.0;
+  //  for(var row = 0; row < grades.length; ++row){
+  //    for(var col = 0; col < grades[row].length; ++col){
+  //      total += grades[row][col];
+  //    }
+  //    average = total / grades[row].length;
+  //    console.log('번호 '+(row+1)+' , 평균 : '+ average.toFixed(2));
+  //    total = 0;
+  //    average = 0.0;
+  //  }
+  // 들쭉날쭉한 배열 또한 가능
+
+  //2.9 연습문제
+  // 1. 객체에 학생들의 점수 집합을 저장하는 grades객체를 만드시오 점수를 추가하는 함수 학생의 평균 점수를 출력하는 기능을 객체에 추가하시오
+
+  //  function Student() {
+  //    this.grades = [];
+  //    this.addPoint = addPoint;
+  //    this.printAverage = printAverage;
+  //  }
+  //
+  //  function addPoint(point){
+  //    this.grades.push(point)
+  //  }
+  //
+  //  function printAverage() {
+  //    var total = 0;
+  //    for(var i = 0; i < this.grades.length; ++i){
+  //      total += this.grades[i];
+  //    }
+  //    return (total / this.grades.length).toFixed(2);
+  //  }
+  //
+  //  var suji = new Student();
+  //  suji.addPoint(11);
+  //  suji.addPoint(44);
+  //  suji.addPoint(77);
+  //  console.log(suji.printAverage());
+
+  // 2. 배열의 단어 집합을 저장한 다음 배열의 내용을 정방양 또는 역방향으로 출겨하는 기능을 구현하시오
+
+  var myarr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+
+  function change(arr) {
+    return arr.reverse();
+  }
+  console.log(change(myarr));
+  console.log(change(myarr));
+
+  //이차원 배열을 이용해 월간 온도 자료를 저장하도록 weeklyTemps객체를 고치시오. 월간 평균 지정한 주의 평균 모든 주의 평균을 출력하는 함수를 만드시오
+
+  function MonthlyTemps() {
+    this.dataStore = [[43,22,33,42,32],[12,23,43,23,45],[55,23,42,33,55],[66,43,23,43,11],[23,13,23,18,43]];
+    this.getWeeklyAvg = getWeeklyAvg;
+    this.getMonthlyAvg = getMonthlyAvg;
+  }
+
+  function getWeeklyAvg(thisWeek) {
+    var thisWeekIdx = thisWeek - 1;
+    var total = 0;
+    for(var i = 0; i < this.dataStore[thisWeekIdx].length; ++i){
+      total += this.dataStore[thisWeekIdx][i];
+    }
+    return total / this.dataStore[thisWeekIdx].length;
+  }
+
+  function getMonthlyAvg() {
+    var total = 0;
+    var avg = 0.0;
+    var monthTotal = 0;
+    for(var m = 0; m < this.dataStore.length; ++m){
+      for(var w = 0; w <this.dataStore[m].length; ++w){
+        total += this.dataStore[m][w];
+      }
+      avg = total / this.dataStore[m].length;
+      monthTotal += avg;
+      total = 0;
+      avg = 0;
+    }
+    return (monthTotal / this.dataStore.length).toFixed(2);
+  }
+
+  var seoul = new MonthlyTemps();
+
+  console.log(seoul.getWeeklyAvg(1));
+  console.log(seoul.getMonthlyAvg());
+
+
+
+
+</script>
+</body>
+</html>

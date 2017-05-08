@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>정규식표현</title>
+</head>
+<body>
+<script>
+  //전화번호 유효성 체크
+  var tel = '0104062228공';
+  var myRegExp = /^[0-9]+$/;
+  console.log(myRegExp.test(tel)); //false
+
+  //정규식은 주석이나 공백을 허용하지 않음, 가독성 나쁨
+  //정규식 표현의 메서드
+  // RegExp.prototype.exec(),
+  // RegExp.prototype.test(),
+  // String.prototype.match(),
+  // String.prototype.replace(),
+  // String.prototype.search(),
+  // String.prototype.split() 등
+
+  var test = 'kaseiFSE';
+  var myRegExp2 = /regexr/i; //pattern/flag
+  console.log(myRegExp2.test(test));
+  //i ignoreCase 대소문자 구분 안함
+  //g global 문자내의 모든 패턴 검색
+  //m MultiLine 문자열 행이 바뀌어도 검색
+
+  var targetStr = 'Is this all there is?';
+  var regexr = /is/;
+  console.log(targetStr.match(regexr)); //["is", index: 5, input: "Is this all there is?"]
+  regexr = /is/ig;
+  console.log(targetStr.match(regexr)); //["Is", "is", "is"]
+  //플래그는 옵션으로 사용하지 않아도 된다. 플래그를 사용하지 않은 경우 문자열 내 검색 매칭 대상이 1개 이상이더라도 첫번째 매칭한 대상만을 검색하고 종료
+
+  targetStr = 'AA BB Aa Bb';
+  regexr = /.../;
+  console.log(targetStr.match(regexr));//["AA ", index: 0, input: "AA BB Aa Bb"]
+  regexr = /.../g;
+  console.log(targetStr.match(regexr));//["AA ", "BB ", "Aa "]
+  regexr = /A/ig;
+  console.log(targetStr.match(regexr));//["A", "A", "A", "a"]
+  regexr = /A+/i;
+  console.log(targetStr.match(regexr));//["AA", index: 0, input: "AA BB Aa Bb"]
+  regexr = /A|B/g;
+  console.log(targetStr.match(regexr));//["A", "A", "B", "B", "A", "B"]
+  regexr = /A+|B+/g;
+  console.log(targetStr.match(regexr));//["AA", "BB", "A", "B"]
+  //위 예제는 패턴을 or로 한번 이상 반복하는 것인데 간단히 표현하면 아래와 같다.
+  regexr = /[AB]+/g;                   //[]내의 문자는 or로 동작한다. 그 뒤에 +를 사용하여 앞선 패턴을 한번 이상 반복하게 한다.
+  console.log(targetStr.match(regexr));//["AA", "BB", "A", "B"]
+  regexr = /[A-Z]+/g;                  // 범위지정
+  console.log(targetStr.match(regexr));//["AA", "BB", "A", "B"]
+  regexr = /[A-Za-z]+/g;
+  console.log(targetStr.match(regexr));//["AA", "BB", "Aa", "Bb"]
+  targetStr = "AA BB Aa Bb 24,000";
+  regexr = /[0-9]+/g;
+  console.log(targetStr.match(regexr));//["24", "000"]
+  regexr = /[0-9,]+/g;
+  console.log(targetStr.match(regexr));//["24,000"]
+  regexr = /[\d,]+/g;                  //\d는 숫자를 의미한다. \D는 \d과 반대로 동작한다.
+  console.log(targetStr.match(regexr));// [ '24,000' ]
+  regexr = /[\w,]+/g;                  //\w는 알파벳과 숫자를 의미한다. \W는 \w과 반대로 동작한다.
+  console.log(targetStr.match(regexr));// [ 'AA', 'BB', 'Aa', 'Bb', '24,000' ]
+  targetStr = "abcdef";
+  regexr = /^abc/;                     // 특정단어 시작
+  console.log(regexr.test(targetStr)); // true
+  regexr = /ef$/;                      // 특정단어 끝
+  console.log(regexr.test(targetStr)); // true
+  targetStr = " Hi!";
+  regexr = /^[\s]+/;                   //공백검사
+  console.log(regexr.test(targetStr)); // true
+  targetStr = "abc123";
+  regexr = /^[A-Za-z0-9]{4,10}$/;      // 아이디 사용 여부 검사
+  console.log(regexr.test(targetStr)); // true
+  targetStr = "thecoolone@gmail.com";        //이메일 형식
+  regexr =   /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  console.log(regexr.test(targetStr)); // true
+  targetStr = "010-1234-5678";
+  regexr = /^\d{3}-\d{3,4}-\d{4}$/;    // 폰형식
+  console.log(regexr.test(targetStr)); // true
+  targetStr = "abc#123";               // 특수문자 형식
+  regexr = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+  console.log(regexr.test(targetStr)); // true
+
+</script>
+</body>
+</html>
