@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* RESET */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video, hr {  margin: 0;  padding: 0;  border: 0;  font-size: 100%;  font: inherit;  vertical-align: baseline;  }
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {  display: block;  }
+    body {  line-height: 1;  }
+    ol, ul {  list-style: none;  }
+    blockquote, q {  quotes: none;  }
+    blockquote:before, blockquote:after,
+    q:before, q:after {  content: '';  content: none;  }
+    table {  border-collapse: collapse;  border-spacing: 0;  }
+    input, button, select{-webkit-appearance:none; border:none; background-color:#fff}
+    a:link, a:visited{text-decoration:none;color:#000}
+    a:hover, a:focus{text-decoration:underline}
+    /* RESET */
+  </style>
+  <style>
+    #shawn .wrap_cont{position:relative;margin:60px auto;width:1000px;height:600px;border:5px solid #012426;background-color:#fff}
+  </style>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="shawn" style="background-color: #f0f0f0">
+  <div class="wrap_cont">
+    <div class="forrest">
+      <img src="https://thumbs.dreamstime.com/x/mystic-forrest-18120676.jpg">
+    </div>
+    <div class="root"></div>
+
+  </div>
+</div>
+
+
+
+
+<script>
+  (function ($, ctx) {
+    var $ctx = $(ctx);
+    var $forrest = $ctx.find('.forrest');
+    var wood = 0;
+
+
+
+
+    var user = {
+      name : 'shawn',
+      wood : 0,
+      updateWood : function(){
+        this.wood += 1;
+        game.updateB();
+      }
+    };
+
+    var board = {
+      context : $('.root'),
+      updateBoard : function(user){
+        this.context.text(user.wood);
+      }
+    };
+
+    var game = {
+      user : user,
+      board : board,
+      start : function(){
+        this.event();
+      },
+      event : function(){
+        var that = this;
+        $forrest.on('click', function () {
+          that.user.updateWood();
+        });
+      },
+      updateB : function(){
+        this.board.updateBoard(this.user);
+      }
+    };
+    game.start();
+
+
+
+
+
+  })(jQuery,'#shawn');
+</script>
+</body>
+</html>

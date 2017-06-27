@@ -9,17 +9,7 @@
 <script>
   var elem = document.getElementById('btn');
   //IE9 이하에서는 인자 중 객체를 지원하지 않음 'new Event' 쓰면 될듯
-  var event = new CustomEvent(
-    'newMsg',
-    {
-      detail: {
-        msg: 'hello world',
-        time: new Date()
-      },
-      bubbles: true,
-      cancelable: true
-    }
-  );
+  var event = new CustomEvent('newMsg', {detail: {msg: 'hello world', time: new Date()}, bubbles: true, cancelable: true});
   var newMsgHandler = function (e) {
     console.log(e.detail.msg); // 이런식으로 인자 중 객체로 전달 받은 데이터를 가지고 놀수 있나봄 ㅇㅇ
     //e.preventDefault(); // 이벤트의 기본적인 동작(캡쳐링과 버블링)이 일어나는 것을 막기위해 보완적으로 사용되는 방법 - 보통 페이지 전환을 막더라

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function copyList(list) {
+    var copiedList = [];
+    list.forEach(function (item, idx) {
+      copiedList.push(list[idx]);
+    });
+    return copiedList;
+  }
+
+  function chunk(list, size) {
+    var copiedList = copyList(list);
+    var resultList = [];
+    var tmpList = [];
+
+    for (var i = 0; i < copiedList.length; i++) {
+
+      tmpList.push(copiedList[i]);
+
+      if(tmpList.length === size){
+        resultList.push(tmpList);
+        tmpList = [];
+      }
+
+    }
+    if(tmpList.length !== 0){
+      resultList.push(tmpList);
+    }
+
+    return resultList;
+  }
+
+
+  console.log(chunk(['a', 'b', 'c', 'd'], 2));
+  console.log(chunk(['a', 'b', 'c', 'd'], 3));
+  console.log(chunk(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 5));
+  console.log(chunk(['a', 'b', 'c', 'd'], 5));
+
+</script>
+</body>
+</html>
