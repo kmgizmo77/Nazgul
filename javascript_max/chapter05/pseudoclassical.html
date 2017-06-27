@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<script>
+  //  Function.method('new', function () {
+  //    //생성자의 프로토타입을 상속받는 새로운 객체 생성
+  //    var that = Object.create(this.prototype);
+  //    //this를 새로운 객체에 바인딩하면서 생성자 호출
+  //    var other = this.apply(that, arguments);
+  //    //반환값이 객체가 아니면 새로운 개체로 대체
+  //    return (typeof other === 'object' && other) || that;
+  //  });
+
+  var Mammal = function (name) {
+    this.name = name;
+  };
+  Mammal.prototype.get_name = function () {
+    return this.name;
+  };
+  Mammal.prototype.says = function () {
+    return this.saying || '';
+  };
+
+//  var myMammal = new Mammal('merlin');
+//  var name = myMammal.get_name();
+//  console.log(name);
+
+  var Cat = function (name) {
+    this.name = name;
+    this.saying = 'ah ohoh'
+  };
+
+  //Cat.prototype을 Mammal의 새 인스턴스로 대체
+  Cat.prototype = new Mammal();
+  //새로운 prototype에 purr와 get_name 메소드 추가
+  Cat.prototype.purr = function (n) {
+    var i, s = '';
+    for (i = 0; i < n; i += 1) {
+      if (s) {
+        s += '-';
+      }
+      s += 'oh'
+    }
+    return s;
+  };
+  Cat.prototype.get_name = function () {
+    return this.says() + ' ' + this.name + ' ' + this.says();
+  };
+
+  var myCat = new Cat('gilbert');
+  var says = myCat.says();
+  var purr = myCat.purr(5);
+  var name = myCat.get_name();
+
+  console.log(says);
+  console.log(purr);
+  console.log(name);
+
+
+</script>
+</body>
+</html>
