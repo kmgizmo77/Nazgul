@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="target">test</div>
+
+
+<script>
+
+
+  //  var jQuery = {
+  //
+  //  };
+  //
+  //  jQuery.prototype.select = function (elem) {
+  //    return document.querySelectorAll(elem);
+  //  };
+  //
+  //  jQuery.prototype.css = function (type, val) {
+  //    for(var i = 0; i<this.length; i++){
+  //      this[i].style[type] = val;
+  //    }
+  //    return this;
+  //  };
+  //console.log(jQuery.select('.target'));
+  //console.log(jQuery.select('.target').css('backgroundColor', 'red'));
+
+  //  function $(elem) {
+  //    return document.querySelectorAll(elem);
+  //  }
+  //
+  //  function css(elem, type, val) {
+  //    for(var i=0; i<elem.length; i++){
+  //      elem[i].style[type] = val;
+  //    }
+  //    return elem;
+  //  }
+  //
+  //
+  //
+  //  console.log($('.target'));
+  //  console.log(css($('.target'),'backgroundColor', 'red'));
+
+
+  //$('.target').css('backgroundColor', 'red'));
+  //$('.target')
+
+  //new
+  function $(elem) {
+
+    function jQuery() {
+      this.elementList = document.querySelectorAll(elem);
+    }
+
+    jQuery.prototype.css = function (type, val) {
+      for (var i = 0; i < this.elementList.length; i++) {
+        this.elementList[i].style[type] = val;
+      }
+      return this;
+    };
+    jQuery.prototype.attr = function (type, val) {
+      for (var i = 0; i < this.elementList.length; i++) {
+        this.elementList[i][type] = val;
+      }
+      return this;
+    };
+
+    return new jQuery();
+  }
+  var $target = $('.target');
+  console.log($target.css('backgroundColor', 'red'));
+  console.log($target.attr('id','key'));
+
+
+  // literal
+  //  function $(elem) {
+  //
+  //    var jQuery = {
+  //      elementList : document.querySelectorAll(elem),
+  //      css : function(){},
+  //      attr : function(){}
+  //    };
+  //
+  //    return jQuery;
+  //  }
+
+
+</script>
+</body>
+</html>

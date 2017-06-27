@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>DK Techin 공통플랫폼 파트 신입 FT개발자 코딩 테스트 문제</title>
+	<link href="css/reset.css" rel="stylesheet"/>
+	<link href="css/main.css" rel="stylesheet"/>
+	<script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+	<!--<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>-->
+	<script src="js/data.js"></script>
+	<script type="text/javascript">
+
+    //3번 요구사항 ------끝!!!! 쏴리질러!!!!
+
+    $(document).ready(function() {
+      console.log("loaded : js/data.js");
+      //-------------functions----------------------------------------------------------------------------------------
+
+//1번 요구사항 슬라이드 구현은....그리고 없어지는 것 해결하기
+      $(function(){
+        $('.btn_nav').click(function(){
+          $(".wrap_gnb").animate({"left":"100%"});
+        });
+      });
+
+      $(function(){
+        $(document).click(function(evt){
+          if(!$(evt.target).is(".btn_nav")){
+            $(".wrap_gnb").animate({"left":"-100%"});
+          }
+        });
+      });
+
+      //2번 요구사항
+
+
+      //공통 대응 부분
+      function page_fn(currentPage){
+        $('.list_slide_nav li').removeClass();
+        var movper = currentPage*(-100);
+        $('.list_slide li').css({transform:"translate("+movper+"%,0)"});
+        $('.list_slide_nav li:eq('+currentPage+')').addClass("on");
+      }
+      //감지1
+      function currentPage_fn(currentPage){
+        $('.list_slide_nav li').click(function(){
+          currentPage = $('.list_slide_nav li').index(this);
+          console.log("currentPage:"+currentPage);
+          page_fn(currentPage);
+        });
+        return currentPage;
+      }
+//감지2
+      function nextPage_fn(currentPage){
+        $(".btn_next").click(function(){
+          if(currentPage >= 2){
+            currentPage = 0;
+            page_fn(currentPage);
+          }else{
+            currentPage = currentPage+1;
+            page_fn(currentPage);
+          }
+        });
+      }
+//감지3
+      function prevPage_fn(currentPage){
+        $(".btn_prev").click(function(){
+          if(currentPage <=0){
+            currentPage = 2;
+            page_fn(currentPage);
+          }else{
+            currentPage = currentPage-1;
+            page_fn(currentPage);
+          }
+        });
+      }
+
+//감지
+      function selectbox_change_fn(selected){
+        $("#charSelect").change(function () {
+          $('.wrap_list').empty();
+          $('.total_items').empty();
+          selected = $(this).val();
+          console.log("selected: "+selected);
+          release_tagtree_fn(selected);
+        });
+        return selected;
+      }
+//대응-> 기능별로 세분화 나눌 것
+      function release_tagtree_fn(selected){
+        var total = 0;
+        $.each(STORE[selected], function (index, object) {
+          var $ul = $('<ul class="list_friends"></ul>');
+          var $li = $('<li></li>');
+          var $a = $('<a href="javascript:;" class="link_friends"></a>');
+          var $span1 = $('<span class="wrap_thumb"></span>');
+          var $strong = $('<strong class="tit_item"></strong>');
+          var $span3 = $('<span class="price_item"></span>');
+          var $img = $('<img class="thumb_items" alt=""/>');
+          var $span2 = $('<span class="ico_soldout"></span>');
+          var imgsrc_arr = object.images;
+          var imgsrc = "";
+          $.each(imgsrc_arr, function (i, val) {
+            if (i == 0) {
+              imgsrc = val;
+            }
+            return imgsrc;
+          });
+          if(object.stock === 0){
+            $('.wrap_list').append($ul.append($li.append($a
+              .append($span1.append($img.attr("src", "images/" + imgsrc)).append($span2.html("SoldOut")))
+              .append($strong.html(object.name)).append($span3.html(object.price)))));
+          }else{
+            $('.wrap_list').append($ul.append($li.append($a
+              .append($span1.append($img.attr("src", "images/" + imgsrc)))
+              .append($strong.html(object.name)).append($span3.html(object.price)))));
+          }
+          total += 1;
+          return total;
+        });
+        var $em = $('<em class="emph_number"></em>');
+        var $span4 = $('<span class="total_number"></span>+"개"');
+        $('.total_items').append('총 ').append($em.append($span4.html(total))).append('개의 상품을 조회하였습니다.');
+      }
+
+
+      //-------------declare------------------------------------------------------------------------------------------
+      var selected = "라이언";
+      var currentPage =0;
+
+
+      //-------------execute------------------------------------------------------------------------------------------
+      release_tagtree_fn(selected);
+      selectbox_change_fn(selected);
+      currentPage_fn(currentPage);
+      nextPage_fn(currentPage);
+      prevPage_fn(currentPage);
+      //-------------end------------------------------------------------------------------------------------------
+    }); //doc.ready end
+
+	</script>
+</head>
+<body>
+
+<!--요구사항 1-->
+<div class="dktest_wrap">
+	<header id="dktestHead" class="dktest_head">
+		<div class="wrap_tit"><h1 class="tit_main">CPDev</h1></div>
+		<div class="wrap_btn_nav">
+			<button class="btn_nav">
+				네비게이션
+			</button>
+		</div>
+		<div class="wrap_nav">
+			<h2 class="screen_out">메인 네비게이션 영역</h2>
+			<nav class="wrap_gnb">
+					<span class="logo_main">
+						<img src="images/logo_main.png" alt="디케이테크인" class="img_logo"/>
+					</span>
+				<span class="line_hr"></span>
+				<ul class="gnb">
+					<li><a href="javascript:" class="link_gnb">Menu1</a></li>
+					<li><a href="javascript:" class="link_gnb">Menu2</a></li>
+					<li><a href="javascript:" class="link_gnb">Menu3</a></li>
+					<li><a href="javascript:" class="link_gnb">Menu4</a></li>
+				</ul>
+			</nav>
+			<span class="dimmed_bg"></span>
+		</div>
+		<div class="wrap_btn_setting">
+			<button class="btn_setting">세팅</button>
+		</div>
+	</header>
+
+	<!--요구사항 2-->
+	<hr class="hide">
+	<main id="dktestMain" class="dktest_main">
+		<div id="cMain">
+			<article id="mArticle" class="article_main">
+				<h2 id="dktestBody" class="screen_out">테스트 본문 영역</h2>
+				<div class="wrap_visual">
+					<h3 class="screen_out">슬라이딩 영역</h3>
+					<div class="wrap_slide">
+						<ul class="list_slide">
+							<li>
+								<img  src="images/slide_item0.png" alt=""/>
+							</li>
+							<li>
+								<img  src="images/slide_item1.png" alt=""/>
+							</li>
+							<li>
+								<img  src="images/slide_item2.png" alt=""/>
+							</li>
+						</ul>
+						<a href="javascript:;" class="btn_slide btn_prev">왼쪽으로 넘기기</a>
+						<a href="javascript:;" class="btn_slide btn_next">오른쪽으로 넘기기</a>
+						<div class="wrap_slide_nav">
+							<ul class="list_slide_nav">
+								<li class="on"></li ><li></li><li></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!--요구사항 3-->
+				<div class="wrap_friends">
+					<h3 class="screen_out">캐릭터 상품 영역</h3>
+					<div class="tit_friends">
+						<select id="charSelect" class="select_friends">
+							<option value="라이언" selected>라이언</option>
+							<option value="무지" >무지</option>
+							<option value="어피치" >어피치</option>
+						</select>
+						<label for="charSelect" >캐릭터 상품</label>
+					</div>
+					<div class="total_items">
+						<!--jquery:totalnumdata-->
+					</div>
+					<div class="wrap_list">
+						<!--jqeury:itemlistdata-->
+					</div>
+				</div>
+			</article>
+		</div>
+	</main>
+	<hr class="hide">
+</div>
+<footer id="dktestFoot" class="dktest_foot">
+	<div class="inner_foot">
+		<h3 class="screen_out">꼬리말 영역</h3>
+		<p class="txt_copyright">Copyright &copy; dk techin All rights reserved.</p>
+	</div>
+</footer>
+<script src="js/answer.js"></script>
+</body>
+</html>
