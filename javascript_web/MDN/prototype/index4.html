@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="speColl"></div>
+<script>
+  (function (ctx) {
+    var $cts = ctx;
+
+    var fn1 = function () {
+      //private
+
+      //constructor
+      function Fn1Cons() {
+        this.ctx = 'testetsetest';
+      }
+
+      Fn1Cons.prototype.method1 = function () {
+        console.log(this.ctx);
+      };
+      return {
+        init:function () {
+          //public
+          var test = new Fn1Cons();
+          test.method1();
+        }
+      }
+    };
+
+    /*var Fn2 = function (name) {
+      this.name = name;
+    };
+
+    Fn2.prototype.add = function(){console.log('add');};
+
+    var Fn3 = function () {
+      this.f2 = new Fn2("shawn");
+    };
+
+    Fn3.prototype.find = function(){console.log(this.f2);};*/
+
+    var fn4 = function () {};
+
+    var fn5 = function () {};
+
+    return {
+      init:function () {
+        fn1().init();
+      }
+    }
+  })('#speColl');
+
+
+</script>
+</body>
+</html>

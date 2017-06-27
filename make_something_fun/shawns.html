@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* RESET */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video, hr { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section { display: block; }
+
+    body { line-height: 1; }
+
+    ol, ul { list-style: none; }
+
+    blockquote, q { quotes: none; }
+
+    blockquote:before, blockquote:after,
+    q:before, q:after { content: ''; content: none; }
+
+    table { border-collapse: collapse; border-spacing: 0; }
+
+    input, button, select { -webkit-appearance: none; border: none; background-color: #fff }
+
+    a:link, a:visited { text-decoration: none; color: #000 }
+
+    a:hover, a:focus { text-decoration: underline }
+
+    /* RESET */
+  </style>
+  <style>
+    #shawn .wrap_cont { position: relative; margin: 60px auto; width: 1000px; height: 600px; border: 5px solid #012426; background-color: #fff }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="shawn" style="background-color: #f0f0f0">
+  <div class="wrap_cont">
+    <div class="forrest">
+      <img src="https://thumbs.dreamstime.com/x/mystic-forrest-18120676.jpg">
+    </div>
+    <div class="root"></div>
+
+  </div>
+</div>
+
+
+<script>
+  (function ($, ctx) {
+    var $ctx = $(ctx);
+    var $forrest = $ctx.find('.forrest');
+    var wood = 0;
+
+    /*
+
+
+
+     var user = {
+     name : 'shawn',
+     wood : 0,
+     updateWood : function(){
+     this.wood += 1;
+     game.updateB();
+     }
+     };
+
+     var board = {
+     context : $('.root'),
+     updateBoard : function(user){
+     this.context.text(user.wood);
+     }
+     };
+
+     var game = {
+     user : user,
+     board : board,
+     start : function(){
+     this.event();
+     },
+     event : function(){
+     var that = this;
+     $forrest.on('click', function () {
+     that.user.updateWood();
+     });
+     },
+     updateB : function(){
+     this.board.updateBoard(this.user);
+     }
+     };
+     game.start();
+
+     var Game = function () {
+
+     };
+     var User = function (name) {
+     this.name = name;
+     this.wood = wood;
+     };
+
+     User.prototype = {
+
+     };
+     var UserInterface = function () {};
+     var EventPool = function () {};
+
+     */
+
+//    var User = function (name) {
+//      this.name = name;
+//      this.wood = 0
+//    };
+//    User.prototype.catchWood = function () {
+//      this.wood += 1;
+//    };
+//    User.prototype.getWood = function () {
+//      return this.wood;
+//    };
+//
+//    var Board = function (context) {
+//      this.context = context;
+//    };
+//    Board.prototype.setWood = function (user) {
+//      console.log(user.getWood());
+//      this.context.text(user.getWood());
+//    };
+//
+//    var Game = function () {
+//      this.user = new User('Shawn');
+//      this.board = new Board($('.root'));
+//    };
+//    Game.prototype.catchWood = function () {
+//      this.user.catchWood();
+//      this.fire('catchWood', this.user);
+//    };
+//    Game.prototype.fire = function (type, arg) {
+//      if (type === 'catchWood') {
+//        this.board.setWood(arg);
+//      }
+//    };
+//
+//
+//    var g = new Game();
+//    $forrest.on('click', function () {
+//      g.catchWood();
+//    });
+
+    var User = function (name) {
+      this.name = name;
+      this.wood = 0;
+      this.gold = 0;
+    };
+    User.prototype = {
+      lsnPool:function (context) {
+        function _actForst (cb){
+          console.log(cb);
+          $(context).on('click',function () {
+            cb();
+          });
+        }
+        return{
+          _actForst:_actForst
+        }
+      },
+      hndPool:function () {
+        console.log(this);
+        function _addWood() {
+          this.wood+=1;
+          console.log('wood : ',this.wood);
+
+        }
+        return{
+          _addWood:_addWood
+        }
+      }
+    };
+
+    var Game = function (user) {
+      this.user = new User(user);
+    };
+
+    Game.prototype ={
+      addEvent:function () {
+        var _user = this.user;
+        _user.lsnPool('.forrest')._actForst(_user.hndPool()._addWood.bind(_user));
+      },
+      removeEvent:function () {
+
+      },
+      fireEvent:function () {
+
+      },
+      init:function () {
+        this.addEvent();
+      }
+    };
+
+    new Game('shawn').init();
+
+
+  })(jQuery, '#shawn');
+</script>
+</body>
+</html>
