@@ -1,0 +1,251 @@
+
+  /* *** 스페셜 톡알람 시작 : grey *** */
+  /* 톡알람 공통 */
+#speSportsColl .alarm_comp{display:inline-block;position:relative;text-align:center;vertical-align:top}
+#speSportsColl .alarm_comp .btn_kakao{display:inline-block;position:relative;min-width:50px;padding:0 4px;border:1px solid #ffcc00;border-radius:1px;background-color:#ffe700;text-align:center;text-decoration:none}
+#speSportsColl .alarm_comp .btn_kakao .inner{font-family:'굴림',gulim,sans-serif;color:#241b05;letter-spacing:-1px}
+#speSportsColl .alarm_comp .btn_kakao .ico_comm3{display:inline-block;width:10px;height:10px;margin-right:2px;background-position:-2px -527px;vertical-align:-2px}
+#speSportsColl .alarm_comp .btn_sizes{height:18px}
+#speSportsColl .alarm_comp .btn_sizes .inner{font-size:12px;line-height:20px}
+#speSportsColl .alarm_comp .btn_sizem{min-width:74px;height:27px;border-radius:20px}
+#speSportsColl .alarm_comp .btn_sizem .inner{font-size:12px;line-height:29px}
+/* 톡알람 안내레이어 */
+#speSportsColl .alarm_comp .layer_tip{display:none;position:absolute;z-index:1;min-height:38px;padding:6px 40px 6px 10px;border:1px solid #696969;line-height:1.4;background-color:#fff;background-color:rgba(255,255,255,.96);text-align:left;white-space:nowrap}
+#speSportsColl .alarm_comp .layer_tip .txt_tip{font-size:13px}
+#speSportsColl .alarm_comp .layer_tip .btn_close{display:block;overflow:hidden;position:absolute;top:0;right:0;padding:10px}
+#speSportsColl .alarm_comp .layer_tip .btn_close .ico_comm3{display:block;overflow:hidden;width:9px;height:9px;background-position:0 -225px;text-indent:-9999px}
+#speSportsColl .alarm_comp .layer_arr{display:none;overflow:hidden;position:absolute;z-index:5;width:11px;height:7px;background:url(http://search1.daumcdn.net/search/statics/special/pi/btn/spe_btn_arr.gif) no-repeat 0 0}
+#speSportsColl .alarm_comp.tip_on .layer_arr{display:block;left:24px}
+#speSportsColl .alarm_comp.tip_on .layer_tip{display:block}
+/* 상단우측 */
+#speSportsColl .alarm_comp.type_top_right .layer_arr{top:-14px;background-position:0 -10px}
+#speSportsColl .alarm_comp.type_top_right .layer_tip{right:-21px;top:-65px}
+/* 상단좌측 */
+#speSportsColl .alarm_comp.type_top_left .layer_arr{top:-14px;background-position:0 -10px}
+#speSportsColl .alarm_comp.type_top_left .layer_tip{left:0;top:-65px}
+/* 알람 팝업레이어 */
+#speSportsColl{position:relative}
+#speSportsColl .alarm_layer{position:absolute;z-index:10;top:10px;left:50%;margin-left:-122px;text-align:center}
+#speSportsColl .alarm_layer .box_layer{width:245px;border:1px solid #9c9ea8;background:#fff}
+#speSportsColl .alarm_layer .layer_cont{padding:26px 12px 23px;line-height:18px}
+#speSportsColl .alarm_layer .txt_subinfo{display:block;margin-top:2px}
+#speSportsColl .alarm_layer .f_etit{display:block}
+#speSportsColl .alarm_layer p+p{margin-top:12px}
+#speSportsColl .alarm_layer .layer_btn{display:table;table-layout:fixed;overflow:hidden;width:100%;border-top:1px solid #ebebeb}
+#speSportsColl .alarm_layer .layer_btn .btn_alarm{display:table-cell;width:50%;padding:11px 0 10px;font-size:14px;line-height:1;color:#000;text-decoration:none}
+#speSportsColl .alarm_layer .layer_btn .btn_alarm+.btn_alarm{border-left:1px solid #ebebeb}
+#speSportsColl .alarm_layer .f_emph{font-family:'돋움',dotum,sans-serif;color:#f93740}
+#speSportsColl .alarm_layer .f_subinfo{color:#919191}
+/* 버튼여러개일 때 */
+#speSportsColl .wrap_btn{width:100%}
+#speSportsColl .wrap_btn .alarm_comp{float:left}
+/* *** 스페셜 톡알람 끝 *** */
+
+    #speSportsColl.wid_r .coll_cont{width:620px;margin-right:0}
+/* 스포츠 */
+#speSportsColl .coll_tit{height:7px;margin-bottom:0}
+#speSportsColl .ico_sports{display:inline-block;overflow:hidden;background:url(//search1.daumcdn.net/search/statics/special/pi/ico/ico_spesports_170829.gif) no-repeat 0 0}
+#speSportsColl .coll_cont{padding-bottom:14px}
+#speSportsColl .box_sports{border:1px solid #e1e5e9;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+#speSportsColl .box_sports .info_base{padding:29px 30px 30px}
+#speSportsColl .box_sports .info_tbl{padding:0 30px 5px}
+#speSportsColl .wrap_thumb{margin-right:29px}
+#speSportsColl .wrap_tit .info_tit{color:#333}
+#speSportsColl .wrap_tit .tit_item{font-size:16px;font-family:'Apple SD Gothic Neo','돋움',dotum,sans-serif;}
+#speSportsColl .wrap_tit .info_txt{display:block;margin-top:7px}
+#speSportsColl .wrap_cont{margin-top:14px;padding:10px 0 0;border-top:1px solid #f5f5f5}
+#speSportsColl .wrap_thumb{float:left}
+#speSportsColl .more_comm{font-size:11px}
+#speSportsColl .cont_data{overflow:hidden}
+#speSportsColl .txt_bar{display:inline-block;width:1px;height:10px;background:#d9d9d9;vertical-align:top}
+#speSportsColl .dl_comm .ico_dot{display:inline-block;width:2px;height:2px;margin:7px 5px 0 0;border-radius:1px;background:#ababab;vertical-align:top}
+#speSportsColl .dl_comm .txt_bar{margin:3px 7px 0}
+#speSportsColl .dl_comm a{display:inline-block}
+#speSportsColl .f_subinfo{color:#777}
+#speSportsColl .scroll{overflow-x:hidden;overflow-y:auto}
+#speSportsColl .ico_alert{display:block;width:30px;height:25px;margin:0 auto 12px;background-position:0 -60px}
+#speSportsColl .box_schinfo{margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #f5f5f5}
+#speSportsColl .box_schinfo .ico_calendar{width:35px;height:35px;background-position:0 -90px;vertical-align:middle;text-indent:-99999px}
+#speSportsColl .box_schinfo .txt_schinfo{display:inline-block;margin-left:6px;font-weight:bold;color:#000}
+#speSportsColl .box_schinfo .txt_sub{display:inline-block;margin-left:2px}
+/* 버튼 */
+#speSportsColl .wrap_btn{margin-top:11px}
+#speSportsColl .wrap_btn .btn_item{display:inline-block;height:27px;margin-right:4px;padding:0 16px;border-radius:3px;border:1px solid #ebebeb;text-align:center;text-decoration:none}
+#speSportsColl .wrap_btn .btn_item .inner{font-size:12px;line-height:28px;font-family:'굴림',gulim,sans-serif;color:#241b05;letter-spacing:-1px}
+#speSportsColl .alarm_comp .btn_sizem .inner{line-height:28px}
+#speSportsColl .wrap_btn .btn_kakao{margin-right:4px}
+#speSportsColl .wrap_btn .btn_stress{border-color:#fdc5c7}
+#speSportsColl .wrap_btn .btn_stress .inner{color:#f73e47}
+#speSportsColl .wrap_btn .alarm_comp .btn_sizem{height:31px;line-height:31px;border-radius:2px;box-shadow:0 1px 0 0 #f7f7f7}
+#speSportsColl .emph_line_grey{border-color:#e6e6e6;color:#999}
+#speSportsColl .wrap_btn .btn_compr_m{padding:0 15px;height:31px;line-height:31px}
+#speSportsColl .wrap_btnsch .btn_compr_m{height:27px;line-height:27px}
+
+/* 메인탭 */
+#speSportsColl .tab_size2 li{width:50%}
+#speSportsColl .tab_size3 li{width:33.333%}
+#speSportsColl .tab_size4 li{width:25%}
+#speSportsColl .tab_main{margin-top:-1px}
+#speSportsColl .list_tab{overflow:hidden;width:100%}
+#speSportsColl .list_tab li{float:left;text-align:center}
+#speSportsColl .list_tab .tab_tit{display:block;height:40px;padding:1px 0 0;border-top:1px solid #e1e5e9;border-left:1px solid #e1e5e9;border-bottom:1px solid #e1e5e9;font-weight:bold;font-size:14px;line-height:41px;letter-spacing:-1px;color:#333;text-decoration:none}
+#speSportsColl .list_tab li:first-child .tab_tit{border-left:0 none}
+#speSportsColl .list_tab .on .tab_tit{padding-top:0;border-top:2px solid #3c88ff;color:#3c88ff;border-bottom-color:#fff}
+/* 서브탭 */
+#speSportsColl .tab_sub{padding-top:11px}
+#speSportsColl .list_tabsub{overflow:hidden;width:100%}
+#speSportsColl .list_tabsub li{float:left}
+#speSportsColl .list_tabsub .tab_tit{display:block;padding:10px 12px 14px 0;line-height:1;color:#777;text-decoration:none}
+#speSportsColl .list_tabsub .ico_check{display:none}
+#speSportsColl .list_tabsub .txt_item{display:inline-block;vertical-align:top}
+#speSportsColl .list_tabsub .on .tab_tit{font-weight:bold;color:#333}
+#speSportsColl .list_tabsub .on .ico_check{display:inline-block;width:12px;height:9px;background-position:0 0;vertical-align:top}
+#speSportsColl .list_tabsub .txt_bar{height:11px;margin-right:7px;background:#ecedf0}
+#speSportsColl .list_tabsub li:first-child .txt_bar{display:none}
+/* 테이블 */
+#speSportsColl .tbl_rank{border-top-color:#ecedf1;border-bottom:0 none}
+#speSportsColl .tbl_rank th{border-bottom-color:#ecedf1;background-color:#f9f9f9}
+#speSportsColl .tbl_rank th,
+#speSportsColl .tbl_rank td{border-left:0 none;text-align:center}
+#speSportsColl .tbl_rank th:first-child,
+#speSportsColl .tbl_rank td:first-child{padding-left:18px;text-align:left}
+#speSportsColl .tab_fix+.wrap_tbl{margin-top:-1px}
+#speSportsColl .tbl_rank .txt_rank{display:inline-block;width:15px;padding:0 3px 0 0;font-family:'돋움',dotum,sans-serif;text-align:center;}
+#speSportsColl .tbl_rank .txt_rank.f_emph{font-weight:bold}
+#speSportsColl .tbl_rank{width:100%}
+#speSportsColl .tbl_rank .thumb_img{display:inline-block;margin:7px 7px 9px 8px;vertical-align:middle}
+/* !* 우승 히스토리 *!*/
+/*#speSportsColl .box_sports .info_history{position:relative;z-index:10;padding:0;margin-top:-1px;border-top:1px solid #ebebeb;background-color:#f8f8f8}*/
+/*#speSportsColl .info_history .cont_data{padding-top:20px}*/
+/*#speSportsColl .item_history{overflow:hidden;width:100%;height:92px}*/
+/*#speSportsColl .info_history .bg_line{float:left;height:92px;margin-left:30px;border-left:1px solid #e1e1e1}*/
+/*#speSportsColl .item_history .ico_dot{float:left;width:5px;height:5px;margin:31px 20px 0 -4px;border-radius:5px;border:1px solid #b3b3b3;background-color:#fff}*/
+/*#speSportsColl .item_history .ico_tail{float:left;width:9px;height:18px;margin-top:27px;background-position:0 -10px}*/
+/*#speSportsColl .item_history.fst .bg_line{margin-top:36px}*/
+/*#speSportsColl .item_history.fst .ico_dot{border-color:#067dff}*/
+/*#speSportsColl .item_history.lst .bg_line{margin-top:-60px}*/
+/*#speSportsColl .info_history .dl_item{overflow:hidden;margin:0 30px 20px 0;padding:18px 0 15px 17px;border-bottom:1px solid #e3e3e3;background-color:#fff}*/
+/*#speSportsColl .info_history .tit_base{font-weight:bold;margin-bottom:8px}*/
+/*#speSportsColl .info_history .cont{color:#777}*/
+/*#speSportsColl .item_history .f_link{display:inline-block;overflow:hidden;max-width:104px;text-overflow:ellipsis;vertical-align:top;white-space:nowrap}*/
+/*#speSportsColl .item_history .txt_bar{height:11px;margin:0 7px;background-color:#ebebeb} */
+/* 관련정보 */
+#speSportsColl .etc_cp{padding-top:2px}
+.g_comp #speSportsColl .etc_cp{padding-top:17px}/* pc개편 추가 */
+.g_comp #speSportsColl .wrap_btn .btn_item .inner .ico_kakao{display:none}/* pc개편 추가 */
+/* 일정.결과 - 항목 2개 */
+#speSportsColl .box_sports .info_sch1{padding:0;margin:20px 30px 12px}
+#speSportsColl .info_sch1 .wrap_tbl{border:1px solid #ecedf0}
+#speSportsColl .info_sch1 .tbl_head .tit{border-left:0 none}
+#speSportsColl .info_sch1 .tbl_head .tit1{width:35%;text-align:left;text-indent:10px}
+#speSportsColl .info_sch1 .tbl_head .tit2{width:40%;text-align:left;text-indent:20px}
+#speSportsColl .info_sch1 .tbl_head .tit3{width:25%;text-align:left;text-indent:30px}
+#speSportsColl .tbl_sch{border-top:0 none; border-bottom: 0 none;}
+#speSportsColl .tbl_sch thead{display:none}
+#speSportsColl .tbl_sch td{border-left:0 none;height:36px}
+#speSportsColl .info_sch1 .wrap_btn .btn_more{float:right;margin-top:10px;font-size:11px;color:#777}
+#speSportsColl .info_sch1 .btn_more .ico_rwd{width:6px;height:12px;margin-left:3px;background-position:100% -408px;text-indent:-9999px}
+#speSportsColl .info_sch1 .tbl_head{border-bottom:1px solid #ecedf0}
+/* 일정.결과 - 항목 3개 이상 */
+#speSportsColl .box_sports .info_sch2{position:relative;z-index:10;padding:0;margin-top:-1px;border-top:1px solid #ebebeb;background-color:#f8f8f8}
+#speSportsColl .info_sch2 .cont_data{padding-top:20px}
+#speSportsColl .item_sch{overflow:hidden;position:relative;padding-left:24px}
+#speSportsColl .info_sch2 .bg_line{position:absolute;left:24px;top:0;width:1px;height:100%;background:#e1e1e1}
+#speSportsColl .item_sch .ico_dot{position:absolute;left:21px;top:32px;width:5px;height:5px;border-radius:5px;border:1px solid #b3b3b3;background-color:#fff}
+#speSportsColl .item_sch .ico_tail{position:absolute;left:48px;top:27px;width:9px;height:18px;background-position:0 -30px}
+#speSportsColl .item_sch.fst .bg_line{margin-top:36px}
+#speSportsColl .item_sch.fst .ico_dot{border-color:#067dff}
+#speSportsColl .item_sch.lst .bg_line{margin-top:-60px}
+#speSportsColl .info_sch2 .dl_item{overflow:hidden;margin:0 20px 20px 31px;padding:18px 17px 15px 17px;border:1px solid #ececec;background-color:#fff}
+#speSportsColl .info_sch2 .tit_base{font-weight:bold;margin-bottom:8px}
+#speSportsColl .info_sch2 .cont{color:#777;line-height:20px}
+#speSportsColl .item_sch .txt_info{display:inline-block;overflow:hidden;max-width:90px;margin-left:6px;text-overflow:ellipsis;vertical-align:top;white-space:nowrap;color:#333}
+#speSportsColl .item_sch a.txt_info{color:#1a0dab}
+#speSportsColl .item_sch .txt_bar{height:11px;margin:3px 7px;background-color:#ebebeb}
+/* 일정.결과 - 대회일정(8강,4강,결승전) */
+#speSportsColl .tab_rwd .wrap_sub{height:42px}
+#speSportsColl .tab_rwd .wrap_sub .menu_item{height:42px;line-height:53px}
+#speSportsColl .box_sports .info_final{padding:0}
+#speSportsColl .tab_rwd{margin:0 20px}
+#speSportsColl .tab_rwd .btn_more{position:absolute;right:0;bottom:10px;font-size:11px;color:#777;font-family:'돋움',dotum,sans-serif}
+#speSportsColl .wrap_final{overflow:hidden;margin:20px 16px 18px 17px;}
+#speSportsColl .item_final{float:left;width:283px;height:114px;border:1px solid #ececec;margin:0 4px 8px 3px}
+#speSportsColl .item_final .tit_item{overflow:hidden;margin:13px 17px;padding-bottom:9px;border-bottom:1px solid #f0f0f0;color:#777}
+#speSportsColl .item_final .txt_state{float:right;font-size:11px;font-family:'돋움',dotum,sans-serif;letter-spacing:-1px}
+#speSportsColl .item_final .txt_game{color:#f73e47}
+#speSportsColl .info_item{margin:0 17px 13px}
+#speSportsColl .info_item .wrap_link{display:table;float:right;width:94px;height:50px;text-align:right;}
+#speSportsColl .info_item .wrap_team{overflow:hidden;height:50px}
+#speSportsColl .wrap_link+.wrap_team{border-right:1px solid #f0f0f0}
+#speSportsColl .team_info{position:relative;height:27px;line-height:25px}
+#speSportsColl .team_info .num_point{float:right;padding-right:10px;font-size:12px;text-align:center}
+#speSportsColl .state_win .num_point{color:#f73e47;font-weight:bold}
+#speSportsColl .team_info .txt_team{display:inline-block;overflow:hidden;max-width:140px;text-overflow:ellipsis;white-space:nowrap;vertical-align:top}
+#speSportsColl .team_info .txt_team:hover{color:#1a0dab}
+#speSportsColl .team_info .wrap_flag{display:inline-block;vertical-align:top;height:14px;margin:3px 3px 0 0;border:1px solid #eee}
+#speSportsColl .team_info .img_team{display:inline-block;margin:1px 3px 0 0;vertical-align:top}
+#speSportsColl .team_info .wrap_flag .img_team{margin:-1px}
+#speSportsColl .state_win .ico_arr{position:absolute;right:0;top:6px;width:5px;height:9px;background-position:0 -50px}
+#speSportsColl .info_item .wrap_team{display:block;text-decoration:none;color:#333}
+#speSportsColl .info_item .link_broad{display:block;line-height:17px}
+#speSportsColl .info_item .link_broad:only-child{margin-top:6px}
+#speSportsColl .txt_nosch{padding:12px 0 13px;line-height:1.5;text-align:center;color:#333}
+#speSportsColl .wrap_final.scroll{overflow-x:hidden;overflow-y:scroll;margin-right:0;height:490px}
+#speSportsColl .num_point{font-family:'Apple SD Gothic Neo','돋움',dotum,sans-serif}
+#speSportsColl .num_point .num_points{display:inline-block;width:14px;padding-right:1px;font-size:11px;text-align:center}
+#speSportsColl dl.related_compo{margin-top:0}
+#speSportsColl .ico_rwd.ico_more{width:6px;height:7px;background-position:-195px -410px;margin:2px -1px 0 4px}
+#speSportsColl .scroll .item_final{width:276px}
+#speSportsColl .num_point .num_score{float:right}
+#speSportsColl .info_item .inner_link{display:table-cell;vertical-align:middle}
+#speSportsColl .info_item .inner_link .btn_compr_m + .btn_compr_m{margin-top:2px}
+#speSportsColl .info_item .inner_link .btn_compr_m{width:74px;padding:0}
+
+/* 토너먼트 */
+#speSportsColl .img_tourna{background:url(//search1.daumcdn.net/search/statics/special/pi/ico/ico_spetourna_170413.png) no-repeat 0 0}
+#speSportsColl .line_tourna{position:absolute;left:209px;top:98px;width:257px;height:395px;background-position:0 -70px}
+#speSportsColl .wrap_tourna{position:relative;width:100%;height:598px;margin-top:-1px;border-top:1px solid #f0f0f0;background-color:#f8f8f8}
+#speSportsColl .wrap_tourna .box_match{position:absolute;width:179px;height:107px;background-color:#fff;border:1px solid #e6e6e6;text-align:center;font-size:0}
+#speSportsColl .wrap_tourna .box_match.game_on{border-color:#fcb2b5}
+#speSportsColl .wrap_tourna .wrap_match{display:block;height:57px;padding:14px 10px 0;text-decoration:none;color:#333;white-space:nowrap}
+#speSportsColl .wrap_tourna .txt_time{display:block;border-top:1px solid #f1f3f4;height:24px;padding-top:11px;color:#777;font-size:11px;font-family:'Apple SD Gothic Neo','돋움',dotum,sans-serif}
+#speSportsColl .wrap_tourna .wrap_team{display:inline-block;width:45px;vertical-align:top}
+#speSportsColl .wrap_tourna .txt_score{display:inline-block;width:64px;margin-top:4px;vertical-align:top;font-size:18px;font-family:arial,sans-serif}
+#speSportsColl .wrap_tourna .num_win{color:#ff0000}
+#speSportsColl .wrap_tourna .img_team{display:inline-block}
+#speSportsColl .wrap_tourna .txt_team{display:block;overflow:hidden;margin-top:5px;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;font-size:11px;font-family:'Apple SD Gothic Neo','돋움',dotum,sans-serif}
+#speSportsColl .wrap_tourna .img_game1{display:inline-block;overflow:hidden;width:33px;height:15px;margin-left:3px;background-position:-145px -40px;text-indent:-9999px;vertical-align:-3px}
+#speSportsColl .wrap_tourna .img_game2{display:inline-block;overflow:hidden;width:33px;height:15px;margin-top:8px;background-position:-105px -40px;text-indent:-9999px;vertical-align:-3px}
+#speSportsColl .wrap_tourna .img_flag1{display:inline-block;width:40px;height:27px;background-position:0 -35px}
+#speSportsColl .wrap_tourna .img_flag2{display:inline-block;width:40px;height:27px;background-position:0 -5px}
+#speSportsColl .wrap_tourna .img_vs1{display:inline-block;overflow:hidden;width:22px;height:13px;margin:10px 21px 0;background-position:-75px -40px;text-indent:-9999px}
+#speSportsColl .wrap_tourna .img_vs2{display:inline-block;overflow:hidden;width:22px;height:13px;margin:10px 21px 0;background-position:-45px -40px;text-indent:-9999px}
+#speSportsColl .wrap_tourna .img_high{display:inline-block;overflow:hidden;width:106px;height:28px;margin-top:6px;background-position:-45px -5px;text-indent:-9999px}
+#speSportsColl .wrap_tourna .match1{left:28px;top:46px}
+#speSportsColl .wrap_tourna .match2{left:28px;top:165px}
+#speSportsColl .wrap_tourna .match3{left:28px;top:324px}
+#speSportsColl .wrap_tourna .match4{left:28px;top:443px}
+#speSportsColl .wrap_tourna .match5{left:248px;top:106px}
+#speSportsColl .wrap_tourna .match6{left:248px;top:379px}
+#speSportsColl .wrap_tourna .match7{left:467px;top:324px}
+#speSportsColl .wrap_tourna .box_final{position:absolute;left:467px;top:106px;width:180px;height:168px;text-align:center;font-size:0}
+#speSportsColl .wrap_tourna .box_soccer{background-position:0 -70px}
+#speSportsColl .wrap_tourna .txt_ftime{display:block;height:56px;padding-top:23px;color:#b1b6ab;font-size:11px;line-height:18px;font-family:'Apple SD Gothic Neo','돋움',dotum,sans-serif}
+#speSportsColl .wrap_tourna .img_bar{display:inline-block;width:151px;height:1px;vertical-align:top}
+#speSportsColl .wrap_tourna .box_final .txt_team{color:#bec5b5}
+#speSportsColl .wrap_tourna .box_final .wrap_match{height:64px;padding-top:24px}
+#speSportsColl .wrap_tourna .box_final .num_win{color:#fff600}
+#speSportsColl .wrap_tourna .box_final .txt_score{color:#e4e6e3}
+#speSportsColl .wrap_tourna .txt_colon{padding:0 2px}
+#speSportsColl .wrap_tourna .num_pk{display:block;margin-top:5px;font-size:12px;color:#fff;font-weight:bold}
+#speSportsColl .wrap_tourna .num_pk .txt_pk{padding:0 3px;font-size:11px;color:#c0c6b3;font-weight:normal}
+#speSportsColl .wrap_tourna .final_on .txt_ftime{padding-top:11px;height:49px}
+#speSportsColl .wrap_tourna .final_on .wrap_match{height:83px}
+#speSportsColl .wrap_tourna .final_off .txt_ftime{padding-top:12px;height:67px}
+#speSportsColl .wrap_tourna .tit_tourna{position:absolute;width:181px;text-align:center}
+#speSportsColl .wrap_tourna .tit_tourna1{left:28px;top:23px}
+#speSportsColl .wrap_tourna .tit_tourna2{left:248px;top:83px}
+#speSportsColl .wrap_tourna .tit_tourna3{left:467px;top:83px}
+#speSportsColl .wrap_tourna .tit_tourna4{left:467px;top:301px}
+#speSportsColl .deactivate{opacity:.5;color:#919191}
+
