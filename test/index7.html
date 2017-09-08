@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.js"
+    integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="pager">
+  <button class="btn_prev">( < )</button>
+  <button class="btn_next">( > )</button>
+</div>
+<script>
+
+  var targetList = [];
+  for (var i = 1; i < 22; i++) {
+    targetList.push(i);
+  }
+  console.log(targetList);
+
+  function pager() {
+    var viewCnt = 9;
+    var startIdx = targetList.length - viewCnt;
+    var $el = $('.pager');
+
+    function hasNext() {
+
+    }
+
+    function hasPrev() {
+
+    }
+
+    function getCurrPage() {
+
+    }
+
+    function getPageList() {
+     var tmpList = [];
+     var reversedFirstIdx = -targetList.length;
+
+     for(var i= -viewCnt; i > reversedFirstIdx; i-= viewCnt){
+       if(i < reversedFirstIdx){
+         var namo = targetList.slice(reversedFirstIdx , reversedFirstIdx+viewCnt);
+         tmpList.push(namo);
+       }else{
+         var dum = targetList.slice(i,i+9);
+         console.log(dum);
+         tmpList.push(dum);
+       }
+
+     }
+      return tmpList
+    }
+
+    var test = getPageList();
+    console.log(test);
+//    function getCurrList(targetList, startIdx, viewCnt) {
+//      if(startIdx <= 0){
+//        return targetList.slice(0,viewCnt);
+//      }else{
+//        var endIdx = startIdx + viewCnt;
+//        return targetList.slice(startIdx,endIdx);
+//      }
+//    }
+//
+//    var currPage = getCurrList(targetList, startIdx, viewCnt);
+//      console.log(currPage);
+
+    $el.find('.btn_prev').on('click', function () {
+
+    });
+    $el.find('.btn_next').on('click', function () {
+
+    });
+  }
+
+  pager();
+
+
+</script>
+</body>
+</html>
