@@ -1,592 +1,919 @@
-<style>
-  #speColl .col1 {width:150px}
-  #speColl .col2 {width:569px}
+<#--api 주소 : http://apihub.daum.net/sports/v1/game/list.xml?leagueCode=KFA&gameId=71048562%2C+71048879%2C+71050796%2C+71057468&appkey=c655d339555c7d586dfdc5d2af4e4d3c-->
+  <#--경기 추가시(api로 경기결과 받아야 할 경우) : api 파라미터 gameId에 추가 (ex : &gameId=71048562%2C+71048879%2C+71050796... 등등-->
 
-  #speColl .col11 {width:150px}
-  #speColl .col12 {width:280px}
-  #speColl .col12 .txt_team {width:72px} /* (경기열폭 - 127) / 2 */
-  #speColl .col13 {width:180px;}
-  #speColl .col14 {width:109px;}
-  /* 목록형 */
-  #speColl .tbl_comm .info_broadcast .link_broadcast+.alarm_comp{margin-top:6px}/* 추가 */
-  #speColl .tbl_comm .info_broadcast{overflow:visible;position:relative}/* 수정 */
-</style>
+    <#--공통파일 : 개발형스페셜공통파일,CSS_톡알람,스크립트_톡알림,공통클릭로그_new가이드-->
 
-<div id="speColl" class="wid_w type_exact">
-  <div class="coll_tit">
-    <h2 class="tit">FIFA 월드컵</h2>
-  </div>
-  <div class="coll_cont">
-    <div class="mg_cont clear">
-      <div class="wrap_thumb">
-        <a href="http://www.fifa.com/worldcup/index.html" target="_blank" class="thumb" onclick="${smLogSP2}">
-          <img src="//search1.daumcdn.net/cfile/27252B345451936A26" class="thumb_img" width="115" height="115" alt="">
-        </a>
-      </div>
-      <div class="wrap_cont">
-        <div class="cont_inner">
-          <div class="wrap_tit">
+      <#setting url_escaping_charset="UTF-8">
+
+        <#-- 경기정보 XML정보 있을 때 -->
+          <#function autoDisplayGameInfo param={
+            'homeTeam': '',
+            'awayTeam': '',
+            'url': '',
+            'matchId': ''
+            }>
+            <#local gameInfo = '' />
+            <#local homeTeam = param.homeTeam />
+            <#local awayTeam = param.awayTeam />
+            <#local url = param.url />
+            <#local matchId = param.matchId />
+            <#assign tmp = doc.HashMap.list>
+              <#list tmp as item>
+                <#if item.gameId == matchId>
+                  <#if doc?has_content && doc.HashMap?has_content>
+                    <#assign gameStatus = item.gameStatus!''>
+                      <#assign homeScore = ((item.home.result)!0)?number>
+                        <#assign awayScore = ((item.away.result)!0)?number>
+                          <#if ((item.home.finalResult) !='') && ((item.away.finalResult) !='')>
+                            <#assign homePKScore = (item.home.finalResult)!'0'>
+                              <#assign awayPKScore = (item.away.finalResult)!'0'>
+                                <#else>
+                                  <#assign homePKScore = '0'>
+                                    <#assign awayPKScore = '0'>
+                          </#if>
+                  </#if>
+                  <#--<#else>-->
+                  <#--<#assign gameStatus = ''>-->
+                  <#--<#assign homeScore = 0>-->
+                  <#--<#assign awayScore = 0>-->
+                  <#--<#assign homePKScore = '0'>-->
+                  <#--<#assign awayPKScore = '0'>-->
+                </#if>
+              </#list>
+
+              <#-- 경기전 -->
+                <#if gameStatus == 'BEFORE'>
+                  <#local gameInfo = displayGameInfoBefore({
+                    'homeTeam': homeTeam,
+                    'awayTeam': awayTeam,
+                    'url': url
+                    }) />
+
+                  <#-- 경기중 -->
+                    <#elseif gameStatus == 'PLAY'>
+                      <#local gameInfo = displayGameInfoPlaying({
+                        'homeTeam': homeTeam,
+                        'awayTeam': awayTeam,
+                        'homeScore': homeScore,
+                        'awayScore': awayScore,
+                        'url': url
+                        }) />
+
+                      <#-- 경기종료 -->
+                        <#elseif gameStatus == 'END'>
+                          <#-- PK점수 있을 시 -->
+                            <#if (homePKScore?has_content && awayPKScore?has_content && homePKScore?number gt 0 && awayPKScore?number gt 0)>
+                              <#assign homePKScore = homePKScore?number>
+                                <#assign awayPKScore = awayPKScore?number>
+                                  <#local gameInfo = displayGameInfoEndPK({
+                                    'homeTeam': homeTeam,
+                                    'awayTeam': awayTeam,
+                                    'homeScore': homeScore,
+                                    'awayScore': awayScore,
+                                    'homePKScore': homePKScore,
+                                    'awayPKScore': awayPKScore,
+                                    'url': url
+                                    }) />
+                                  <#-- PK점수 없을 시 -->
+                                    <#else>
+                                      <#local gameInfo = displayGameInfoEnd({
+                                        'homeTeam': homeTeam,
+                                        'awayTeam': awayTeam,
+                                        'homeScore': homeScore,
+                                        'awayScore': awayScore,
+                                        'url': url
+                                        }) />
+                            </#if>
+
+                            <#-- 경기취소 -->
+                              <#elseif gameStatus == 'CANCEL'>
+                                <#local gameInfo = displayGameInfoCancel({
+                                  'homeTeam': homeTeam,
+                                  'awayTeam': awayTeam,
+                                  'url': url
+                                  }) />
+                </#if>
+                <#return gameInfo>
+          </#function>
+
+          <#-- 경기정보 : XML 정보 없을 때 -->
+            <#function displayGameInfo param={}>
+              <#local gameInfo = '' />
+              <#local homeTeam = param.homeTeam!'' />
+              <#local awayTeam = param.awayTeam!'' />
+              <#local homeScore = (param.homeScore!-1)?number />
+              <#local awayScore = (param.awayScore!-1)?number />
+              <#local homePKScore = (param.homePKScore!-1)?number />
+              <#local awayPKScore = (param.awayPKScore!-1)?number />
+              <#local url = param.url!''/>
+              <#local isCancel = param.isCancel!false />
+
+              <#if isCancel>
+                <#local gameInfo = displayGameInfoCancel({
+                  'homeTeam': homeTeam,
+                  'awayTeam': awayTeam,
+                  'url': url
+                  }) />
+                <#else>
+                  <#if homeScore < 0>
+                  <#local gameInfo = displayGameInfoVS({
+                    'homeTeam': homeTeam,
+                    'awayTeam': awayTeam,
+                    'url': url
+                    }) />
+                  <#else>
+                    <#if homePKScore < 0>
+                    <#local gameInfo = displayGameInfoEnd({
+                      'homeTeam': homeTeam,
+                      'awayTeam': awayTeam,
+                      'homeScore': homeScore,
+                      'awayScore': awayScore,
+                      'url': url
+                      }) />
+                    <#else>
+                      <#local gameInfo = displayGameInfoEndPK({
+                        'homeTeam': homeTeam,
+                        'awayTeam': awayTeam,
+                        'homeScore': homeScore,
+                        'awayScore': awayScore,
+                        'homePKScore': homePKScore,
+                        'awayPKScore': awayPKScore,
+                        'url': url
+                        }) />
+              </#if>
+              </#if>
+              </#if>
+              <#return gameInfo>
+            </#function>
+
+            <#-- 경기부분 wrapper 설정 -->
+              <#function initWrapElement url='' hasPk=false clickCode='HSTO'>
+                <#local pkClass='' />
+                <#if hasPk>
+                  <#local pkClass=' cont_pk' />
+                </#if>
+                <#assign wrapStartElement = '<span class="cont_score${pkClass}">'>
+                <#assign wrapEndElement = '</span>'>
+                <#if url != ''>
+                  <#assign wrapStartElement = '<a href="${url}" class="f_link cont_score${pkClass}" onclick="smartLog(this, \'s=TO&a=${clickCode}&d=&pg=1&r=1&p=1&rc=1&at=link\', event);">'>
+                  <#assign wrapEndElement = '</a>'>
+                </#if>
+                <#return ''>
+              </#function>
+
+              <#-- 경기전 : XML 데이터 있을 시 -->
+                <#function displayGameInfoBefore param={
+                  'homeTeam': '',
+                  'awayTeam': '',
+                  'url': ''
+                  }>
+                  <#local initWrapElement=initWrapElement(param.url) />
+                  <#local gameInfo = '
+                    ${wrapStartElement}
+                  <span class="txt_team team_home">${param.homeTeam} </span>
+                  <span class="screen_out">대 </span>
+                  <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
+                  <span class="img_play txt_state txt_before">경기전</span>
+                  ${wrapEndElement}
+                  ' />
+                  <#return gameInfo>
+                </#function>
+
+                <#-- 경기중 -->
+                  <#function displayGameInfoPlaying param={
+                    'homeTeam': '',
+                    'awayTeam': '',
+                    'homeScore': 0,
+                    'awayScore': 0,
+                    'url': ''
+                    }>
+                    <#local initWrapElement=initWrapElement(param.url) />
+                    <#local gameInfo = '
+                      ${wrapStartElement}
+                    <span class="txt_team team_home">${param.homeTeam} </span>
+                    <span class="screen_out">대 </span>
+                    <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
+                    <em class="num_score score_home">${param.homeScore} </em>
+                    <span class="screen_out">: </span>
+                    <em class="num_score score_away">${param.awayScore}</em><span class="screen_out">로 </span>
+                    <span class="img_play txt_state txt_gaming">경기중 </span>
+                    ${wrapEndElement}
+                    ' />
+                    <#return gameInfo>
+                  </#function>
+
+                  <#-- 경기종료 - PK점수 없을 시 -->
+                    <#function displayGameInfoEnd param={
+                      'homeTeam': '',
+                      'awayTeam': '',
+                      'homeScore': 0,
+                      'awayScore': 0,
+                      'url': ''
+                      }>
+                      <#local initWrapElement=initWrapElement(param.url) />
+                      <#local homeWin = ''>
+                        <#local awayWin = ''>
+                          <#local result = '무승부'>
+                            <#if param.homeScore gt param.awayScore>
+                              <#local result = '${param.homeTeam} 승리'>
+                                <#local homeWin = ' num_win'>
+                                  <#elseif param.homeScore lt param.awayScore>
+                                    <#local awayWin = ' num_win'>
+                                      <#local result = '${param.awayTeam} 승리'>
+                            </#if>
+                            <#local gameInfo = '
+                              ${wrapStartElement}
+                            <span class="txt_team team_home">${param.homeTeam} </span>
+                            <span class="screen_out">대 </span>
+                            <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
+                            <em class="num_score score_home${homeWin}">${param.homeScore} </em>
+                            <span class="screen_out">: </span>
+                            <em class="num_score score_away${awayWin}">${param.awayScore}</em><span class="screen_out">로 경기 </span>
+                            <span class="img_play txt_state">종료 </span>
+                            <span class="screen_out">${result} </span>
+                            ${wrapEndElement}
+                            ' />
+                            <#return gameInfo>
+                    </#function>
+
+                    <#-- 경기종료 - PK점수 있을 시 -->
+                      <#function displayGameInfoEndPK param={
+                        'homeTeam': '',
+                        'awayTeam': '',
+                        'homeScore': 0,
+                        'awayScore': 0,
+                        'homePKScore': 0,
+                        'awayPKScore': 0,
+                        'url': ''
+                        }>
+                        <#local initWrapElement=initWrapElement(param.url, true) />
+                        <#local pKScore = '<span class="fw_b"><span class="num_win">${param.homePKScore}</span>:${param.awayPKScore}</span>'>
+                        <#if param.homePKScore lt param.awayPKScore>
+                          <#local pKScore = '<span class="fw_b">${param.homePKScore}:<span class="num_win">${param.awayPKScore}</span></span>'>
+                        </#if>
+                        <#local result = '${param.homeTeam} 승리'>
+                          <#if param.homePKScore lt param.awayPKScore>
+                            <#local result = '${param.awayTeam} 승리'>
+                          </#if>
+                          <#local gameInfo = '
+                            ${wrapStartElement}
+                          <span class="txt_team team_home">${param.homeTeam} </span>
+                          <span class="screen_out">대 </span>
+                          <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
+                          <em class="num_score score_home">${param.homeScore} </em>
+                          <span class="screen_out">: </span>
+                          <em class="num_score score_away">${param.awayScore}</em><span class="screen_out">로 경기 </span>
+                          <span class="img_play txt_state">종료 </span>
+                          <span class="info_pk">PK ${pKScore}</span><span class="screen_out">로 ${result} </span>
+                          ${wrapEndElement}
+                          ' />
+                          <#return gameInfo>
+                      </#function>
+
+                      <#-- 경기취소 -->
+                        <#function displayGameInfoCancel param={
+                          'homeTeam': '',
+                          'awayTeam': '',
+                          'url': ''
+                          }>
+                          <#local initWrapElement=initWrapElement(param.url) />
+                          <#local gameInfo = '
+                            ${wrapStartElement}
+                          <span class="txt_team team_home">${param.homeTeam} </span>
+                          <span class="screen_out">대 </span>
+                          <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
+                          <span class="screen_out">경기 </span>
+                          <span class="img_play txt_state txt_cancel">취소 </span>
+                          ${wrapEndElement}
+                          ' />
+                          <#return gameInfo>
+                        </#function>
+
+                        <#-- 경기전 VS -->
+                          <#function displayGameInfoVS param={
+                            'homeTeam': '',
+                            'awayTeam': '',
+                            'url': ''
+                            }>
+                            <#local initWrapElement=initWrapElement(param.url) />
+                            <#local gameInfo = '
+                              ${wrapStartElement}
+                            <span class="txt_team team_home">${param.homeTeam} </span>
+                            <span class="f_l txt_vs">vs </span>
+                            <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
+                            ${wrapEndElement}
+                            ' />
+                            <#return gameInfo>
+                          </#function>
+
+                          <#-- 경기정보 XML정보 있을 때 -->
+                            <#function autoDisplayHighlight url="#none">
+                              <#local highlight = '' />
+                              <#-- 경기중, 경기종료 -->
+                                <#if gameStatus == 'PLAY' || gameStatus == 'END'>
+                                  <#local highlight = '<a href="${url}" target="_blank" class="img_play link_broadcast link_vod" onclick="smartLog(this, \'s=TO&a=HSTO&d=&pg=1&r=1&p=1&rc=1&at=link\', event);"><span class="img_play inner_broadcast inner_vod">VOD</span></a>' />
+                                </#if>
+                                <#return highlight>
+                            </#function>
+
+                            <#-- 톡알림 추가 -->
+                              <#assign talkClickLog50 = "smartLog(this, 's=TO&a=SP2A&d=&pg=1&r=1&p=50&rc=1&dc=SP2&at=func', event);">
+                                <#assign talkClickLog51 = "smartLog(this, 's=TO&a=SP2A&d=&pg=1&r=1&p=51&rc=1&dc=SP2&at=func', event);">
+                                  <#function displayTalkAlarm title="" groupid="">
+                                    <#local talkAlarm = '
+                                    <div class="alarm_comp type_top_right tip_on"><#-- 툴팁 노출 시 tip_on 클래스 추가ㅏ / 툴팁 위치에 해당하는 클래스 추가 type_top_right, type_top_left -->
+                                    <a href="javascript:;" data-groupid="${groupid}" class="btn_kakao btn_sizes" onclick="${talkClickLog50}"><#-- 버튼 사이즈에 해당하는 클래스 추가 btn_sizes, btn_sizem -->
+                                      <span class="inner"><span class="ico_comm3"></span>${title}</span>
+                                    </a>
+                                    <span class="layer_arr"></span>
+                                    <div class="layer_tip">
+                                      <p class="txt_tip">
+                                        카카오톡으로 빠르게 경기<br>소식을 받으세요~!
+                                      </p>
+                                      <button type="button" class="btn_close" onclick="${talkClickLog51}"><span class="ico_comm3">닫기</span></button>
+                                    </div>
+                                    </div>
+                                    '/>
+                                    <#return talkAlarm>
+                                  </#function>
+                                  <style>
+                                    #speColl .col1 {width:150px}
+                                    #speColl .col2 {width:569px}
+
+                                    #speColl .col11 {width:150px}
+                                    #speColl .col12 {width:280px}
+                                    #speColl .col12 .txt_team {width:72px} /* (경기열폭 - 127) / 2 */
+                                    #speColl .col13 {width:180px;}
+                                    #speColl .col14 {width:109px;}
+                                    /* 목록형 */
+                                    #speColl .tbl_comm .info_broadcast .link_broadcast+.alarm_comp{margin-top:6px}/* 추가 */
+                                    #speColl .tbl_comm .info_broadcast{overflow:visible;position:relative}/* 수정 */
+                                  </style>
+
+                                  <div id="speColl" class="wid_w type_exact">
+                                    <div class="coll_tit">
+                                      <h2 class="tit">FIFA 월드컵</h2>
+                                    </div>
+                                    <div class="coll_cont">
+                                      <div class="mg_cont clear">
+                                        <div class="wrap_thumb">
+                                          <a href="http://www.fifa.com/worldcup/index.html" target="_blank" class="thumb" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                            <img src="//search1.daumcdn.net/search/statics/special/pi/sport_worldcup2018.png" class="thumb_img" width="115" height="115" alt="">
+                                          </a>
+                                        </div>
+                                        <div class="wrap_cont">
+                                          <div class="cont_inner">
+                                            <div class="wrap_tit">
 						<span class="f_l">
-							<a class="f_tit" href="http://www.fifa.com/worldcup/index.html" target="_blank" onclick="${smLogSP2}">2018 러시아 월드컵</a>
-                        <#--	<a href="?w=tot&q=%EC%97%AD%EB%8C%80%EC%9B%94%EB%93%9C%EC%BB%B5&rtmaxcoll=SP2" class="more_comm" onclick="${smLogSP2}">역대월드컵 전체보기</a>-->
+							<a class="f_tit" href="http://www.fifa.com/worldcup/index.html" target="_blank" onclick="<@clickLogSP2 d='12MRL' at='link' />">2018 러시아 월드컵</a>
+                        <#--	<a href="http://search.daum.net/search?w=tot&q=%EC%97%AD%EB%8C%80%EC%9B%94%EB%93%9C%EC%BB%B5&rtmaxcoll=SP2" class="more_comm" onclick="<@clickLogSP2 d='12MRL' at='link' />">역대월드컵 전체보기</a>-->
 						</span>
-          </div>
-          <dl class="coll_dl">
-            <dt class="tit_base">개최기간</dt>
-            <dd class="f_eb cont">2018.06.14(목) ~ 07.15(일) - 현지기준</dd>
-          </dl>
-          <dl class="coll_dl dl_fl">
-            <dt class="tit_base">개최국가</dt>
-            <dd class="f_eb cont">
-              <a href="?w=tot&q=%EB%9F%AC%EC%8B%9C%EC%95%84&rtmaxcoll=BXE,3DV" class="f_link" onclick="${smLogSP2}">러시아</a><span class="txt_bar">&nbsp;|&nbsp;</span>
-            </dd>
-          </dl>
-          <#--<dl class="coll_dl">
-          <dt class="tit_base">대회규모</dt>
-          <dd class="f_eb cont">32개국 (6개 대륙)</dd>
-          </dl>-->
-          <#--<dl class="coll_dl">
-          <dt class="tit_base">아시아 최종예선 조추첨 중계</dt>
-          <dd class="f_eb cont">
-            <a href="https://www.youtube.com/watch?v=AwfFUBkdqsA" target="_blank" class="f_link tableLink" onclick="${smLogSP2}">AFC유튜브</a><span class="txt_bar">&nbsp;|&nbsp;</span>2016.04.12(화) 17:30 - 한국기준&nbsp;&nbsp;<a href="http://sports.media.daum.net/sports/soccer/newsview?newsId=20160412082403094" target="_blank" class="more_comm" onclick="${smLogSP2}">더보기</a>
-          </dd>
-          </dl>-->
-          <dl class="coll_dl">
-            <dt class="tit_base">개최도시</dt>
-            <dd class="f_eb cont">
-              <a href="http://www.fifa.com/worldcup/destination/cities/city=73217/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">카잔</a>,
-              <a href="http://www.fifa.com/worldcup/destination/cities/city=1559/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">모스크바</a>
-              <#--<a href="http://www.fifa.com/worldcup/destination/cities/city=35268/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">소치</a>,
-              <a href="http://www.fifa.com/worldcup/destination/cities/city=35137/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">칼리닌그라드</a>-->
-              등 11개 도시..&nbsp;&nbsp;<a href="http://www.fifa.com/worldcup/destination/index.html" target="_blank" class="more_comm" onclick="${smLogSP2}">더보기</a>
-            </dd>
-          </dl>
-          <dl class="coll_dl">
-            <dt class="tit_base">대한민국 감독</dt>
-            <dd class="f_eb cont">
-              <a href="?w=tot&q=${'신태용'?url('utf-8')}&ppkey=31366&rtmaxcoll=PRF" class="f_link" onclick="${smLogSP2}">신태용</a><span class="txt_bar">&nbsp;|&nbsp;</span><a href="http://www.kfa.or.kr/national/teamlist.asp?Query=Grade%3DMNT%26Sumons%3D1471" target="_blank" class="f_link" onclick="${smLogSP2}">대표팀 명단</a>
-            </dd>
-          </dl>
-          <dl class="coll_dl">
-            <dt class="tit_base">대회정보</dt>
-            <dd class="f_eb cont">
-              <#-- <a href="http://sports.media.daum.net/sports/soccer/newsview?newsId=20160414060018066" target="_blank" class="f_link" onclick="${smLogSP2}">최종예선 방식</a>, -->
-              <a href="http://www.fifa.com/worldcup/matches/preliminaries/index.html" target="_blank" class="f_link tableLink1" onclick="${smLogSP2}"><span class="groupschedule">일정 및 결과</span></a>,
-              <a href="http://www.fifa.com/worldcup/news/y=2014/m=11/news=emblem-a-hit-in-russia-2480085.html" target="_blank" class="f_link" onclick="${smLogSP2}">엠블럼</a>,
-              <span class="groupRanking"><a href="http://www.fifa.com/worldcup/preliminaries/asia/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">조별순위</a></span>
-              <#-- <a href="http://ticket.interpark.com/Contents/Sports/GoodsInfo?SportsCode=07002&TeamCode=PS070" target="_blank" class="f_link" onclick="${smLogSP2}"><span class="fw_b">이란전 티켓예매</span></a> -->
-              <#-- <a href="http://sports.media.daum.net/sports/soccer/newsview?newsId=20150326164810250" target="_blank" class="f_link" onclick="${smLogSP2}">2차 예선 조추첨</a> (2015.04.14 - 현지기준)-->
-            </dd>
-          </dl>
-          <dl class="coll_dl">
-            <dt class="tit_base">관련정보</dt>
-            <dd class="f_eb cont">
-              <a href="http://www.fifa.com/worldcup/news/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">뉴스</a>,
-              <a href="http://www.fifa.com/worldcup/photos/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">포토갤러리</a>,
-              <#--<a href="http://www.fifa.com/worldcup/videos/index.html" target="_blank" class="f_link" onclick="${smLogSP2}">동영상</a>,-->
-              <a href="http://www.fifa.com/" class="f_link" target="_blank" onclick="${smLogSP2}">국제축구연맹(FIFA)</a>,
-              <a href="http://sports.media.daum.net/sports/issue/224182" target="_blank" class="f_link" onclick="${smLogSP2}"><span class="fw_b">Daum 스포츠 특집페이지</span></a>
-            </dd>
-          </dl>
-        </div>
-      </div>
+                                            </div>
+                                            <dl class="coll_dl">
+                                              <dt class="tit_base">개최기간</dt>
+                                              <dd class="f_eb cont">2018.06.14(목) ~ 07.15(일) - 현지기준</dd>
+                                            </dl>
+                                            <dl class="coll_dl dl_fl">
+                                              <dt class="tit_base">개최국가</dt>
+                                              <dd class="f_eb cont">
+                                                <a href="http://search.daum.net/search?w=tot&q=%EB%9F%AC%EC%8B%9C%EC%95%84&rtmaxcoll=BXE,3DV" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">러시아</a><span class="txt_bar">&nbsp;|&nbsp;</span>
+                                              </dd>
+                                            </dl>
+                                            <#--<dl class="coll_dl">
+                                            <dt class="tit_base">대회규모</dt>
+                                            <dd class="f_eb cont">32개국 (6개 대륙)</dd>
+                                            </dl>-->
+                                            <#--<dl class="coll_dl">
+                                            <dt class="tit_base">아시아 최종예선 조추첨 중계</dt>
+                                            <dd class="f_eb cont">
+                                              <a href="https://www.youtube.com/watch?v=AwfFUBkdqsA" target="_blank" class="f_link tableLink" onclick="<@clickLogSP2 d='12MRL' at='link' />">AFC유튜브</a><span class="txt_bar">&nbsp;|&nbsp;</span>2016.04.12(화) 17:30 - 한국기준&nbsp;&nbsp;<a href="http://sports.media.daum.net/sports/soccer/newsview?newsId=20160412082403094" target="_blank" class="more_comm" onclick="<@clickLogSP2 d='12MRL' at='link' />">더보기</a>
+                                            </dd>
+                                            </dl>-->
+                                            <dl class="coll_dl">
+                                              <dt class="tit_base">개최도시</dt>
+                                              <dd class="f_eb cont">
+                                                <a href="http://www.fifa.com/worldcup/destination/cities/city=73217/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">카잔</a>,
+                                                <a href="http://www.fifa.com/worldcup/destination/cities/city=1559/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">모스크바</a>
+                                                <#--<a href="http://www.fifa.com/worldcup/destination/cities/city=35268/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">소치</a>,
+                                                <a href="http://www.fifa.com/worldcup/destination/cities/city=35137/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">칼리닌그라드</a>-->
+                                                등 11개 도시..&nbsp;&nbsp;<a href="http://www.fifa.com/worldcup/destination/index.html" target="_blank" class="more_comm" onclick="<@clickLogSP2 d='12MRL' at='link' />">더보기</a>
+                                              </dd>
+                                            </dl>
+                                            <dl class="coll_dl">
+                                              <dt class="tit_base">대한민국 감독</dt>
+                                              <dd class="f_eb cont">
+                                                <a href="http://search.daum.net/search?w=tot&q=${'신태용'?url('utf-8')}&ppkey=31366&rtmaxcoll=PRF" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">신태용</a><span class="txt_bar">&nbsp;|&nbsp;</span><a href="http://www.kfa.or.kr/news/news_view.asp?BoardNo=14479&Page=1&Query=Gubun%3D11301" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">대표팀 명단</a>
+                                              </dd>
+                                            </dl>
+                                            <dl class="coll_dl">
+                                              <dt class="tit_base">대회정보</dt>
+                                              <dd class="f_eb cont">
+                                                <#-- <a href="http://sports.media.daum.net/sports/soccer/newsview?newsId=20160414060018066" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">최종예선 방식</a>, -->
+                                                <a href="http://www.fifa.com/worldcup/matches/preliminaries/index.html" target="_blank" class="f_link tableLink1" onclick="<@clickLogSP2 d='12MRL' at='link' />"><span class="groupschedule">일정 및 결과</span></a>,
+                                                <a href="http://www.fifa.com/worldcup/news/y=2014/m=11/news=emblem-a-hit-in-russia-2480085.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">엠블럼</a>,
+                                                <span class="groupRanking"><a href="http://www.fifa.com/worldcup/preliminaries/asia/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">조별순위</a></span>,
+                                                <a href="http://ticket.interpark.com/Contents/Sports/GoodsInfo?SportsCode=07002&TeamCode=PS070" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />"><span class="fw_b">이란전 티켓예매</span></a>
+                                                <#-- <a href="http://sports.media.daum.net/sports/soccer/newsview?newsId=20150326164810250" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">2차 예선 조추첨</a> (2015.04.14 - 현지기준)-->
+                                              </dd>
+                                            </dl>
+                                            <dl class="coll_dl">
+                                              <dt class="tit_base">관련정보</dt>
+                                              <dd class="f_eb cont">
+                                                <a href="http://www.fifa.com/worldcup/news/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">뉴스</a>,
+                                                <a href="http://www.fifa.com/worldcup/photos/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">포토갤러리</a>,
+                                                <#--<a href="http://www.fifa.com/worldcup/videos/index.html" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">동영상</a>,-->
+                                                <a href="http://www.fifa.com/" class="f_link" target="_blank" onclick="<@clickLogSP2 d='12MRL' at='link' />">국제축구연맹(FIFA)</a>,
+                                                <a href="http://sports.media.daum.net/sports/issue/224182" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />"><span class="fw_b">Daum 스포츠 특집페이지</span></a>
+                                              </dd>
+                                            </dl>
+                                          </div>
+                                        </div>
 
-      <div class="tab_comm pd_top10 tab_type2">
-        <ul class="tab_info">
-          <li>
-            <a href="javascript:;" class="tab_tit tab_tit2" onclick="${smLogSP2}">아시아 최종예선 조편성</a>
-          </li>
-          <li>
-            <a href="javascript:;" class="tab_tit tab_tit2" onclick="${smLogSP2}">대한민국 경기일정</a>
-          </li>
-          <li>
-            <a href="?w=tot&q=2018%EB%9F%AC%EC%8B%9C%EC%95%84%EC%9B%94%EB%93%9C%EC%BB%B5%EC%A0%84%EC%B2%B4%EC%98%88%EC%84%A0%EC%A0%84%EA%B2%BD%EA%B8%B0" class="tab_tit" onclick="${smLogSP2}">예선전 경기일정</a>
-          </li>
-        </ul>
-        <#--<a href="http://kr.soccerway.com/national/germany/dfb-pokal/20152016/s11695/final-stages/" class="more_comm f_r" target="_blank" onclick="${smLogSP2}">자세히보기</a>-->
-      </div>
+                                        <div class="tab_comm pd_top10 tab_type2">
+                                          <ul class="tab_info">
+                                            <li>
+                                              <a href="javascript:;" class="tab_tit tab_tit2" onclick="<@clickLogSP2 d='12MRL' at='func' />">아시아 최종예선 조편성</a>
+                                            </li>
+                                            <li>
+                                              <a href="javascript:;" class="tab_tit tab_tit2" onclick="<@clickLogSP2 d='12MRL' at='func' />">대한민국 경기일정</a>
+                                            </li>
+                                            <li>
+                                              <a href="http://search.daum.net/search?w=tot&q=2018%EB%9F%AC%EC%8B%9C%EC%95%84%EC%9B%94%EB%93%9C%EC%BB%B5%EC%A0%84%EC%B2%B4%EC%98%88%EC%84%A0%EC%A0%84%EA%B2%BD%EA%B8%B0" class="tab_tit" onclick="<@clickLogSP2 d='12MRL' at='link' />">예선전 경기일정</a>
+                                            </li>
+                                          </ul>
+                                          <#--<a href="http://kr.soccerway.com/national/germany/dfb-pokal/20152016/s11695/final-stages/" class="more_comm f_r" target="_blank" onclick="<@clickLogSP2 d='12MRL' at='link' />">자세히보기</a>-->
+                                        </div>
 
 
-      <div>
-        <div class="tab_cont">
-          <div class="wrap_tbl wrap_tbl2 tbl_type2">
-            <table class="tbl_comm">
-              <caption>경기일정</caption>
-              <colgroup>
-                <col class="col1">
-                <col class="col2">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="fst">조</th>
-                <th>국가</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="fst">
-                <td class="col1 fst txt_ac"><span class="f_eb">A조</span></td>
-                <td class="col2">
+                                        <div>
+                                          <div class="tab_cont">
+                                            <div class="wrap_tbl wrap_tbl2 tbl_type2">
+                                              <table class="tbl_comm">
+                                                <caption>경기일정</caption>
+                                                <colgroup>
+                                                  <col class="col1">
+                                                  <col class="col2">
+                                                </colgroup>
+                                                <thead>
+                                                <tr>
+                                                  <th class="fst">조</th>
+                                                  <th>국가</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="fst">
+                                                  <td class="col1 fst txt_ac"><span class="f_eb">A조</span></td>
+                                                  <td class="col2">
 									<span class="pd_left15 pd_right10">
-										<a href="?w=tot&q=${'이란'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">이란</a>,
-										 <a href="?w=tot&q=${'대한민국'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}"><span class="fw_b">대한민국</span></a>,
-										 <a href="?w=tot&q=${'우즈베키스탄'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">우즈베키스탄</a>,
-										 	<a href="?w=tot&q=${'중국'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">중국</a>,
-										 	<a href="?w=tot&q=${'카타르'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">카타르</a>,
-										<a href="?w=tot&q=${'시리아'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">시리아</a>
+										<a href="http://search.daum.net/search?w=tot&q=${'이란'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">이란</a>,
+										 <a href="http://search.daum.net/search?w=tot&q=${'대한민국'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />"><span class="fw_b">대한민국</span></a>,
+										 <a href="http://search.daum.net/search?w=tot&q=${'우즈베키스탄'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">우즈베키스탄</a>,
+										 	<a href="http://search.daum.net/search?w=tot&q=${'중국'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">중국</a>,
+										 	<a href="http://search.daum.net/search?w=tot&q=${'카타르'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">카타르</a>,
+										<a href="http://search.daum.net/search?w=tot&q=${'시리아'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">시리아</a>
 									</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col1 fst txt_ac"><span class="f_eb">B조</span></td>
-                <td class="col2">
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col1 fst txt_ac"><span class="f_eb">B조</span></td>
+                                                  <td class="col2">
 									<span class="pd_left15 pd_right10">
-                                     	<a href="?w=tot&q=${'호주'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">호주</a>,
-										<a href="?w=tot&q=${'일본'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">일본</a>,
-										<a href="?w=tot&q=${'사우디 아라비아'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">사우디 아라비아</a>,
-										<a href="?w=tot&q=${'아랍 에미리트'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">아랍 에미리트</a>,
-										<a href="?w=tot&q=${'이라크'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">이라크</a>,
-										<a href="?w=tot&q=${'태국'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="${smLogSP2}">태국</a>
+                                     	<a href="http://search.daum.net/search?w=tot&q=${'호주'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">호주</a>,
+										<a href="http://search.daum.net/search?w=tot&q=${'일본'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">일본</a>,
+										<a href="http://search.daum.net/search?w=tot&q=${'사우디 아라비아'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">사우디 아라비아</a>,
+										<a href="http://search.daum.net/search?w=tot&q=${'아랍 에미리트'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아랍 에미리트</a>,
+										<a href="http://search.daum.net/search?w=tot&q=${'이라크'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">이라크</a>,
+										<a href="http://search.daum.net/search?w=tot&q=${'태국'?url('utf-8')}&rtmaxcoll=BXE,3DV"  class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">태국</a>
 									</span>
-                </td>
-              </tr>
+                                                  </td>
+                                                </tr>
 
-              </tbody>
-            </table>
-          </div>
-        </div>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </div>
 
-        <div class="tab_cont">
-          <div class="wrap_tbl wrap_tbl2 tbl_type2">
-            <table class="tbl_comm">
-              <caption>경기일정</caption>
-              <colgroup>
-                <col class="col11">
-                <col class="col12">
-                <col class="col13">
-                <col class="col14">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="fst">일시 (한국기준)</th>
-                <th>경기</th>
-                <th>중계</th>
-                <th>중계/VOD</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="fst">
-                <td class="col11 fst txt_ac"><span class="f_eb">2016.09.01(목) 20:00</span></td>
-                <td class="col12">
-                  <#--${displayGameInfo({
-                    'homeTeam': '대한민국',
-                    'awayTeam': '중국',
-                    'homeScore': -1,
-                    'awayScore': -1,
-                    'homePKScore': -1,
-                    'awayPKScore': -1,
-                    'isCancel': false
-                    })}-->
+                                          <div class="tab_cont">
+                                            <div class="wrap_tbl wrap_tbl2 tbl_type2">
+                                              <table class="tbl_comm">
+                                                <caption>경기일정</caption>
+                                                <colgroup>
+                                                  <col class="col11">
+                                                  <col class="col12">
+                                                  <col class="col13">
+                                                  <col class="col14">
+                                                </colgroup>
+                                                <thead>
+                                                <tr>
+                                                  <th class="fst">일시 (한국기준)</th>
+                                                  <th>경기</th>
+                                                  <th>중계</th>
+                                                  <th>중계/VOD</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="fst">
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2016.09.01(목) 20:00</span></td>
+                                                  <td class="col12">
+                                                    <#--${displayGameInfo({
+                                                      'homeTeam': '대한민국',
+                                                      'awayTeam': '중국',
+                                                      'homeScore': -1,
+                                                      'awayScore': -1,
+                                                      'homePKScore': -1,
+                                                      'awayPKScore': -1,
+                                                      'isCancel': false
+                                                      })}-->
 
-                    ${autoDisplayGameInfo({
-                    'url': '',
-                    'homeTeam': '대한민국',
-                    'awayTeam': '중국',
-                    'matchId': '71048562'
-                    })}
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                                      ${autoDisplayGameInfo({
+                                                      'url': '',
+                                                      'homeTeam': '대한민국',
+                                                      'awayTeam': '중국',
+                                                      'matchId': '71048562'
+                                                      })}
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048562" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048562" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">문자중계</span>
 											</a>
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                              <span class="img_play inner_broadcast inner_vod">VOD</span>
                       </a>-->
 										</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2016.09.06(화) 21:00 </span></td>
-                <td class="col12">
-                  <#--${displayGameInfo({
-                    'homeTeam': '대한민국',
-                    'awayTeam': '시리아',
-                    'homeScore': -1,
-                    'awayScore': -1,
-                    'homePKScore': -1,
-                    'awayPKScore': -1,
-                    'isCancel': false
-                    })}-->
-                    ${autoDisplayGameInfo({
-                    'url': '',
-                    'homeTeam': '시리아',
-                    'awayTeam': '대한민국',
-                    'matchId': '71048879'
-                    })}
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2016.09.06(화) 21:00 </span></td>
+                                                  <td class="col12">
+                                                    <#--${displayGameInfo({
+                                                      'homeTeam': '대한민국',
+                                                      'awayTeam': '시리아',
+                                                      'homeScore': -1,
+                                                      'awayScore': -1,
+                                                      'homePKScore': -1,
+                                                      'awayPKScore': -1,
+                                                      'isCancel': false
+                                                      })}-->
+                                                      ${autoDisplayGameInfo({
+                                                      'url': '',
+                                                      'homeTeam': '시리아',
+                                                      'awayTeam': '대한민국',
+                                                      'matchId': '71048879'
+                                                      })}
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048879" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048879" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">문자중계</span>
 											</a>
 
 										</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2016.10.06(목) 20:00</span></td>
-                <td class="col12">
-                  ${displayGameInfo({
-                  'homeTeam': '대한민국',
-                  'awayTeam': '카타르',
-                  'homeScore': 3,
-                  'awayScore': 2,
-                  'homePKScore': -1,
-                  'awayPKScore': -1,
-                  'isCancel': false
-                  })}
-                  <#--${autoDisplayGameInfo({
-                    'url': '?w=tot&q=' + '러시아 월드컵 대한민국 카타르'?url,
-                    'homeTeam': '대한민국',
-                    'awayTeam': '카타르',
-                    'matchId': '71048969'
-                    })}-->
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2016.10.06(목) 20:00</span></td>
+                                                  <td class="col12">
+                                                    ${displayGameInfo({
+                                                    'homeTeam': '대한민국',
+                                                    'awayTeam': '카타르',
+                                                    'homeScore': 3,
+                                                    'awayScore': 2,
+                                                    'homePKScore': -1,
+                                                    'awayPKScore': -1,
+                                                    'isCancel': false
+                                                    })}
+                                                    <#--${autoDisplayGameInfo({
+                                                      'url': 'http://search.daum.net/search?w=tot&q=' + '러시아 월드컵 대한민국 카타르'?url,
+                                                      'homeTeam': '대한민국',
+                                                      'awayTeam': '카타르',
+                                                      'matchId': '71048969'
+                                                      })}-->
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048969" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048969" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">문자중계</span>
 											</a>
                                         ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71048969")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                              <span class="img_play inner_broadcast inner_vod">VOD</span>
                       </a>-->
 										</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2016.10.11(화) 23:45</span></td>
-                <td class="col12">
-                  ${displayGameInfo({
-                  'homeTeam': '이란',
-                  'awayTeam': '대한민국',
-                  'homeScore': 1,
-                  'awayScore': 0,
-                  'homePKScore': -1,
-                  'awayPKScore': -1,
-                  'isCancel': false
-                  })}
-                  <#--${autoDisplayGameInfo({
-                    'url': '?w=tot&q=' + '러시아 월드컵 대한민국 이란'?url,
-                    'homeTeam': '이란',
-                    'awayTeam': '대한민국',
-                    'matchId': '71049195'
-                    })}-->
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2016.10.11(화) 23:45</span></td>
+                                                  <td class="col12">
+                                                    ${displayGameInfo({
+                                                    'homeTeam': '이란',
+                                                    'awayTeam': '대한민국',
+                                                    'homeScore': 1,
+                                                    'awayScore': 0,
+                                                    'homePKScore': -1,
+                                                    'awayPKScore': -1,
+                                                    'isCancel': false
+                                                    })}
+                                                    <#--${autoDisplayGameInfo({
+                                                      'url': 'http://search.daum.net/search?w=tot&q=' + '러시아 월드컵 대한민국 이란'?url,
+                                                      'homeTeam': '이란',
+                                                      'awayTeam': '대한민국',
+                                                      'matchId': '71049195'
+                                                      })}-->
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71049195" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71049195" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">문자중계</span>
 											</a>
                                         ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71049195")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                              <span class="img_play inner_broadcast inner_vod">VOD</span>
                       </a>-->
 										</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2016.11.15(화) 20:00</span></td>
-                <td class="col12">
-                  ${displayGameInfo({
-                  'homeTeam': '대한민국',
-                  'awayTeam': '우즈베키스탄',
-                  'homeScore': 2,
-                  'awayScore': 1,
-                  'homePKScore': -1,
-                  'awayPKScore': -1,
-                  'isCancel': false
-                  })}
-                  <#--${autoDisplayGameInfo({
-                    'url': '?w=tot&q=' + '러시아 월드컵 대한민국 우즈베키스탄'?url,
-                    'homeTeam': '대한민국',
-                    'awayTeam': '우즈베키스탄',
-                    'matchId': '71050796'
-                    })}-->
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2016.11.15(화) 20:00</span></td>
+                                                  <td class="col12">
+                                                    ${displayGameInfo({
+                                                    'homeTeam': '대한민국',
+                                                    'awayTeam': '우즈베키스탄',
+                                                    'homeScore': 2,
+                                                    'awayScore': 1,
+                                                    'homePKScore': -1,
+                                                    'awayPKScore': -1,
+                                                    'isCancel': false
+                                                    })}
+                                                    <#--${autoDisplayGameInfo({
+                                                      'url': 'http://search.daum.net/search?w=tot&q=' + '러시아 월드컵 대한민국 우즈베키스탄'?url,
+                                                      'homeTeam': '대한민국',
+                                                      'awayTeam': '우즈베키스탄',
+                                                      'matchId': '71050796'
+                                                      })}-->
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71050796" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71050796" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">문자중계</span>
 											</a>
                                         ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71050796")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                              <span class="img_play inner_broadcast inner_vod">VOD</span>
                       </a>-->
                                         <#--${displayTalkAlarm("경기알림","20161109_worldcup")} 톡알림 미등록 시 주석처리 -->
 										</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2017.03.23(목) 20:35</span></td>
-                <td class="col12">
-                  ${displayGameInfo({
-                  'homeTeam': '중국',
-                  'awayTeam': '대한민국',
-                  'homeScore': 1,
-                  'awayScore': 0,
-                  'homePKScore': -1,
-                  'awayPKScore': -1,
-                  'isCancel': false
-                  })}
-                  <#--${autoDisplayGameInfo({
-                    'url': '?w=tot&q=' + '러시아 월드컵 중국 대한민국'?url,
-                    'homeTeam': '중국',
-                    'awayTeam': '대한민국',
-                    'matchId': '71055630'
-                    })} -->
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2017.03.23(목) 20:35</span></td>
+                                                  <td class="col12">
+                                                    ${displayGameInfo({
+                                                    'homeTeam': '중국',
+                                                    'awayTeam': '대한민국',
+                                                    'homeScore': 1,
+                                                    'awayScore': 0,
+                                                    'homePKScore': -1,
+                                                    'awayPKScore': -1,
+                                                    'isCancel': false
+                                                    })}
+                                                    <#--${autoDisplayGameInfo({
+                                                      'url': 'http://search.daum.net/search?w=tot&q=' + '러시아 월드컵 중국 대한민국'?url,
+                                                      'homeTeam': '중국',
+                                                      'awayTeam': '대한민국',
+                                                      'matchId': '71055630'
+                                                      })} -->
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://sports.media.daum.net/sports/gamecenter/71055630" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://sports.media.daum.net/sports/gamecenter/71055630" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">동영상중계</span>
 											</a>
                                         ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71055630")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                              <span class="img_play inner_broadcast inner_vod">VOD</span>
                       </a>
-                                    </span>-->
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2017.03.28(화) 20:00</span></td>
-                <td class="col12">
-                  ${displayGameInfo({
-                  'homeTeam': '대한민국',
-                  'awayTeam': '시리아',
-                  'homeScore': 1,
-                  'awayScore': 0,
-                  'homePKScore': -1,
-                  'awayPKScore': -1,
-                  'isCancel': false
-                  })}
-                  <#-- ${autoDisplayGameInfo({
-                    'url': '?w=tot&q=' + '러시아 월드컵 대한민국 시리아'?url,
-                    'homeTeam': '대한민국',
-                    'awayTeam': '시리아',
-                    'matchId': '71055631'
-                    })} -->
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                      </span>-->
+                                                    </span>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2017.03.28(화) 20:00</span></td>
+                                                  <td class="col12">
+                                                    ${displayGameInfo({
+                                                    'homeTeam': '대한민국',
+                                                    'awayTeam': '시리아',
+                                                    'homeScore': 1,
+                                                    'awayScore': 0,
+                                                    'homePKScore': -1,
+                                                    'awayPKScore': -1,
+                                                    'isCancel': false
+                                                    })}
+                                                    <#-- ${autoDisplayGameInfo({
+                                                      'url': 'http://search.daum.net/search?w=tot&q=' + '러시아 월드컵 대한민국 시리아'?url,
+                                                      'homeTeam': '대한민국',
+                                                      'awayTeam': '시리아',
+                                                      'matchId': '71055631'
+                                                      })} -->
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://sports.media.daum.net/sports/gamecenter/71055631/" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://sports.media.daum.net/sports/gamecenter/71055631/" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">동영상중계</span>
 											</a>
                                         ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71055631")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                              <span class="img_play inner_broadcast inner_vod">VOD</span>
                       </a>
-                                    </span>-->
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2017.06.14(수) 04:00</span></td>
-                <td class="col12">
-                  <#--${displayGameInfo({
-                    'homeTeam': '카타르',
-                    'awayTeam': '대한민국',
-                    'homeScore': -1,
-                    'awayScore': -1,
-                    'homePKScore': -1,
-                    'awayPKScore': -1,
-                    'isCancel': false
-                    })}-->
-                    ${autoDisplayGameInfo({
-                    'url': ''?url, <#--?w=tot&q=' + '러시아 월드컵 대한민국 카타르-->
-                    'homeTeam': '카타르',
-                    'awayTeam': '대한민국',
-                    'matchId': '71057468'
-                    })}
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
+                                      </span>-->
+                                                    </span>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2017.06.14(수) 04:00</span></td>
+                                                  <td class="col12">
+                                                    <#--${displayGameInfo({
+                                                      'homeTeam': '카타르',
+                                                      'awayTeam': '대한민국',
+                                                      'homeScore': -1,
+                                                      'awayScore': -1,
+                                                      'homePKScore': -1,
+                                                      'awayPKScore': -1,
+                                                      'isCancel': false
+                                                      })}-->
+                                                      ${autoDisplayGameInfo({
+                                                      'url': ''?url, <#--http://search.daum.net/search?w=tot&q=' + '러시아 월드컵 대한민국 카타르-->
+                                                      'homeTeam': '카타르',
+                                                      'awayTeam': '대한민국',
+                                                      'matchId': '71057468'
+                                                      })}
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
 										<span class="info_broadcast broadcast_center">
-											<a href="http://sports.media.daum.net/sports/gamecenter/71057468/" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
+											<a href="http://sports.media.daum.net/sports/gamecenter/71057468/" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
 												<span class="img_play inner_broadcast">동영상중계</span>
 											</a>
                                         ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71057468")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                              <span class="img_play inner_broadcast inner_vod">VOD</span>
                       </a>-->
 										</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2017.08.31(목) 21:00</span></td>
-                <td class="col12">
-                  <#-- ${displayGameInfo({
-                    'homeTeam': '대한민국',
-                    'awayTeam': '이란',
-                    'homeScore': -1,
-                    'awayScore': -1,
-                    'homePKScore': -1,
-                    'awayPKScore': -1,
-                    'isCancel': false
-                    })}-->
-                    ${autoDisplayGameInfo({
-                    'url': '?w=tot&q=' + '러시아 월드컵 대한민국 이란'?url,
-                    'homeTeam': '대한민국',
-                    'awayTeam': '이란',
-                    'matchId': '71057690'
-                    })}
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
-										<span class="info_broadcast broadcast_center">
-											<a href="http://sports.media.daum.net/sports/gamecenter/71057690/" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
-												<span class="img_play inner_broadcast">영상중계</span>
-											</a>
-                                        ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71057690")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
-                      </a>
-                                    </span>-->
-                </td>
-              </tr>
-              <tr>
-                <td class="col11 fst txt_ac"><span class="f_eb">2017.09.06(수) 00:00</span></td>
-                <td class="col12">
-                  <#-- ${displayGameInfo({
-                    'homeTeam': '우즈베키스탄',
-                    'awayTeam': '대한민국',
-                    'homeScore': -1,
-                    'awayScore': -1,
-                    'homePKScore': -1,
-                    'awayPKScore': -1,
-                    'isCancel': false
-                    })} -->
-                    ${autoDisplayGameInfo({
-                    'url': '?w=tot&q=' + '러시아 월드컵 우즈베키스탄 대한민국'?url,
-                    'homeTeam': '우즈베키스탄',
-                    'awayTeam': '대한민국',
-                    'matchId': '71057694'
-                    })}
-                </td>
-                <td class="col13 txt_ac">
-                  <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC</a>,
-                  <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="${smLogSP2}">JTBC3 FOX Sports</a>,<br>
-                  <a href="http://soccer.sports.afreecatv.com/" target="_blank" class="f_link" onclick="${smLogSP2}">아프리카TV</a>
-                </td>
-                <td class="col14 txt_ac">
-										<span class="info_broadcast broadcast_center">
-											<a href="http://sports.media.daum.net/sports/gamecenter/71057694/" target="_blank" class="img_play link_broadcast" onclick="${smLogSP2}">
-												<span class="img_play inner_broadcast">영상중계</span>
-											</a>
-                                        ${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71057694")}
-                                        <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="${smLogSP2}">
-                                            <span class="img_play inner_broadcast inner_vod">VOD</span>
-                      </a>
-                                    </span>-->
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2017.08.31(목) 21:00</span></td>
+                                                  <td class="col12">
+                                                    ${displayGameInfo({
+                                                    'homeTeam': '대한민국',
+                                                    'awayTeam': '이란',
+                                                    'homeScore': -1,
+                                                    'awayScore': -1,
+                                                    'homePKScore': -1,
+                                                    'awayPKScore': -1,
+                                                    'isCancel': false
+                                                    })}
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
+                                                    <#--<span class="info_broadcast broadcast_center">
+                                                    <a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048562" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                                      <span class="img_play inner_broadcast">문자중계</span>
+                                                    </a>-->
+                                                    <#--${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71040281")}-->
+                                                      <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                                      <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                                      </a>
+                                                      </span>-->
+                                                      <span class="f_eb">-</span>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="col11 fst txt_ac"><span class="f_eb">2017.09.06(수) 00:00</span></td>
+                                                  <td class="col12">
+                                                    ${displayGameInfo({
+                                                    'homeTeam': '우즈베키스탄',
+                                                    'awayTeam': '대한민국',
+                                                    'homeScore': -1,
+                                                    'awayScore': -1,
+                                                    'homePKScore': -1,
+                                                    'awayPKScore': -1,
+                                                    'isCancel': false
+                                                    })}
+                                                  </td>
+                                                  <td class="col13 txt_ac">
+                                                    <a href="http://jtbc.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC</a>,
+                                                    <a href="http://jtbc3foxsports.joins.com/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">JTBC3 FOX Sports</a>,<br>
+                                                    <a href="http://sportstv.afreecatv.com/kfa/" target="_blank" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">아프리카TV</a>
+                                                  </td>
+                                                  <td class="col14 txt_ac">
+                                                    <#--<span class="info_broadcast broadcast_center">
+                                                    <a href="http://live.sports.media.daum.net/cast/soccer/relay?game_id=71048562" target="_blank" class="img_play link_broadcast" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                                      <span class="img_play inner_broadcast">문자중계</span>
+                                                    </a>-->
+                                                    <#--${autoDisplayHighlight("http://live.sports.media.daum.net/video/afc/p:71040281")}-->
+                                                      <#--<a href="http://live.sports.media.daum.net/video/wwc2015/130550" target="_blank" class="img_play link_broadcast link_vod" onclick="<@clickLogSP2 d='12MRL' at='link' />">
+                                                      <span class="img_play inner_broadcast inner_vod">VOD</span>
+                                                      </a>
+                                                      </span>-->
+                                                      <span class="f_eb">-</span>
+                                                  </td>
+                                                </tr>
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="coll_relation line_clr">
+                                      <dl class="coll_dl">
+                                        <dt class="tit_base">관련검색</dt>
+                                        <dd class="f_eb cont">
+                                          <a href="http://search.daum.net/search?w=tot&q=${'역대월드컵'?url('utf-8')}&rtmaxcoll=SP2" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">역대 월드컵</a>
+                                          <span class="txt_bar"> | </span>
+                                          <a href="http://search.daum.net/search?w=tot&q=${'FIFA 컨페더레이션스컵 러시아 2017'?url('utf-8')}&rtmaxcoll=SP2" class="f_link" onclick="<@clickLogSP2 d='12MRL' at='link' />">2017 FIFA 컨페더레이션스컵 러시아</a>
+                                        </dd>
+                                      </dl>
+                                    </div>
+                                  </div>
+                                  <script>
+                                    (function($) {
+                                      <#assign keywordGroupId = (specialBean.keywordGroupId)!'0'>
+                                      <#if keywordGroupId = '15'>$('#speColl .groupRanking').addClass("highlighting");
+                                      <#elseif keywordGroupId = '23'>$('#speColl .groupRanking').addClass("highlighting");
+                                      <#elseif keywordGroupId = '24'>$('#speColl .groupRanking').addClass("highlighting");</#if>
+                                    })(jq);
 
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="coll_relation line_clr">
-    <dl class="coll_dl">
-      <dt class="tit_base">관련검색</dt>
-      <dd class="f_eb cont">
-        <a href="?w=tot&q=${'역대월드컵'?url('utf-8')}&rtmaxcoll=SP2" class="f_link" onclick="${smLogSP2}">역대 월드컵</a>
-        <span class="txt_bar"> | </span>
-        <a href="?w=tot&q=${'FIFA 컨페더레이션스컵 러시아 2017'?url('utf-8')}&rtmaxcoll=SP2" class="f_link" onclick="${smLogSP2}">2017 FIFA 컨페더레이션스컵 러시아</a>
-      </dd>
-    </dl>
-  </div>
-</div>
-<script>
-  (function($) {
-    <#assign keywordGroupId = (specialBean.keywordGroupId)!'0'>
-    <#if keywordGroupId = '15'>$('#speColl .groupRanking').addClass("highlighting");
-    <#elseif keywordGroupId = '23'>$('#speColl .groupRanking').addClass("highlighting");
-    <#elseif keywordGroupId = '24'>$('#speColl .groupRanking').addClass("highlighting");</#if>
-  })(jq);
+                                    (function($) {
+                                      <@speTab param = {
+                                        'tabKeyword' : [
+                                          [5,19,21], <#-- 1번 탭 -->
+                                      [0,1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,22,23,24,25,26] <#-- 2번 탭 -->
 
-  (function($) {
-    <@speTab param = {
-      'tabKeyword' : [
-        [5,19,21], <#-- 1번 탭 -->
-    [0,1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,22,23,24,25,26] <#-- 2번 탭 -->
+                                      ],
+                                      'tabLink' : '.tab_tit2', <#-- 탭 셀렉터 -->
+                                      'panel' : '.tab_cont', <#-- 탭 컨텐츠 셀렉터 -->
+                                      'hisName' : 'speMainTabHistory' <#-- 히스토리명 -->
+                                    } />
+                                      <#-- 카톡알림 : 일정에 붙는 경우 사용 -->
+                                      <@scriptTalk/>
+                                      $('#speColl .btn_kakao').on('click', function() {
 
-    ],
-    'tabLink' : '.tab_tit2', <#-- 탭 셀렉터 -->
-    'panel' : '.tab_cont', <#-- 탭 컨텐츠 셀렉터 -->
-    'hisName' : 'speMainTabHistory' <#-- 히스토리명 -->
-  } />
-    <#-- 카톡알림 : 일정에 붙는 경우 사용 -->
-    <@scriptTalk/>
-    $('#speColl .btn_kakao').on('click', function() {
+                                        jq.fn.center = function () {
+                                          $('#speColl').find('.box_layer').css('margin-top','0');
+                                          var topNum = $('#speColl').height()/2 - 75;
+                                          $('#speColl .alarm_layer').css("top",topNum + "px");
+                                          return this;
+                                        };
+                                        $('#speColl .alarm_layer').center();
 
-      jq.fn.center = function () {
-        $('#speColl').find('.box_layer').css('margin-top','0');
-        var topNum = $('#speColl').height()/2 - 75;
-        $('#speColl .alarm_layer').css("top",topNum + "px");
-        return this;
-      };
-      $('#speColl .alarm_layer').center();
-
-      var homeTeamTxt = $(this).parents('tr').find('.team_home').text();
-      var awayTeamTxt = $(this).parents('tr').find('.team_away').text();
-      $('#speSportsPopup .f_etit').text(homeTeamTxt + ' vs ' + awayTeamTxt);
-    });
-  })(jQuery);
-</script>
+                                        var homeTeamTxt = $(this).parents('tr').find('.team_home').text();
+                                        var awayTeamTxt = $(this).parents('tr').find('.team_away').text();
+                                        $('#speSportsPopup .f_etit').text(homeTeamTxt + ' vs ' + awayTeamTxt);
+                                      });
+                                    })(jQuery);
+                                  </script>
