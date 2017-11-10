@@ -1,338 +1,130 @@
-<#--api 주소 : http://apihub.daum.net/sports/v1/game/list.xml?leagueCode=KFA&gameId=71048562%2C+71048879%2C+71050796%2C+71057468&appkey=c655d339555c7d586dfdc5d2af4e4d3c-->
-  <#--경기 추가시(api로 경기결과 받아야 할 경우) : api 파라미터 gameId에 추가 (ex : &gameId=71048562%2C+71048879%2C+71050796... 등등-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Title</title>
+</head>
+<body>
+<button id="btn" style="height:100px;width:300px;background-color:wheat">btn</button>
+<button id="btn2" style="height:100px;width:300px;background-color:wheat">btn2</button>
+<button id="btn3" style="height:100px;width:300px;background-color:wheat">btn3</button>
+<script>
 
-    <#--공통파일 : 개발형스페셜공통파일,CSS_톡알람,스크립트_톡알림,공통클릭로그_new가이드-->
+  (function(){
+    var obj = {
+      init: function()
+      {
+        var btn  = document.getElementById('btn')
+          , btn2 = document.getElementById('btn2')
+          , btn3 = document.getElementById('btn3');
+        // Isn't beautiful just passing "this" \o/
+        on(btn , "click"      , this, false);
+        on(btn , "contextmenu", this, false);
+        on(btn , "touchstart" , this, false);
+        on(btn2, "click"      , this, false);
+        on(btn3, "click"      , this, false);
+      },
+      handleEvent: function(e)
+      {
+        var evt = e          || window.event
+          , t   = evt.target || evt.srcElement;
 
-      <#setting url_escaping_charset="UTF-8">
+        switch(evt.type) {
+          case "click":
+            if (t.id === "btn") {
+              this.button();
+            } else if(t.id === "btn2") {
+              this.changeHandleEvent(evt);
+            } else {
+              this.revertHandleEvent();
+            }
+            break;
+          case "touchstart":
+            this.button();
+            break;
+          case "contextmenu":
+            this.other(evt);
+            break;
+        }
+      },
+      dude: "holla",
+      button: function()
+      {
+        alert(this.dude);
+      },
+      changeHandleEvent: function(evt)
+      {
+        this._handleEvent = this.handleEvent;
+        // Change the the handleEvent method without needing to remove and re-attach the event(s)
+        this.handleEvent = function(e) {
+          var evt = e || window.event,
+            t = evt.target || evt.srcElement;
 
-        <#-- 경기정보 XML정보 있을 때 -->
-          <#function autoDisplayGameInfo param={
-            'homeTeam': '',
-            'awayTeam': '',
-            'url': '',
-            'matchId': ''
-            }>
-            <#local gameInfo = '' />
-            <#local homeTeam = param.homeTeam />
-            <#local awayTeam = param.awayTeam />
-            <#local url = param.url />
-            <#local matchId = param.matchId />
-            <#assign tmp = doc.HashMap.list>
-              <#list tmp as item>
-                <#if item.gameId == matchId>
-                  <#if doc?has_content && doc.HashMap?has_content>
-                    <#assign gameStatus = item.gameStatus!''>
-                      <#assign homeScore = ((item.home.result)!0)?number>
-                        <#assign awayScore = ((item.away.result)!0)?number>
-                          <#if ((item.home.finalResult) !='') && ((item.away.finalResult) !='')>
-                            <#assign homePKScore = (item.home.finalResult)!'0'>
-                              <#assign awayPKScore = (item.away.finalResult)!'0'>
-                                <#else>
-                                  <#assign homePKScore = '0'>
-                                    <#assign awayPKScore = '0'>
-                          </#if>
-                  </#if>
-                  <#--<#else>-->
-                  <#--<#assign gameStatus = ''>-->
-                  <#--<#assign homeScore = 0>-->
-                  <#--<#assign awayScore = 0>-->
-                  <#--<#assign homePKScore = '0'>-->
-                  <#--<#assign awayPKScore = '0'>-->
-                </#if>
-              </#list>
+          if (t.id === "btn")
+          {
+            document
+              .getElementById("content")
+              .appendChild(
+                document
+                  .createTextNode("Change the action for all events ")
+              );
+          }
+          else if(t.id === "btn3")
+          {
+            this.revertHandleEvent();
+          }
 
-              <#-- 경기전 -->
-                <#if gameStatus == 'BEFORE'>
-                  <#local gameInfo = displayGameInfoBefore({
-                    'homeTeam': homeTeam,
-                    'awayTeam': awayTeam,
-                    'url': url
-                    }) />
+        };
+        alert("Totally just changed the event handling");
+      },
+      revertHandleEvent: function()
+      {
+        if(!this._handleEvent) return; // If handleEvent hasn't been changed don't set it to null
+        this.handleEvent = this._handleEvent;
+        delete this._handleEvent;
+        alert("Original behaviour has been reverted!");
+      },
+      other: function(e)
+      {
+        alert(e.type);
+      }
+    };
 
-                  <#-- 경기중 -->
-                    <#elseif gameStatus == 'PLAY'>
-                      <#local gameInfo = displayGameInfoPlaying({
-                        'homeTeam': homeTeam,
-                        'awayTeam': awayTeam,
-                        'homeScore': homeScore,
-                        'awayScore': awayScore,
-                        'url': url
-                        }) />
 
-                      <#-- 경기종료 -->
-                        <#elseif gameStatus == 'END'>
-                          <#-- PK점수 있을 시 -->
-                            <#if (homePKScore?has_content && awayPKScore?has_content && homePKScore?number gt 0 && awayPKScore?number gt 0)>
-                              <#assign homePKScore = homePKScore?number>
-                                <#assign awayPKScore = awayPKScore?number>
-                                  <#local gameInfo = displayGameInfoEndPK({
-                                    'homeTeam': homeTeam,
-                                    'awayTeam': awayTeam,
-                                    'homeScore': homeScore,
-                                    'awayScore': awayScore,
-                                    'homePKScore': homePKScore,
-                                    'awayPKScore': awayPKScore,
-                                    'url': url
-                                    }) />
-                                  <#-- PK점수 없을 시 -->
-                                    <#else>
-                                      <#local gameInfo = displayGameInfoEnd({
-                                        'homeTeam': homeTeam,
-                                        'awayTeam': awayTeam,
-                                        'homeScore': homeScore,
-                                        'awayScore': awayScore,
-                                        'url': url
-                                        }) />
-                            </#if>
+    // fn arg can be an object or a function, thanks to handleEvent
+    function on(el, evt, fn, bubble) {
+      if("addEventListener" in el) {
+        // BBOS6 doesn't support handleEvent, catch and polyfill
+        try {
+          el.addEventListener(evt, fn, bubble);
+        } catch(e) {
+          if(typeof fn == "object" && fn.handleEvent) {
+            el.addEventListener(evt, function(e){
+              // Bind fn as this and set first arg as event object
+              fn.handleEvent.call(fn,e);
+            }, bubble);
+          } else {
+            throw e;
+          }
+        }
+      } else if("attachEvent" in el) {
+        // check if the callback is an object and contains handleEvent
+        if(typeof fn == "object" && fn.handleEvent) {
+          el.attachEvent("on" + evt, function(){
+            // Bind fn as this
+            fn.handleEvent.call(fn);
+          });
+        } else {
+          el.attachEvent("on" + evt, fn);
+        }
+      }
+    }
 
-                            <#-- 경기취소 -->
-                              <#elseif gameStatus == 'CANCEL'>
-                                <#local gameInfo = displayGameInfoCancel({
-                                  'homeTeam': homeTeam,
-                                  'awayTeam': awayTeam,
-                                  'url': url
-                                  }) />
-                </#if>
-                <#return gameInfo>
-          </#function>
+    obj.init();
+  })();
 
-          <#-- 경기정보 : XML 정보 없을 때 -->
-            <#function displayGameInfo param={}>
-              <#local gameInfo = '' />
-              <#local homeTeam = param.homeTeam!'' />
-              <#local awayTeam = param.awayTeam!'' />
-              <#local homeScore = (param.homeScore!-1)?number />
-              <#local awayScore = (param.awayScore!-1)?number />
-              <#local homePKScore = (param.homePKScore!-1)?number />
-              <#local awayPKScore = (param.awayPKScore!-1)?number />
-              <#local url = param.url!''/>
-              <#local isCancel = param.isCancel!false />
 
-              <#if isCancel>
-                <#local gameInfo = displayGameInfoCancel({
-                  'homeTeam': homeTeam,
-                  'awayTeam': awayTeam,
-                  'url': url
-                  }) />
-                <#else>
-                  <#if homeScore < 0>
-                  <#local gameInfo = displayGameInfoVS({
-                    'homeTeam': homeTeam,
-                    'awayTeam': awayTeam,
-                    'url': url
-                    }) />
-                  <#else>
-                    <#if homePKScore < 0>
-                    <#local gameInfo = displayGameInfoEnd({
-                      'homeTeam': homeTeam,
-                      'awayTeam': awayTeam,
-                      'homeScore': homeScore,
-                      'awayScore': awayScore,
-                      'url': url
-                      }) />
-                    <#else>
-                      <#local gameInfo = displayGameInfoEndPK({
-                        'homeTeam': homeTeam,
-                        'awayTeam': awayTeam,
-                        'homeScore': homeScore,
-                        'awayScore': awayScore,
-                        'homePKScore': homePKScore,
-                        'awayPKScore': awayPKScore,
-                        'url': url
-                        }) />
-              </#if>
-              </#if>
-              </#if>
-              <#return gameInfo>
-            </#function>
-
-            <#-- 경기부분 wrapper 설정 -->
-              <#function initWrapElement url='' hasPk=false clickCode='HSTO'>
-                <#local pkClass='' />
-                <#if hasPk>
-                  <#local pkClass=' cont_pk' />
-                </#if>
-                <#assign wrapStartElement = '<span class="cont_score${pkClass}">'>
-                <#assign wrapEndElement = '</span>'>
-                <#if url != ''>
-                  <#assign wrapStartElement = '<a href="${url}" class="f_link cont_score${pkClass}" onclick="smartLog(this, \'s=TO&a=${clickCode}&d=&pg=1&r=1&p=1&rc=1&at=link\', event);">'>
-                  <#assign wrapEndElement = '</a>'>
-                </#if>
-                <#return ''>
-              </#function>
-
-              <#-- 경기전 : XML 데이터 있을 시 -->
-                <#function displayGameInfoBefore param={
-                  'homeTeam': '',
-                  'awayTeam': '',
-                  'url': ''
-                  }>
-                  <#local initWrapElement=initWrapElement(param.url) />
-                  <#local gameInfo = '
-                    ${wrapStartElement}
-                  <span class="txt_team team_home">${param.homeTeam} </span>
-                  <span class="screen_out">대 </span>
-                  <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
-                  <span class="img_play txt_state txt_before">경기전</span>
-                  ${wrapEndElement}
-                  ' />
-                  <#return gameInfo>
-                </#function>
-
-                <#-- 경기중 -->
-                  <#function displayGameInfoPlaying param={
-                    'homeTeam': '',
-                    'awayTeam': '',
-                    'homeScore': 0,
-                    'awayScore': 0,
-                    'url': ''
-                    }>
-                    <#local initWrapElement=initWrapElement(param.url) />
-                    <#local gameInfo = '
-                      ${wrapStartElement}
-                    <span class="txt_team team_home">${param.homeTeam} </span>
-                    <span class="screen_out">대 </span>
-                    <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
-                    <em class="num_score score_home">${param.homeScore} </em>
-                    <span class="screen_out">: </span>
-                    <em class="num_score score_away">${param.awayScore}</em><span class="screen_out">로 </span>
-                    <span class="img_play txt_state txt_gaming">경기중 </span>
-                    ${wrapEndElement}
-                    ' />
-                    <#return gameInfo>
-                  </#function>
-
-                  <#-- 경기종료 - PK점수 없을 시 -->
-                    <#function displayGameInfoEnd param={
-                      'homeTeam': '',
-                      'awayTeam': '',
-                      'homeScore': 0,
-                      'awayScore': 0,
-                      'url': ''
-                      }>
-                      <#local initWrapElement=initWrapElement(param.url) />
-                      <#local homeWin = ''>
-                        <#local awayWin = ''>
-                          <#local result = '무승부'>
-                            <#if param.homeScore gt param.awayScore>
-                              <#local result = '${param.homeTeam} 승리'>
-                                <#local homeWin = ' num_win'>
-                                  <#elseif param.homeScore lt param.awayScore>
-                                    <#local awayWin = ' num_win'>
-                                      <#local result = '${param.awayTeam} 승리'>
-                            </#if>
-                            <#local gameInfo = '
-                              ${wrapStartElement}
-                            <span class="txt_team team_home">${param.homeTeam} </span>
-                            <span class="screen_out">대 </span>
-                            <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
-                            <em class="num_score score_home${homeWin}">${param.homeScore} </em>
-                            <span class="screen_out">: </span>
-                            <em class="num_score score_away${awayWin}">${param.awayScore}</em><span class="screen_out">로 경기 </span>
-                            <span class="img_play txt_state">종료 </span>
-                            <span class="screen_out">${result} </span>
-                            ${wrapEndElement}
-                            ' />
-                            <#return gameInfo>
-                    </#function>
-
-                    <#-- 경기종료 - PK점수 있을 시 -->
-                      <#function displayGameInfoEndPK param={
-                        'homeTeam': '',
-                        'awayTeam': '',
-                        'homeScore': 0,
-                        'awayScore': 0,
-                        'homePKScore': 0,
-                        'awayPKScore': 0,
-                        'url': ''
-                        }>
-                        <#local initWrapElement=initWrapElement(param.url, true) />
-                        <#local pKScore = '<span class="fw_b"><span class="num_win">${param.homePKScore}</span>:${param.awayPKScore}</span>'>
-                        <#if param.homePKScore lt param.awayPKScore>
-                          <#local pKScore = '<span class="fw_b">${param.homePKScore}:<span class="num_win">${param.awayPKScore}</span></span>'>
-                        </#if>
-                        <#local result = '${param.homeTeam} 승리'>
-                          <#if param.homePKScore lt param.awayPKScore>
-                            <#local result = '${param.awayTeam} 승리'>
-                          </#if>
-                          <#local gameInfo = '
-                            ${wrapStartElement}
-                          <span class="txt_team team_home">${param.homeTeam} </span>
-                          <span class="screen_out">대 </span>
-                          <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
-                          <em class="num_score score_home">${param.homeScore} </em>
-                          <span class="screen_out">: </span>
-                          <em class="num_score score_away">${param.awayScore}</em><span class="screen_out">로 경기 </span>
-                          <span class="img_play txt_state">종료 </span>
-                          <span class="info_pk">PK ${pKScore}</span><span class="screen_out">로 ${result} </span>
-                          ${wrapEndElement}
-                          ' />
-                          <#return gameInfo>
-                      </#function>
-
-                      <#-- 경기취소 -->
-                        <#function displayGameInfoCancel param={
-                          'homeTeam': '',
-                          'awayTeam': '',
-                          'url': ''
-                          }>
-                          <#local initWrapElement=initWrapElement(param.url) />
-                          <#local gameInfo = '
-                            ${wrapStartElement}
-                          <span class="txt_team team_home">${param.homeTeam} </span>
-                          <span class="screen_out">대 </span>
-                          <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
-                          <span class="screen_out">경기 </span>
-                          <span class="img_play txt_state txt_cancel">취소 </span>
-                          ${wrapEndElement}
-                          ' />
-                          <#return gameInfo>
-                        </#function>
-
-                        <#-- 경기전 VS -->
-                          <#function displayGameInfoVS param={
-                            'homeTeam': '',
-                            'awayTeam': '',
-                            'url': ''
-                            }>
-                            <#local initWrapElement=initWrapElement(param.url) />
-                            <#local gameInfo = '
-                              ${wrapStartElement}
-                            <span class="txt_team team_home">${param.homeTeam} </span>
-                            <span class="f_l txt_vs">vs </span>
-                            <span class="txt_team team_away">${param.awayTeam}</span><span class="screen_out">의 경기 </span>
-                            ${wrapEndElement}
-                            ' />
-                            <#return gameInfo>
-                          </#function>
-
-                          <#-- 경기정보 XML정보 있을 때 -->
-                            <#function autoDisplayHighlight url="#none">
-                              <#local highlight = '' />
-                              <#-- 경기중, 경기종료 -->
-                                <#if gameStatus == 'PLAY' || gameStatus == 'END'>
-                                  <#local highlight = '<a href="${url}" target="_blank" class="img_play link_broadcast link_vod" onclick="smartLog(this, \'s=TO&a=HSTO&d=&pg=1&r=1&p=1&rc=1&at=link\', event);"><span class="img_play inner_broadcast inner_vod">VOD</span></a>' />
-                                </#if>
-                                <#return highlight>
-                            </#function>
-
-                            <#-- 톡알림 추가 -->
-                              <#assign talkClickLog50 = "smartLog(this, 's=TO&a=SP2A&d=&pg=1&r=1&p=50&rc=1&dc=SP2&at=func', event);">
-                                <#assign talkClickLog51 = "smartLog(this, 's=TO&a=SP2A&d=&pg=1&r=1&p=51&rc=1&dc=SP2&at=func', event);">
-                                  <#function displayTalkAlarm title="" groupid="">
-                                    <#local talkAlarm = '
-                                    <div class="alarm_comp type_top_right tip_on"><#-- 툴팁 노출 시 tip_on 클래스 추가ㅏ / 툴팁 위치에 해당하는 클래스 추가 type_top_right, type_top_left -->
-                                    <a href="javascript:;" data-groupid="${groupid}" class="btn_kakao btn_sizes" onclick="${talkClickLog50}"><#-- 버튼 사이즈에 해당하는 클래스 추가 btn_sizes, btn_sizem -->
-                                      <span class="inner"><span class="ico_comm3"></span>${title}</span>
-                                    </a>
-                                    <span class="layer_arr"></span>
-                                    <div class="layer_tip">
-                                      <p class="txt_tip">
-                                        카카오톡으로 빠르게 경기<br>소식을 받으세요~!
-                                      </p>
-                                      <button type="button" class="btn_close" onclick="${talkClickLog51}"><span class="ico_comm3">닫기</span></button>
-                                    </div>
-                                    </div>
-                                    '/>
-                                    <#return talkAlarm>
-                                  </#function>
+</script>
+</body>
+</html>

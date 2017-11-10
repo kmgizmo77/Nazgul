@@ -2,9 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Title</title>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
 </head>
 <body>
-$END$
+<div id="ctx">
+  <a href="javascript:;" class="target" data-click="p=1&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=2&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=3&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=4&r=1&at=link">click</a>
+  <a href="javascript:;" class="target" data-click="p=5&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=6&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=7&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=8&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=9&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="p=10&r=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="e=1&at=func">click</a>
+  <a href="javascript:;" class="target" data-click="e=2&at=func">click</a>
+
+
+</div>
+<script>
+  (function ($) {
+    var $ctx = $('#ctx');
+    function smartLog(elem, params, event) {
+      console.log(params);
+    }
+    function onClickLog($ctx, clickParams) {
+      function getParamsToStr(clickParams) {
+        var paramList = [];
+        for(var prop in clickParams){
+          if(clickParams.hasOwnProperty(prop)){
+            paramList.push(prop + '='+ clickParams[prop]);
+          }
+        }
+        return paramList.join('&');
+      }
+      $ctx.on('click', '[data-click]',function (event) {
+        var params = getParamsToStr(clickParams) + $(this).data('click');
+        smartLog(this, params ,event);
+      })
+    }
+    onClickLog($ctx, {
+      dc:'0SP',
+      d :'mda10',
+      rc:1,
+      pg:1
+    });
+
+  })(jQuery);
+</script>
 </body>
 </html>
